@@ -34,8 +34,8 @@ class KhmerChess {
   }
   WHITE = 'w';
   BLACK = 'b';
-  TREY_BORK = 'f';
-  TREY = 't';
+  TREY_BORK = 'b'; // បក Bork => b
+  TREY = 'm'; // មច្ឆា Marchar => m
   SES = 's';
   KOL = 'k';
   TOUK = 't';
