@@ -55,7 +55,7 @@ class KhmerChess {
   FLAGS = {
     NORMAL: 'n',
     CAPTURE: 'c', // ស៊ី
-    FLIP: 'f',​ // បក
+    FLIP: 'f', // បក
     ATTACK: 'a', // អុក
     STUCK: 's', // អាប់
   };
