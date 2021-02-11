@@ -54,9 +54,10 @@ class KhmerChess {
   ];
   FLAGS = {
     NORMAL: 'n',
-    CAPTURE: 'c',
-    FLIP: 'f',
-    KSIDE_CASTLE: 'k',
+    CAPTURE: 'c', // ស៊ី
+    FLIP: 'f',​ // បក
+    ATTACK: 'a', // អុក
+    STUCK: 's', // អាប់
   };
   load() { return false; }
   reset() { return false; }
