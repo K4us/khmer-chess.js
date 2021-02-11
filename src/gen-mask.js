@@ -28,7 +28,9 @@
 
 "use strict";
 
-function genMask(boardHelper) {
+const boardHelper = require("./board-helper");
+
+function genMask() {
     const mask = {};
     mask[boardHelper.PIECE_TYPE_TOUK] = [
         [0, 1], [0, 2], [0, 3], [0, 4], [0, 5], [0, 6], [0, 7], [0, 8],
