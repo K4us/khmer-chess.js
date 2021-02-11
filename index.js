@@ -1,4 +1,8 @@
 var KhmerChess = function() {
+  this.game_over = function(){
+    return false;
+  };
+  return this;
 };
 
 /* export KhmerChess object if using node or any other CommonJS compatible
