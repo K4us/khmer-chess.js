@@ -47,27 +47,59 @@ class Rectangle {
         return isContainsPoint;
     }
 }
-
+let allPiecesString = null;
 const boardHelper = {
     HORIZONTAL_CODE_LETTERS: "abcdefgh",
 
     PIECE_COLOR_WHITE: "w",
     PIECE_COLOR_BLACK: "b",
 
-    PIECE_TYPE_TOUK: "a", // Boat
-    PIECE_TYPE_SES: "b", // Horse
-    PIECE_TYPE_KOL: "c", // General
-    PIECE_TYPE_SDECH: "d", // King
-    PIECE_TYPE_NEANG: "e", // Queen
+    PIECE_TYPE_TOUK: "b", // Boat
+    PIECE_TYPE_SES: "h", // Horse
+    PIECE_TYPE_KOL: "g", // General
+    PIECE_TYPE_SDECH: "k", // King
+    PIECE_TYPE_NEANG: "q", // Queen
     PIECE_TYPE_TREY: "f", // Fish
-    PIECE_TYPE_BORK: "g", // Flipped fish
-    EMPTY_PIECE: "o",
+    PIECE_TYPE_BORK: "t", // Transform fish
+    EMPTY_PIECE: ".",
+    BOARD_SEPARATOR: "/",
 
     ROW_NUMBER: 8,
     ROW_FIRST_INDEX: 0,
     ROW_LAST_INDEX: 7,
 
     mask: null,
+
+    isValidPiecesString(str, onlyPiece) {
+        if (jsis.isNull(allPiecesString)) {
+            allPiecesString = [
+                this.PIECE_TYPE_TOUK,
+                this.PIECE_TYPE_SES,
+                this.PIECE_TYPE_KOL,
+                this.PIECE_TYPE_SDECH,
+                this.PIECE_TYPE_NEANG,
+                this.PIECE_TYPE_TREY,
+                this.PIECE_TYPE_BORK,
+                this.toWhitePiece(this.PIECE_TYPE_TOUK),
+                this.toWhitePiece(this.PIECE_TYPE_SES),
+                this.toWhitePiece(this.PIECE_TYPE_KOL),
+                this.toWhitePiece(this.PIECE_TYPE_SDECH),
+                this.toWhitePiece(this.PIECE_TYPE_NEANG),
+                this.toWhitePiece(this.PIECE_TYPE_TREY),
+                this.toWhitePiece(this.PIECE_TYPE_BORK),
+                this.EMPTY_PIECE,
+                this.BOARD_SEPARATOR,
+            ]
+        }
+        const ruler = onlyPiece ? allPiecesString.filter((c) => {
+            return !~[this.EMPTY_PIECE, this.BOARD_SEPARATOR].indexOf(c);
+        }) : allPiecesString;
+        return !str.split('').some((c) => {
+            return !~ruler.indexOf(c);
+        });
+    },
+
+    toWhitePiece: (str) => str.toUpperCase(),
 
     isValidPosXY(point, y) {
         if (jsis.isUndefined(point)) {
@@ -79,35 +111,24 @@ const boardHelper = {
         return !jsis.isUndefined(point.x) && !jsis.isUndefined(point.y) &&
             this.rect(0, 0, this.ROW_LAST_INDEX, this.ROW_LAST_INDEX).isContainsPoint(point);
     },
-    isValidPiece(piece) {
-        return piece != this.EMPTY_PIECE;
-    },
-    isWhite(c) {
-        return c === this.PIECE_COLOR_WHITE;
-    },
-    isBlack(c) {
-        return c === this.PIECE_COLOR_BLACK;
-    },
-    p(x, y) {
-        return {
-            x,
-            y,
-        };
-    },
-    res(width, height) {
-        return {
-            width,
-            height,
-        };
-    },
-    rect(x, y, width, height) {
-        return new Rectangle(x, y, width, height);
-    },
-    getSubBoardNumber() {
-        return this.ROW_NUMBER * this.ROW_NUMBER;
-    },
+    isValidPiece: (piece) => piece != boardHelper.EMPTY_PIECE,
+    isWhite: (c) => c === boardHelper.PIECE_COLOR_WHITE,
+    isBlack: (c) => c === boardHelper.PIECE_COLOR_BLACK,
+    codeP: (h, v) => ({ h, v }),
+    p: (x, y) => ({ x, y }),
+    res: (width, height) => ({ width, height }),
+    rect: (x, y, width, height) => new Rectangle(x, y, width, height),
+    getSubBoardNumber: () => boardHelper.ROW_NUMBER * boardHelper.ROW_NUMBER,
     nerdPosToXY(p) {
-        return jsis.isNumber(p.x) && jsis.isNumber(p.y) ? p : (jsis.isNumber(p) ? this.p(p % this.ROW_NUMBER, Math.floor(p / this.ROW_NUMBER)) : null);
+        if (jsis.isNumber(p.x) && jsis.isNumber(p.y)) {
+            return p;
+        }
+        if (jsis.isNumber(p)) {
+            const x = p % this.ROW_NUMBER;
+            const y = Math.floor(p / this.ROW_NUMBER);
+            return this.p(x, y);
+        }
+        return null;
     },
     nerdXyToPos(point, y) {
         if (!jsis.isUndefined(y)) {
@@ -275,8 +296,12 @@ const boardHelper = {
         }
         return null;
     },
+    numToCodeP(number) {
+        return this.codeP(this.HORIZONTAL_CODE_LETTERS[number % 8], ((number / 8 | 0) + 1));
+    },
     numToCode(number) {
-        return this.HORIZONTAL_CODE_LETTERS[number % 8] + ((number / 8 | 0) + 1);
+        const codeP = this.numToCodeP(number);
+        return `${codeP.h}${codeP.v}`;
     },
     generatePosesCanMove(type, pos, color, piecesString, isHaveMoved) {
         let p;

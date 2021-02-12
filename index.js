@@ -34,13 +34,13 @@ class KhmerChess {
   }
   WHITE = 'w';
   BLACK = 'b';
-  TREY_BORK = 'b'; // បក Bork => b
-  TREY = 'm'; // មច្ឆា Marchar => m
-  SES = 's';
-  KOL = 'k';
-  TOUK = 't';
-  NEANG = 'n';
-  SDECH = 's';
+  TREY_BORK = 't'; // Transform Fish
+  TREY = 'f'; // Fish
+  SES = 'h'; // Horse
+  KOL = 'g'; // General
+  TOUK = 'b'; // Boat
+  NEANG = 'q'; // Queen
+  SDECH = 'k'; // King
   SQUARES = [
     'a8', 'b8', 'c8', 'd8', 'e8', 'f8', 'g8', 'h8',
     'a7', 'b7', 'c7', 'd7', 'e7', 'f7', 'g7', 'h7',

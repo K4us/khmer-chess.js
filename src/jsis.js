@@ -88,6 +88,9 @@ const jsis = {
     isEven(n) {
         return !this.isOdd(n);
     },
+    isUpperCase(str) {
+        return str === str.toUpperCase();
+    }
 };
 
 module.exports = jsis;
