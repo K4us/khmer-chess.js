@@ -28,12 +28,15 @@
 
 "use strict";
 
+const KPGN = require("./src/KPGN");
 const MoveHelper = require("./src/move-helper");
+const { REN } = require("./src/REN");
 const renHelper = require("./src/ren-helper");
 
 class KhmerChess {
   moveHelper = new MoveHelper();
   renInstance = renHelper.toRen();
+  kpgnInstance = new KPGN();
   constructor(renStr) {
     this.renInstance = renHelper.toRen(renStr);
   }
@@ -77,9 +80,13 @@ class KhmerChess {
     // TODO:
     return false;
   }
-  validate_ren() {
-    // TODO:
-    return false;
+  validate_ren(renStr) {
+    try {
+      renHelper.toRen(renStr);
+      return { valid: true, error_number: 0, error: 'No errors.' };
+    } catch (error) {
+      return { valid: false, error_number: 1, error: error.message };
+    }
   }
   ren() {
     return this.renInstance.toString();
@@ -87,13 +94,12 @@ class KhmerChess {
   board() {
     return this.renInstance.board.toMultiArray();
   }
-  pgn() {
-    // TODO:
-    return false;
+  // Khmer Portable Game Notation <file-name>.kpgn.json
+  kpgn() {
+    return this.kpgnInstance.toJson();
   }
-  load_pgn() {
-    // TODO:
-    return false;
+  load_kpgn(kpgnJosn, options) {
+    this.kpgnInstance = new KPGN(kpgnJosn);
   }
   header() {
     // TODO:
@@ -149,10 +155,6 @@ ${graveyardStr}`
     return false;
   }
   perft() {
-    // TODO:
-    return false;
-  }
-  square_color() {
     // TODO:
     return false;
   }
