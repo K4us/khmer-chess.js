@@ -67,7 +67,7 @@ ${8 - i} ┃${rs}┃
       return s;
     }, str);
     return `${result}
-   a   b   c   d   e   f   g   h`
+    a   b   c   d   e   f   g   h`
   }
   turn() { return false; }
   move() { return false; }
