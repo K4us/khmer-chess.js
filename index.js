@@ -97,10 +97,6 @@ class KhmerChess {
     // TODO:
     return null;
   }
-  in_threefold_repetition() {
-    // TODO:
-    return false;
-  }
   /**
    * Is game over, win|stuck|win-timeout|draw-count-over|win-resign
    */
@@ -213,6 +209,12 @@ ${graveyardStr}`
   }
   history() {
     return this.kpgnInstance.moves;
+  }
+  addUpdateRenderEventListener(listener) {
+    // TODO:
+  }
+  removeUpdateRenderEventListener(listener) {
+    // TODO:
   }
 }
 
