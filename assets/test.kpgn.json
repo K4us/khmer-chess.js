@@ -1,0 +1,40 @@
+{
+    "event": "King of Khmer Chess 2021",
+    "date": "2021-02-12T08:49:21.716Z",
+    "location": "PP Cambodia",
+    "players": {
+        "white": {
+            "name": "White Player",
+            "id": "12341"
+        },
+        "black": {
+            "name": "Black Player",
+            "id": "235145"
+        }
+    },
+    "result": {
+        "last": {
+            "whiteWin": false,
+            "blackWin": false
+        },
+        "white": {
+            "win": 7,
+            "draw": 2,
+            "lost": 11
+        }
+    },
+    "moves": [
+        {
+            "from": "b3",
+            "to": "b4",
+            "jump": false,
+            "capture": ""
+        }
+    ],
+    "ren": "bhgqkghb/8/ffffffff/8/1F6/F1FFFFFF/8/BHGKQGHB b ---- -|-",
+    "timer": {
+        "totalSecond": 3600,
+        "currentWhite": 3500,
+        "currentBlack": 3600
+    }
+}
