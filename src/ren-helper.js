@@ -37,7 +37,7 @@ const renHelper = {
             fen = DEFAULT_BOARD_STR;
         }
         const fenArr = fen.split(' ');
-        return new REN(fenArr[0], fenArr[1], fenArr[2], fenArr[3], fenArr[4]);
+        return new REN(fenArr[0], fenArr[1], fenArr[2], fenArr[3], fenArr[4], fenArr[5]);
     }
 };
 

@@ -117,7 +117,7 @@ class KPGN {
     moves = [new Move()];
     ren = new REN();
     timer = new Timer();
-    constructor(kpgnJson){
+    constructor(kpgnJson) {
     }
     toJson() {
         return {
@@ -142,4 +142,10 @@ class KPGN {
     }
 }
 
-module.exports = KPGN;
+module.exports = {
+    KPGN,
+    Player,
+    Result,
+    Move,
+    Timer
+};

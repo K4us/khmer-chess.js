@@ -30,14 +30,14 @@
 const { PIECE_TYPE_BORK } = require("./board-helper");
 /**
  * Raksa-Eng Notation
- * fen: <pieces on board> <turn w|b> <king&queen moved ----|SNsn> <countdown -.-|-.4> <pieces in graveyard>
+ * fen: <pieces on board> <turn w|b> <king&queen moved ----|SNsn> <king attack --|Kk> <countdown -.-|-.4> <pieces in graveyard>
  * e.g: bhgqkghb/8/ffffffff/8/8/FFFFFFFF/8/BHGKQGHB
  */
 
 const boardHelper = require("./board-helper");
 const jsis = require("./jsis");
 
-// bhgqkghb/8/ffffffff/8/8/FFFFFFFF/8/BHGKQGHB w ---- --
+// bhgqkghb/8/ffffffff/8/8/FFFFFFFF/8/BHGKQGHB w ---- -- -.-
 const DEFAULT_BOARD_STR = 'bhgqkghb/8/ffffffff/8/8/FFFFFFFF/8/BHGKQGHB';
 const NOT_SET = '-';
 const STRING_COUNT = 'B2F8G2H2K1Q1b2f8g2h2k1q1';
@@ -177,6 +177,20 @@ class KqMoved {
         return str;
     }
 }
+class KAttacked {
+    whiteKing = false;
+    blackKing = false;
+    constructor(kAttackedStr = '') {
+        const bh = boardHelper;
+        this.whiteKing = !!~kAttackedStr.indexOf(bh.toWhitePiece(bh.PIECE_TYPE_SDECH));
+        this.blackKing = !!~kAttackedStr.indexOf(bh.PIECE_TYPE_SDECH);
+    }
+    toString() {
+        let str = `${this.whiteKing ? boardHelper.toWhitePiece(boardHelper.PIECE_TYPE_SDECH) : NOT_SET}`;
+        str += `${this.blackKing ? boardHelper.PIECE_TYPE_SDECH : NOT_SET}`;
+        return str;
+    }
+}
 // 23.-
 class CountDown {
     white = null;
@@ -220,13 +234,15 @@ class REN {
     board = new Board();
     turn = boardHelper.PIECE_COLOR_WHITE;
     kqMoved = new KqMoved();
+    kAttacked = new KAttacked();
     countdown = new CountDown();
     graveyard = new Graveyard();
     constructor(boardStr, turnStr = boardHelper.PIECE_COLOR_WHITE,
-        kqMovedStr, countdownStr, graveyardStr) {
+        kqMovedStr, kAttackedStr, countdownStr, graveyardStr) {
         this.board = new Board(boardStr);
         this.turn = turnStr;
         this.kqMoved = new KqMoved(kqMovedStr);
+        this.kqMoved = new KAttacked(kAttackedStr);
         this.countdown = new CountDown(countdownStr);
         this.graveyard = new Graveyard(graveyardStr);
         const invalidPiecesString = this.isInvalidPieceCount();
@@ -257,6 +273,7 @@ class REN {
         let str = this.board.toString();
         str += ` ${this.turn.toString()}`;
         str += ` ${this.kqMoved.toString()}`;
+        str += ` ${this.kAttacked.toString()}`;
         str += ` ${this.countdown.toString()}`;
         str += ` ${this.graveyard.toString()}`;
         return str;

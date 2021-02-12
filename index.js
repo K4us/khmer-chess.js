@@ -28,9 +28,8 @@
 
 "use strict";
 
-const KPGN = require("./src/KPGN");
+const { KPGN } = require("./src/KPGN");
 const MoveHelper = require("./src/move-helper");
-const { REN } = require("./src/REN");
 const renHelper = require("./src/ren-helper");
 
 class KhmerChess {
@@ -40,42 +39,71 @@ class KhmerChess {
   constructor(renStr) {
     this.renInstance = renHelper.toRen(renStr);
   }
-  load() {
-    // TODO:
-    return false;
+  load(renStr) {
+    this.renInstance = renHelper.toRen(renStr);
   }
   reset() {
-    // TODO:
-    return false;
+    this.renInstance = renHelper.toRen();
   }
+  /**
+   * Generate all available moves of current turn
+   */
   moves() {
     // TODO:
-    return false;
+    return [];
   }
+  /**
+   * Is King is attacked (អុក), return under attack color
+   * 
+   * return color|null
+   */
   in_check() {
     // TODO:
-    return false;
+    return null;
   }
+  /**
+   * Is win, return lost color
+   * 
+   * return color|null
+   */
   in_checkmate() {
     // TODO:
-    return false;
+    return null;
   }
+  /**
+   * Is stuck (អាប់), return stuck color
+   * 
+   * return color|null
+   */
   in_stalemate() {
     // TODO:
-    return false;
+    return null;
   }
+  /**
+   * Is draw (ស្មើ)
+   * 
+   * return boolean
+   */
   in_draw() {
     // TODO:
     return false;
   }
-  insufficient_material() {
+  /**
+   * Is draw by counting over (ស្មើ​ដោយ​ការ​រាប់), return counter color
+   * 
+   * return color|null
+   */
+  in_draw_count() {
     // TODO:
-    return false;
+    return null;
   }
   in_threefold_repetition() {
     // TODO:
     return false;
   }
+  /**
+   * Is game over, win|stuck|win-timeout|draw-count-over|win-resign
+   */
   game_over() {
     // TODO:
     return false;
@@ -101,10 +129,6 @@ class KhmerChess {
   load_kpgn(kpgnJosn, options) {
     this.kpgnInstance = new KPGN(kpgnJosn);
   }
-  header() {
-    // TODO:
-    return false;
-  }
   ascii() {
     const arr = this.renInstance.board.toMultiArray();
     let str = `  ┏━━━┳━━━┳━━━┳━━━┳━━━┳━━━┳━━━┳━━━┓`;
@@ -127,60 +151,68 @@ ${8 - i} ┃${rs}┃
 ${graveyardStr}`
   }
   turn() {
-    // TODO:
-    return false;
+    this.renInstance.turn;
   }
-  move() {
+  /**
+   * Move piece regarding provided Move object
+   *
+   * @param Move move
+   */
+  move(move) {
     // TODO:
-    return false;
   }
+  /**
+   * Undo last move
+   * 
+   * return {Piece, Move}|null
+   */
   undo() {
     // TODO:
     return false;
   }
+  /**
+   * Move all pieces to graveyard except kings
+   * -> 4k3/8/8/8/8/8/8/3K4 w ---- -- -.- bhgqghbffffffffFFFFFFFFBHGQGHB
+   */
   clear() {
-    // TODO:
-    return false;
+    this.renInstance = renHelper.toRen('4k3/8/8/8/8/8/8/3K4 w ---- -- -.- bhgqghbffffffffFFFFFFFFBHGQGHB');
   }
-  put() {
-    // TODO:
-    return false;
+  /**
+   * Move piece to square id location
+   *
+   * @param Piece piece
+   * @param String squareId
+   *
+   * return Piece|null
+   */
+  put(piece, squareId) {
+    // TODO: move piece to square id location
+    return null;
   }
-  get() {
-    // TODO:
-    return false;
+  /**
+   * Get piece at square id location
+   *
+   * @param String squareId 'a1'
+   *
+   * return Piece|null
+   */
+  get(squareId) {
+    // TODO: get piece at square id location
+    return null;
   }
-  remove() {
-    // TODO:
-    return false;
-  }
-  perft() {
-    // TODO:
-    return false;
+  /**
+   * Move piece to graveyard
+   *
+   * @param String squareId 'a1'
+   *
+   * return Piece|null
+   */
+  remove(squareId) {
+    // TODO: move piece to graveyard
+    return null;
   }
   history() {
-    // TODO:
-    return false;
-  }
-  get_comment() {
-    // TODO:
-    return false;
-  }
-  set_comment() {
-    // TODO:
-    return false;
-  }
-  delete_comment() {
-    // TODO:
-    return false;
-  }
-  get_comments() {
-    // TODO:
-    return false;
-  }
-  delete_comments() {
-    // TODO:
-    return false;
+    return this.kpgnInstance.moves;
   }
 }
 
