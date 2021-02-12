@@ -85,8 +85,7 @@ class KhmerChess {
     return this.renInstance.toString();
   }
   board() {
-    // TODO:
-    return false;
+    return this.renInstance.board.toMultiArray();
   }
   pgn() {
     // TODO:
