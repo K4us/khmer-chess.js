@@ -33,30 +33,75 @@ const renHelper = require("./src/ren-helper");
 
 class KhmerChess {
   moveHelper = new MoveHelper();
-  ren = renHelper.toRen();
+  renInstance = renHelper.toRen();
   constructor(renStr) {
-    this.ren = renHelper.toRen(renStr);
+    this.renInstance = renHelper.toRen(renStr);
   }
-  load() { return false; }
-  reset() { return false; }
-  moves() { return false; }
-  in_check() { return false; }
-  in_checkmate() { return false; }
-  in_stalemate() { return false; }
-  in_draw() { return false; }
-  insufficient_material() { return false; }
-  in_threefold_repetition() { return false; }
-  game_over() { return false; }
-  validate_ren() { return false; }
+  load() {
+    // TODO:
+    return false;
+  }
+  reset() {
+    // TODO:
+    return false;
+  }
+  moves() {
+    // TODO:
+    return false;
+  }
+  in_check() {
+    // TODO:
+    return false;
+  }
+  in_checkmate() {
+    // TODO:
+    return false;
+  }
+  in_stalemate() {
+    // TODO:
+    return false;
+  }
+  in_draw() {
+    // TODO:
+    return false;
+  }
+  insufficient_material() {
+    // TODO:
+    return false;
+  }
+  in_threefold_repetition() {
+    // TODO:
+    return false;
+  }
+  game_over() {
+    // TODO:
+    return false;
+  }
+  validate_ren() {
+    // TODO:
+    return false;
+  }
   ren() {
-    return this.ren.toString();
+    return this.renInstance.toString();
   }
-  board() { return false; }
-  pgn() { return false; }
-  load_pgn() { return false; }
-  header() { return false; }
+  board() {
+    // TODO:
+    return false;
+  }
+  pgn() {
+    // TODO:
+    return false;
+  }
+  load_pgn() {
+    // TODO:
+    return false;
+  }
+  header() {
+    // TODO:
+    return false;
+  }
   ascii() {
-    const arr = this.ren.board.toMultiArray();
+    const arr = this.renInstance.board.toMultiArray();
     let str = `  ┏━━━┳━━━┳━━━┳━━━┳━━━┳━━━┳━━━┳━━━┓`;
     const result = arr.reduce((s, subArr, i) => {
       const rs = subArr.map((p) => ` ${p ? p.toString() : ' '} `).join('┃');
@@ -69,21 +114,66 @@ ${8 - i} ┃${rs}┃
     return `${result}
     a   b   c   d   e   f   g   h`
   }
-  turn() { return false; }
-  move() { return false; }
-  undo() { return false; }
-  clear() { return false; }
-  put() { return false; }
-  get() { return false; }
-  remove() { return false; }
-  perft() { return false; }
-  square_color() { return false; }
-  history() { return false; }
-  get_comment() { return false; }
-  set_comment() { return false; }
-  delete_comment() { return false; }
-  get_comments() { return false; }
-  delete_comments() { return false; }
+  turn() {
+    // TODO:
+    return false;
+  }
+  move() {
+    // TODO:
+    return false;
+  }
+  undo() {
+    // TODO:
+    return false;
+  }
+  clear() {
+    // TODO:
+    return false;
+  }
+  put() {
+    // TODO:
+    return false;
+  }
+  get() {
+    // TODO:
+    return false;
+  }
+  remove() {
+    // TODO:
+    return false;
+  }
+  perft() {
+    // TODO:
+    return false;
+  }
+  square_color() {
+    // TODO:
+    return false;
+  }
+  history() {
+    // TODO:
+    return false;
+  }
+  get_comment() {
+    // TODO:
+    return false;
+  }
+  set_comment() {
+    // TODO:
+    return false;
+  }
+  delete_comment() {
+    // TODO:
+    return false;
+  }
+  get_comments() {
+    // TODO:
+    return false;
+  }
+  delete_comments() {
+    // TODO:
+    return false;
+  }
 }
 
 module.exports = {
