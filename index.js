@@ -111,8 +111,15 @@ ${8 - i} ┃${rs}┃
   ${bottom}`;
       return s;
     }, str);
+    const gyTStr = this.renInstance.graveyard.pieces.map(() => '━━━').join('┳');
+    const gyStr = this.renInstance.graveyard.pieces.map((p) => ` ${p ? p.toString() : ' '} `).join('┃');
+    const gyBStr = this.renInstance.graveyard.pieces.map(() => '━━━').join('┻');
+    const graveyardStr = `  ┏${gyTStr}┓
+  ┃${gyStr}┃
+  ┗${gyBStr}┛`;
     return `${result}
-    a   b   c   d   e   f   g   h`
+    a   b   c   d   e   f   g   h
+${graveyardStr}`
   }
   turn() {
     // TODO:
