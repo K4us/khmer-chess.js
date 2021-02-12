@@ -40,6 +40,7 @@ const jsis = require("./jsis");
 // bhgqkghb/8/ffffffff/8/8/FFFFFFFF/8/BHGKQGHB w ---- --
 const DEFAULT_BOARD_STR = 'bhgqkghb/8/ffffffff/8/8/FFFFFFFF/8/BHGKQGHB';
 const NOT_SET = '-';
+const STRING_COUNT = 'B2F8G2H2K1Q1b2f8g2h2k1q1';
 
 class Piece {
     type = boardHelper.PIECE_TYPE_TREY;
@@ -215,11 +216,12 @@ class FEN {
         this.kqMoved = new KqMoved(kqMovedStr);
         this.countdown = new CountDown(countdownStr);
         this.graveyard = new Graveyard(graveyardStr);
-        if (!this.isValidPieceCount()) {
-            throw new Error(`Invalid piece string board:${boardStr}, graveyard:${graveyardStr}`);
+        const invalidPiecesString = this.isInvalidPieceCount();
+        if (invalidPiecesString) {
+            throw new Error(`Invalid piece string board:${boardStr}, graveyard:${graveyardStr}, count:${invalidPiecesString}`);
         }
     }
-    isValidPieceCount() {
+    isInvalidPieceCount() {
         const pieces = this.board.poses.map((pos) => {
             return pos.p;
         }).filter((p) => {
@@ -227,11 +229,16 @@ class FEN {
         }).concat(this.graveyard.pieces).map((p) => {
             return p.toOrigin();
         });
-        // TODO: validate count piece
-        if (pieces.length != boardHelper.ROW_NUMBER * 4) {
+        const piecesCount = pieces.reduce((obj, p) => {
+            obj[p.toString()] = obj[p.toString()] || 0;
+            obj[p.toString()]++;
+            return obj;
+        }, {});
+        const str = Object.keys(piecesCount).map((k) => `${k}${piecesCount[k]}`).sort().join('');
+        if (str == STRING_COUNT) {
             return false;
         }
-        return true;
+        return str;
     }
     toString() {
         let str = this.board.toString();
