@@ -30,7 +30,7 @@
 
 const boardHelper = require("./board-helper");
 
-class BoardWorker {
+class MoveHelper {
     init(option) {
         this.piecesString = option.piecesString;
         this.currentTurn = option.currentTurn;
@@ -192,4 +192,4 @@ class BoardWorker {
     }
 }
 
-module.exports = BoardWorker;
+module.exports = MoveHelper;

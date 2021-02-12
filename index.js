@@ -28,37 +28,43 @@
 
 "use strict";
 
+const boardHelper = require("./src/board-helper");
+const MoveHelper = require("./src/move-helper");
+const renHelper = require("./src/ren-helper");
+
+const WHITE = boardHelper.PIECE_COLOR_WHITE;
+const BLACK = boardHelper.PIECE_COLOR_BLACK;
+const TREY_BORK = boardHelper.PIECE_TYPE_BORK; // Transform Fish
+const TREY = boardHelper.PIECE_TYPE_TREY; // Fish
+const SES = boardHelper.PIECE_TYPE_SES; // Horse
+const KOL = boardHelper.PIECE_TYPE_KOL; // General
+const TOUK = boardHelper.PIECE_TYPE_TOUK; // Boat
+const NEANG = boardHelper.PIECE_TYPE_NEANG; // Queen
+const SDECH = boardHelper.PIECE_TYPE_SDECH; // King
+const SQUARES = {
+  a8: 0, b8: 1, c8: 2, d8: 3, e8: 4, f8: 5, g8: 6, h8: 7,
+  a7: 16, b7: 17, c7: 18, d7: 19, e7: 20, f7: 21, g7: 22, h7: 23,
+  a6: 32, b6: 33, c6: 34, d6: 35, e6: 36, f6: 37, g6: 38, h6: 39,
+  a5: 48, b5: 49, c5: 50, d5: 51, e5: 52, f5: 53, g5: 54, h5: 55,
+  a4: 64, b4: 65, c4: 66, d4: 67, e4: 68, f4: 69, g4: 70, h4: 71,
+  a3: 80, b3: 81, c3: 82, d3: 83, e3: 84, f3: 85, g3: 86, h3: 87,
+  a2: 96, b2: 97, c2: 98, d2: 99, e2: 100, f2: 101, g2: 102, h2: 103,
+  a1: 112, b1: 113, c1: 114, d1: 115, e1: 116, f1: 117, g1: 118, h1: 119
+};
+const FLAGS = {
+  NORMAL: 'n',
+  CAPTURE: 'c', // ស៊ី
+  FLIP: 'f', // បក
+  ATTACK: 'a', // អុក
+  STUCK: 's', // អាប់
+};
+
 class KhmerChess {
-  constructor() {
-
+  moveHelper = new MoveHelper();
+  ren = renHelper.toRen();
+  constructor(renStr) {
+    this.ren = renHelper.toRen(renStr);
   }
-  WHITE = 'w';
-  BLACK = 'b';
-  TREY_BORK = 't'; // Transform Fish
-  TREY = 'f'; // Fish
-  SES = 'h'; // Horse
-  KOL = 'g'; // General
-  TOUK = 'b'; // Boat
-  NEANG = 'q'; // Queen
-  SDECH = 'k'; // King
-  SQUARES = [
-    'a8', 'b8', 'c8', 'd8', 'e8', 'f8', 'g8', 'h8',
-    'a7', 'b7', 'c7', 'd7', 'e7', 'f7', 'g7', 'h7',
-    'a6', 'b6', 'c6', 'd6', 'e6', 'f6', 'g6', 'h6',
-    'a5', 'b5', 'c5', 'd5', 'e5', 'f5', 'g5', 'h5',
-    'a4', 'b4', 'c4', 'd4', 'e4', 'f4', 'g4', 'h4',
-    'a3', 'b3', 'c3', 'd3', 'e3', 'f3', 'g3', 'h3',
-    'a2', 'b2', 'c2', 'd2', 'e2', 'f2', 'g2', 'h2',
-    'a1', 'b1', 'c1', 'd1', 'e1', 'f1', 'g1', 'h1'
-
-  ];
-  FLAGS = {
-    NORMAL: 'n',
-    CAPTURE: 'c', // ស៊ី
-    FLIP: 'f', // បក
-    ATTACK: 'a', // អុក
-    STUCK: 's', // អាប់
-  };
   load() { return false; }
   reset() { return false; }
   moves() { return false; }
@@ -69,13 +75,28 @@ class KhmerChess {
   insufficient_material() { return false; }
   in_threefold_repetition() { return false; }
   game_over() { return false; }
-  validate_fen() { return false; }
-  fen() { return false; }
+  validate_ren() { return false; }
+  ren() {
+    return this.ren.toString();
+  }
   board() { return false; }
   pgn() { return false; }
   load_pgn() { return false; }
   header() { return false; }
-  ascii() { return false; }
+  ascii() {
+    const arr = this.ren.board.toMultiArray();
+    let str = `  ┏━━━┳━━━┳━━━┳━━━┳━━━┳━━━┳━━━┳━━━┓`;
+    const result = arr.reduce((s, subArr, i) => {
+      const rs = subArr.map((p) => ` ${p ? p.toString() : ' '} `).join('┃');
+      const bottom = i == arr.length - 1 ? '┗━━━┻━━━┻━━━┻━━━┻━━━┻━━━┻━━━┻━━━┛' : '┣━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━┫';
+      s += `
+${8 - i} ┃${rs}┃
+  ${bottom}`;
+      return s;
+    }, str);
+    return `${result}
+   a   b   c   d   e   f   g   h`
+  }
   turn() { return false; }
   move() { return false; }
   undo() { return false; }

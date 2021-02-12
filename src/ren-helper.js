@@ -77,6 +77,8 @@ class Piece {
 class Pos {
     h = 'a';
     v = 1;
+    x = 0;
+    y = 0;
     p = new Piece();
     constructor(p, h, v) {
         this.p = p
@@ -86,6 +88,8 @@ class Pos {
         }
         this.h = h;
         this.v = v;
+        this.x = boardHelper.HORIZONTAL_CODE_LETTERS.indexOf(this.h);
+        this.y = this.v - 1;
     }
     toString() {
         return `${this.toPString()}${this.h}${this.v}`;
@@ -117,6 +121,13 @@ class Board {
             const codeP = boardHelper.numToCodeP(i);
             return new Pos(c == boardHelper.EMPTY_PIECE ? null : new Piece(c), codeP);
         });
+    }
+    toMultiArray() {
+        const arr = [[], [], [], [], [], [], [], []];
+        this.poses.forEach((pos) => {
+            arr[pos.y][pos.x] = pos.p;
+        });
+        return arr;
     }
     compress(str) {
         const reg = new RegExp(`(\\${boardHelper.EMPTY_PIECE}+)`, 'g');
@@ -203,7 +214,7 @@ class Graveyard {
         }).join('');
     }
 }
-class FEN {
+class REN {
     board = new Board();
     turn = boardHelper.PIECE_COLOR_WHITE;
     kqMoved = new KqMoved();
@@ -256,15 +267,15 @@ const renHelper = {
     KqMoved,
     CountDown,
     Graveyard,
-    FEN,
+    REN,
     EMPTY_PIECE: boardHelper.EMPTY_PIECE,
     DEFAULT_BOARD_STR,
-    toFen(fen) {
+    toRen(fen) {
         if (jsis.isUndefined(fen)) {
             fen = renHelper.DEFAULT_BOARD_STR;
         }
         const fenArr = fen.split(' ');
-        return new FEN(fenArr[0], fenArr[1], fenArr[2], fenArr[3], fenArr[4]);
+        return new REN(fenArr[0], fenArr[1], fenArr[2], fenArr[3], fenArr[4]);
     }
 };
 
