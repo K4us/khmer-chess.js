@@ -27,6 +27,7 @@
  *----------------------------------------------------------------------------*/
 
 "use strict";
+const { PIECE_TYPE_BORK } = require("./board-helper");
 /**
  * Raksa-Eng Notation
  * fen: <pieces on board> <turn w|b> <king&queen moved ----|SNsn> <countdown --|-4> <pieces in graveyard>
@@ -57,6 +58,12 @@ class Piece {
         }
         this.type = t;
         this.color = c;
+    }
+    toOrigin() {
+        if (this.type == PIECE_TYPE_BORK) {
+            return new Piece(this.color, boardHelper.PIECE_TYPE_TREY);
+        }
+        return this;
     }
     toString() {
         let c = this.type;
@@ -182,7 +189,11 @@ class Graveyard {
             throw new Error(`Invalid graveyard string ${graveyardStr}`);
         }
         this.pieces = graveyardStr.split('').map((c, i) => {
-            return new Piece(c);
+            const p = new Piece(c);
+            if (p.type == boardHelper.PIECE_TYPE_SDECH) {
+                throw new Error(`King cannot die graveyard:${graveyardStr}`);
+            }
+            return p;
         });
     }
     toString() {
@@ -213,7 +224,10 @@ class FEN {
             return pos.p;
         }).filter((p) => {
             return !jsis.isNull(p);
-        }).concat(this.graveyard.pieces);
+        }).concat(this.graveyard.pieces).map((p) => {
+            return p.toOrigin();
+        });
+        // TODO: validate count piece
         if (pieces.length != boardHelper.ROW_NUMBER * 4) {
             return false;
         }
