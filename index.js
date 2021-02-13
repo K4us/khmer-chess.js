@@ -118,6 +118,9 @@ class KhmerChess {
   board() {
     return this.renInstance.board.toMultiArray();
   }
+  graveyard() {
+    return this.renInstance.graveyard.pieces;
+  }
   // Khmer Portable Game Notation <file-name>.kpgn.json
   kpgn() {
     return this.kpgnInstance.toJson();
