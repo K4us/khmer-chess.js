@@ -1,6 +1,6 @@
 {
-  "name": "@k4us/khmer-chess",
-  "version": "1.0.0",
+  "name": "khmer-chess",
+  "version": "1.0.1",
   "description": "KhmerChess Javascript library",
   "main": "./dist/khmer-chess.js",
   "scripts": {
