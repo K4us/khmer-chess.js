@@ -7,6 +7,7 @@ module.exports = {
     filename: 'khmer-chess.js',
     libraryTarget: 'umd',
   },
+  mode: 'production',
   module: {
     rules: [
       {
