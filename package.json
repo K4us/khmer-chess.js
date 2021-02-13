@@ -2,7 +2,7 @@
   "name": "khmer-chess",
   "version": "1.0.0",
   "description": "KhmerChess Javascript library",
-  "main": "index.js",
+  "main": "./dist/khmer-chess.js",
   "scripts": {
     "test": "jest",
     "build": "webpack --config webpack.config.js"
