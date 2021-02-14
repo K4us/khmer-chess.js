@@ -50,6 +50,8 @@ class Rectangle {
 let allPiecesString = null;
 const boardHelper = {
     HORIZONTAL_CODE_LETTERS: "abcdefgh",
+    HORIZONTAL_NOTE_LETTERS: "abcdefgh",
+    VERTICAL_NOTE_LETTERS: "12345678",
 
     PIECE_COLOR_WHITE: "w",
     PIECE_COLOR_BLACK: "b",
@@ -135,11 +137,33 @@ const boardHelper = {
         }
         return null;
     },
-    nerdXyToPos(point, y) {
+    nerdXyToPos(x, y) {
         if (!jsis.isUndefined(y)) {
-            return point + y * this.ROW_NUMBER;
+            return x + y * this.ROW_NUMBER;
         }
-        return point.x + point.y * this.ROW_NUMBER;
+        return x.x + x.y * this.ROW_NUMBER;
+    },
+    indexCodeToPos(code) {
+        const x = this.HORIZONTAL_CODE_LETTERS.indexOf(code[0]);
+        const y = Number(code[1]) - 1;
+        return this.nerdXyToPos(x, y);
+    },
+    pointToIndexCode(p) {
+        return `${this.HORIZONTAL_CODE_LETTERS[p.x]}${this.ROW_NUMBER + p.y}`
+    },
+    xyToIndexCode(x, y) {
+        return this.pointToIndexCode(this.p(x, y));
+    },
+    posToIndexCode(p) {
+        if (jsis.isNumber(p.x) && jsis.isNumber(p.y)) {
+            return this.pointToIndexCode(p);
+        }
+        if (jsis.isNumber(p)) {
+            const x = p % this.ROW_NUMBER;
+            const y = Math.floor(p / this.ROW_NUMBER);
+            return this.xyToIndexCode(x, y);
+        }
+        return null;
     },
     isPosInBoard(posInBoard) {
         return jsis.isNumber(posInBoard) &&
