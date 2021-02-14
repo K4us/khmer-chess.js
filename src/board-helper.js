@@ -107,6 +107,7 @@ const boardHelper = {
     },
 
     toWhitePiece: (str) => str.toUpperCase(),
+    toBlackPiece: (str) => str.toLowerCase(),
 
     isValidPosXY(point, y) {
         if (jsis.isUndefined(point)) {
