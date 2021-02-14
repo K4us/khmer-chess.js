@@ -51,24 +51,24 @@ class Piece {
         }
         return this.type;
     }
-    constructor(t, c) {
-        if (jsis.isUndefined(c)) {
-            if (jsis.isUndefined(t)) {
-                t = boardHelper.toWhitePiece(boardHelper.PIECE_TYPE_TREY);
+    constructor(type, color) {
+        if (jsis.isUndefined(color)) {
+            if (jsis.isUndefined(type)) {
+                type = boardHelper.toWhitePiece(boardHelper.PIECE_TYPE_TREY);
             }
-            if (jsis.isUpperCase(t)) {
-                c = boardHelper.PIECE_COLOR_WHITE;
+            if (jsis.isUpperCase(type)) {
+                color = boardHelper.PIECE_COLOR_WHITE;
             } else {
-                c = boardHelper.PIECE_COLOR_BLACK;
+                color = boardHelper.PIECE_COLOR_BLACK;
             }
-            t = t.toLowerCase();
         }
-        this.type = t;
-        this.color = c;
+        type = boardHelper.toBlackPiece(type);
+        this.type = type;
+        this.color = color;
     }
     toOrigin() {
         if (this.type == PIECE_TYPE_BORK) {
-            return new Piece(this.color, boardHelper.PIECE_TYPE_TREY);
+            return new Piece(boardHelper.PIECE_TYPE_TREY, this.color);
         }
         return this;
     }
@@ -123,9 +123,9 @@ class Board {
             !boardHelper.isValidPiecesString(newBoardStr)) {
             throw new Error(`Invalid board string ${boardStr}`);
         }
-        this.poses = newBoardStr.split('').map((c, i) => {
+        this.poses = newBoardStr.split('').map((type, i) => {
             const codeP = boardHelper.numToCodeP(i);
-            return new Pos(c == boardHelper.EMPTY_PIECE ? null : new Piece(c), codeP);
+            return new Pos(type == boardHelper.EMPTY_PIECE ? null : new Piece(type), codeP);
         });
     }
     toMultiArray() {
@@ -222,8 +222,8 @@ class Graveyard {
             !boardHelper.isValidPiecesString(graveyardStr, true)) {
             throw new Error(`Invalid graveyard string ${graveyardStr}`);
         }
-        this.pieces = graveyardStr.split('').map((c, i) => {
-            const p = new Piece(c);
+        this.pieces = graveyardStr.split('').map((type, i) => {
+            const p = new Piece(type);
             if (p.type == boardHelper.PIECE_TYPE_SDECH) {
                 throw new Error(`King cannot die graveyard:${graveyardStr}`);
             }
