@@ -70,23 +70,28 @@ const boardHelper = {
 
     mask: null,
 
+    getPieceCharArray() {
+        return [
+            this.PIECE_TYPE_TOUK,
+            this.PIECE_TYPE_SES,
+            this.PIECE_TYPE_KOL,
+            this.PIECE_TYPE_SDECH,
+            this.PIECE_TYPE_NEANG,
+            this.PIECE_TYPE_TREY,
+            this.PIECE_TYPE_BORK,
+        ];
+    },
+    getColorArray() {
+        return [
+            this.PIECE_COLOR_WHITE,
+            this.PIECE_COLOR_BLACK,
+        ];
+    },
     isValidPiecesString(str, onlyPiece) {
         if (jsis.isNull(allPiecesString)) {
             allPiecesString = [
-                this.PIECE_TYPE_TOUK,
-                this.PIECE_TYPE_SES,
-                this.PIECE_TYPE_KOL,
-                this.PIECE_TYPE_SDECH,
-                this.PIECE_TYPE_NEANG,
-                this.PIECE_TYPE_TREY,
-                this.PIECE_TYPE_BORK,
-                this.toWhitePiece(this.PIECE_TYPE_TOUK),
-                this.toWhitePiece(this.PIECE_TYPE_SES),
-                this.toWhitePiece(this.PIECE_TYPE_KOL),
-                this.toWhitePiece(this.PIECE_TYPE_SDECH),
-                this.toWhitePiece(this.PIECE_TYPE_NEANG),
-                this.toWhitePiece(this.PIECE_TYPE_TREY),
-                this.toWhitePiece(this.PIECE_TYPE_BORK),
+                ...this.getPieceCharArray(),
+                ...this.getPieceCharArray().map((c) => this.toWhitePiece(c)),
                 this.EMPTY_PIECE,
                 this.BOARD_SEPARATOR,
             ]

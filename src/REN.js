@@ -45,6 +45,12 @@ const STRING_COUNT = 'B2F8G2H2K1Q1b2f8g2h2k1q1';
 class Piece {
     type = boardHelper.PIECE_TYPE_TREY;
     color = boardHelper.PIECE_COLOR_WHITE;
+    get pCode() {
+        if (this.color == boardHelper.PIECE_COLOR_WHITE) {
+            return boardHelper.toWhitePiece(this.type);
+        }
+        return this.type;
+    }
     constructor(t, c) {
         if (jsis.isUndefined(c)) {
             if (jsis.isUndefined(t)) {
