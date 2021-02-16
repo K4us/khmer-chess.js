@@ -32,6 +32,7 @@ const { KPGN } = require("./KPGN");
 const MoveHelper = require("./move-helper");
 const renHelper = require("./ren-helper");
 const config = require('../package.json');
+const { asciiTable } = require("./table");
 
 class KhmerChess {
   static name = config.name;
@@ -132,25 +133,7 @@ class KhmerChess {
     this.kpgnInstance = new KPGN(kpgnJosn);
   }
   ascii() {
-    const arr = this.renInstance.board.toMultiArray();
-    let str = `  ┏━━━┳━━━┳━━━┳━━━┳━━━┳━━━┳━━━┳━━━┓`;
-    const result = arr.reduce((s, subArr, i) => {
-      const rs = subArr.map((p) => ` ${p ? p.toString() : ' '} `).join('┃');
-      const bottom = i == arr.length - 1 ? '┗━━━┻━━━┻━━━┻━━━┻━━━┻━━━┻━━━┻━━━┛' : '┣━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━┫';
-      s += `
-${8 - i} ┃${rs}┃
-  ${bottom}`;
-      return s;
-    }, str);
-    const gyTStr = this.renInstance.graveyard.pieces.map(() => '━━━').join('┳');
-    const gyStr = this.renInstance.graveyard.pieces.map((p) => ` ${p ? p.toString() : ' '} `).join('┃');
-    const gyBStr = this.renInstance.graveyard.pieces.map(() => '━━━').join('┻');
-    const graveyardStr = `  ┏${gyTStr}┓
-  ┃${gyStr}┃
-  ┗${gyBStr}┛`;
-    return `${result}
-    a   b   c   d   e   f   g   h
-${graveyardStr}`
+    return asciiTable(this.renInstance);
   }
   turn() {
     this.renInstance.turn;
