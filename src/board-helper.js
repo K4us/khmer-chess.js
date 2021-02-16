@@ -50,8 +50,12 @@ class Rectangle {
 let allPiecesString = null;
 const boardHelper = {
     HORIZONTAL_CODE_LETTERS: "abcdefgh",
-    HORIZONTAL_NOTE_LETTERS: "abcdefgh",
-    VERTICAL_NOTE_LETTERS: "12345678",
+    HORIZONTAL_NOTE_LETTERS: ['ក', 'ខ', 'គ', 'ឃ', 'ង', 'ច', 'ឆ', 'ជ'],
+    VERTICAL_NOTE_LETTERS: ['១', '២', '៣', '៤', '៥', '៦', '៧', '៨', '៩', '១០',
+        , '១១', '១២', '១៣', '១៤', '១៥', '១៦', '១៧', '១៨', '១៩', '២០',
+        , '២១', '២២', '២៣', '២៤', '២៥', '២៦', '២៧', '២៨', '២៩', '៣០'],
+    HORIZONTAL_NOTE_LETTERS_ASCII: 'abcdefgh',
+    VERTICAL_NOTE_LETTERS_ASCII: Array.from({ length: 30 }, (_, i) => `${i + 1}`),
 
     PIECE_COLOR_WHITE: "w",
     PIECE_COLOR_BLACK: "b",
