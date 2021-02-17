@@ -55,7 +55,7 @@
 function asciiTable(renInstance) {
   const arr = renInstance.board.toMultiArray();
   let str = `  ┏━━━┳━━━┳━━━┳━━━┳━━━┳━━━┳━━━┳━━━┓`;
-  const result = arr.reduce((s, subArr, i) => {
+  const result = arr.reverse().reduce((s, subArr, i) => {
     const rs = subArr.map((p) => ` ${p ? p.toString() : ' '} `).join('┃');
     const bottom = i == arr.length - 1 ? '┗━━━┻━━━┻━━━┻━━━┻━━━┻━━━┻━━━┻━━━┛' : '┣━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━┫';
     s += `
