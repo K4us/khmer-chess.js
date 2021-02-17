@@ -31,14 +31,13 @@ const { PIECE_TYPE_BORK } = require("./board-helper");
 /**
  * Raksa-Eng Notation
  * fen: <pieces on board> <turn w|b> <king&queen moved ----|SNsn> <king attack --|Kk> <countdown -.-|-.4> <pieces in graveyard>
- * e.g: bhgqkghb/8/ffffffff/8/8/FFFFFFFF/8/BHGKQGHB
  */
 
 const boardHelper = require("./board-helper");
 const jsis = require("./jsis");
 
-// bhgqkghb/8/ffffffff/8/8/FFFFFFFF/8/BHGKQGHB w ---- -- -.-
-const DEFAULT_BOARD_STR = 'bhgqkghb/8/ffffffff/8/8/FFFFFFFF/8/BHGKQGHB';
+// BHGQKGHB/8/FFFFFFFF/8/8/ffffffff/8/bhgkqghb w ---- -- -.-
+const DEFAULT_BOARD_STR = 'BHGQKGHB/8/FFFFFFFF/8/8/ffffffff/8/bhgkqghb';
 const NOT_SET = '-';
 const STRING_COUNT = 'B2F8G2H2K1Q1b2f8g2h2k1q1';
 
@@ -105,7 +104,7 @@ class Pos {
     }
 }
 /**
- * bhgqkghb/8/ffffffff/8/8/FFFFFFFF/8/BHGKQGHB => bhgqkghb/......../ffffffff/......../......../FFFFFFFF/......../BHGKQGHB
+ * BHGQKGHB/8/FFFFFFFF/8/8/ffffffff/8/bhgkqghb => bhgqkghb/......../ffffffff/......../......../FFFFFFFF/......../BHGKQGHB
  */
 class Board {
     poses = Array.from({
