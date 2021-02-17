@@ -24,9 +24,9 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- *----------------------------------------------------------------------------*/
+ *---------------------------------------------------------------------------- */
 
-"use strict";
+'use strict';
 
 const jsis = {
     isValid(v) {
@@ -36,31 +36,33 @@ const jsis = {
         return v === null;
     },
     isUndefined(v) {
-        return typeof v === "undefined";
+        return typeof v === 'undefined';
     },
     isString(str) {
-        return this.isValid(str) && typeof str === "string";
+        return this.isValid(str) && typeof str === 'string';
     },
     isNotEmpty(str) {
-        return this.isValidString(str) && str != "";
+        // eslint-disable-next-line eqeqeq
+        return this.isValidString(str) && str != '';
     },
     isNumber(n) {
-        return this.isValid(n) && typeof n === "number";
+        return this.isValid(n) && typeof n === 'number';
     },
     isStringNumber(n) {
-        return this.isString(n) && n != "" && !isNaN(Number(n));
+        // eslint-disable-next-line eqeqeq
+        return this.isString(n) && n != '' && !isNaN(Number(n));
     },
     isArray(arr) {
         return this.isValid(arr) && arr instanceof Array;
     },
     isFunction(f) {
-        return this.isValid(f) && typeof f === "function";
+        return this.isValid(f) && typeof f === 'function';
     },
     isObject(o) {
         return this.isValid(o) && o instanceof Object;
     },
     isBoolean(b) {
-        return this.isValid(b) && typeof b === "boolean";
+        return this.isValid(b) && typeof b === 'boolean';
     },
     isTrue(b) {
         return this.isValidBoolean(b) && b;

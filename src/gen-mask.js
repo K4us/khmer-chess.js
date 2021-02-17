@@ -24,11 +24,11 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- *----------------------------------------------------------------------------*/
+ *---------------------------------------------------------------------------- */
 
-"use strict";
+'use strict';
 
-const boardHelper = require("./board-helper");
+const boardHelper = require('./board-helper');
 
 function genMask() {
     const mask = {};
@@ -36,7 +36,7 @@ function genMask() {
         [0, 1], [0, 2], [0, 3], [0, 4], [0, 5], [0, 6], [0, 7], [0, 8],
         [0, -1], [0, -2], [0, -3], [0, -4], [0, -5], [0, -6], [0, -7], [0, -8],
         [1, 0], [2, 0], [3, 0], [4, 0], [5, 0], [6, 0], [7, 0], [8, 0],
-        [-1, 0], [-2, 0], [-3, 0], [-4, 0], [-5, 0], [-6, 0], [-7, 0], [-8, 0],
+        [-1, 0], [-2, 0], [-3, 0], [-4, 0], [-5, 0], [-6, 0], [-7, 0], [-8, 0]
     ];
     mask[boardHelper.PIECE_TYPE_SES] = [
         [-1, -2],
@@ -46,26 +46,26 @@ function genMask() {
         [-1, 2],
         [1, 2],
         [-2, 1],
-        [2, 1],
+        [2, 1]
     ];
     mask[boardHelper.PIECE_TYPE_NEANG] = [
         [-1, -1],
         [1, -1],
         [-1, 1],
-        [1, 1],
+        [1, 1]
     ];
     mask[boardHelper.PIECE_TYPE_KOL] = mask[boardHelper.PIECE_TYPE_NEANG].concat([
-        [0, 1],
+        [0, 1]
     ]);
     mask[boardHelper.PIECE_TYPE_SDECH] = mask[boardHelper.PIECE_TYPE_KOL].concat([
         [0, -1],
         [1, 0],
-        [-1, 0],
+        [-1, 0]
     ]);
     mask[boardHelper.PIECE_TYPE_TREY] = [
         [0, 1],
         [-1, 1],
-        [1, 1],
+        [1, 1]
     ];
     mask[boardHelper.PIECE_TYPE_BORK] = mask[boardHelper.PIECE_TYPE_NEANG];
     return mask;

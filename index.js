@@ -24,9 +24,9 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- *----------------------------------------------------------------------------*/
+ *---------------------------------------------------------------------------- */
 
-"use strict";
+'use strict';
 
 const { KhmerChess } = require('./src/KhmerChess');
 const boardHelper = require('./src/board-helper');
@@ -35,9 +35,9 @@ const renHelper = require('./src/ren-helper');
 const KPGN = require('./src/KPGN');
 
 module.exports = {
-  KhmerChess,
-  boardHelper,
-  ...REN,
-  renHelper,
-  KPGN,
+    KhmerChess,
+    boardHelper,
+    ...REN,
+    renHelper,
+    KPGN
 };

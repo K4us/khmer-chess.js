@@ -24,9 +24,9 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- *----------------------------------------------------------------------------*/
+ *---------------------------------------------------------------------------- */
 
-"use strict";
+'use strict';
 
 /*
   ┏━━━┳━━━┳━━━┳━━━┳━━━┳━━━┳━━━┳━━━┓
@@ -53,27 +53,27 @@
  */
 
 function asciiTable(renInstance) {
-  const arr = renInstance.board.toMultiArray();
-  let str = `  ┏━━━┳━━━┳━━━┳━━━┳━━━┳━━━┳━━━┳━━━┓`;
-  const result = arr.reverse().reduce((s, subArr, i) => {
-    const rs = subArr.map((p) => ` ${p ? p.toString() : ' '} `).join('┃');
-    const bottom = i == arr.length - 1 ? '┗━━━┻━━━┻━━━┻━━━┻━━━┻━━━┻━━━┻━━━┛' : '┣━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━┫';
-    s += `
+    const arr = renInstance.board.toMultiArray();
+    const str = '  ┏━━━┳━━━┳━━━┳━━━┳━━━┳━━━┳━━━┳━━━┓';
+    const result = arr.reverse().reduce((s, subArr, i) => {
+        const rs = subArr.map((p) => ` ${p ? p.toString() : ' '} `).join('┃');
+        const bottom = i === arr.length - 1 ? '┗━━━┻━━━┻━━━┻━━━┻━━━┻━━━┻━━━┻━━━┛' : '┣━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━┫';
+        s += `
 ${8 - i} ┃${rs}┃
   ${bottom}`;
-    return s;
-  }, str);
-  const gyTStr = renInstance.graveyard.pieces.map(() => '━━━').join('┳');
-  const gyStr = renInstance.graveyard.pieces.map((p) => ` ${p ? p.toString() : ' '} `).join('┃');
-  const gyBStr = renInstance.graveyard.pieces.map(() => '━━━').join('┻');
-  const graveyardStr = `  ┏${gyTStr}┓
+        return s;
+    }, str);
+    const gyTStr = renInstance.graveyard.pieces.map(() => '━━━').join('┳');
+    const gyStr = renInstance.graveyard.pieces.map((p) => ` ${p ? p.toString() : ' '} `).join('┃');
+    const gyBStr = renInstance.graveyard.pieces.map(() => '━━━').join('┻');
+    const graveyardStr = `  ┏${gyTStr}┓
   ┃${gyStr}┃
   ┗${gyBStr}┛`;
-  return `${result}
+    return `${result}
     a   b   c   d   e   f   g   h
-${graveyardStr}`
+${graveyardStr}`;
 }
 
 module.exports = {
-  asciiTable,
+    asciiTable
 };

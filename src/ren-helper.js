@@ -24,9 +24,9 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- *----------------------------------------------------------------------------*/
+ *---------------------------------------------------------------------------- */
 
-"use strict";
+'use strict';
 
 const { REN, DEFAULT_BOARD_STR } = require('./REN');
 const jsis = require('./jsis');

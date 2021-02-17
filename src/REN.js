@@ -24,17 +24,17 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- *----------------------------------------------------------------------------*/
+ *---------------------------------------------------------------------------- */
 
-"use strict";
-const { PIECE_TYPE_BORK } = require("./board-helper");
+'use strict';
+const { PIECE_TYPE_BORK } = require('./board-helper');
 /**
  * Raksa-Eng Notation
  * fen: <pieces on board> <turn w|b> <king&queen moved ----|SNsn> <king attack --|Kk> <countdown -.-|-.4> <pieces in graveyard>
  */
 
-const boardHelper = require("./board-helper");
-const jsis = require("./jsis");
+const boardHelper = require('./board-helper');
+const jsis = require('./jsis');
 
 // BHGQKGHB/8/FFFFFFFF/8/8/ffffffff/8/bhgkqghb w ---- -- -.-
 const DEFAULT_BOARD_STR = 'BHGQKGHB/8/FFFFFFFF/8/8/ffffffff/8/bhgkqghb';
@@ -45,11 +45,12 @@ class Piece {
     type = boardHelper.PIECE_TYPE_TREY;
     color = boardHelper.PIECE_COLOR_WHITE;
     get pCode() {
-        if (this.color == boardHelper.PIECE_COLOR_WHITE) {
+        if (this.color === boardHelper.PIECE_COLOR_WHITE) {
             return boardHelper.toWhitePiece(this.type);
         }
         return this.type;
     }
+
     constructor(type, color) {
         if (jsis.isUndefined(color)) {
             if (jsis.isUndefined(type)) {
@@ -65,12 +66,14 @@ class Piece {
         this.type = type;
         this.color = color;
     }
+
     toOrigin() {
-        if (this.type == PIECE_TYPE_BORK) {
+        if (this.type === PIECE_TYPE_BORK) {
             return new Piece(boardHelper.PIECE_TYPE_TREY, this.color);
         }
         return this;
     }
+
     toString() {
         let c = this.type;
         if (boardHelper.isWhite(this.color)) {
@@ -86,7 +89,7 @@ class Pos {
     y = 0;
     p = new Piece();
     constructor(p, h, v) {
-        this.p = p
+        this.p = p;
         if (jsis.isUndefined(v)) {
             v = h.v;
             h = h.h;
@@ -96,9 +99,11 @@ class Pos {
         this.x = boardHelper.HORIZONTAL_CODE_LETTERS.indexOf(this.h);
         this.y = this.v - 1;
     }
+
     toString() {
         return `${this.toPString()}${this.h}${this.v}`;
     }
+
     toPString() {
         return jsis.isNull(this.p) ? boardHelper.EMPTY_PIECE : this.p.toString();
     }
@@ -108,11 +113,12 @@ class Pos {
  */
 class Board {
     poses = Array.from({
-        length: boardHelper.getSubBoardNumber(),
+        length: boardHelper.getSubBoardNumber()
     }, (_, i) => {
         const codeP = boardHelper.numToCodeP(i);
         return new Pos(null, codeP);
     });
+
     constructor(boardStr) {
         if (jsis.isUndefined(boardStr)) {
             boardStr = DEFAULT_BOARD_STR;
@@ -124,9 +130,10 @@ class Board {
         }
         this.poses = newBoardStr.split('').map((type, i) => {
             const codeP = boardHelper.numToCodeP(i);
-            return new Pos(type == boardHelper.EMPTY_PIECE ? null : new Piece(type), codeP);
+            return new Pos(type === boardHelper.EMPTY_PIECE ? null : new Piece(type), codeP);
         });
     }
+
     toMultiArray() {
         const arr = [[], [], [], [], [], [], [], []];
         this.poses.forEach((pos) => {
@@ -134,10 +141,12 @@ class Board {
         });
         return arr;
     }
+
     compress(str) {
         const reg = new RegExp(`(\\${boardHelper.EMPTY_PIECE}+)`, 'g');
         return str.replace(reg, ($1) => $1.length);
     }
+
     extract(str) {
         return str.replace(/(\d+)/g, ($1) => {
             // $1 == 3 => '...', bh6 => 'bh......'
@@ -146,16 +155,18 @@ class Board {
             }, () => boardHelper.EMPTY_PIECE).join('');
         });
     }
+
     toStringFull() {
         const str = this.poses.map((pos, i) => {
             const p = pos.toPString();
-            if (i && i % 8 == 0 && i != boardHelper.getSubBoardNumber()) {
+            if (i && i % 8 === 0 && i !== boardHelper.getSubBoardNumber()) {
                 return `${boardHelper.BOARD_SEPARATOR}${p}`;
             }
             return p;
         }).join('');
         return str;
     }
+
     toString() {
         let str = this.toStringFull();
         str = this.compress(str);
@@ -174,6 +185,7 @@ class KqMoved {
         this.blackKing = !!~kqMovedStr.indexOf(bh.PIECE_TYPE_SDECH);
         this.blackQueen = !!~kqMovedStr.indexOf(bh.PIECE_TYPE_NEANG);
     }
+
     toString() {
         let str = `${this.whiteKing ? boardHelper.toWhitePiece(boardHelper.PIECE_TYPE_SDECH) : NOT_SET}`;
         str += `${this.whiteQueen ? boardHelper.toWhitePiece(boardHelper.PIECE_TYPE_NEANG) : NOT_SET}`;
@@ -190,6 +202,7 @@ class KAttacked {
         this.whiteKing = !!~kAttackedStr.indexOf(bh.toWhitePiece(bh.PIECE_TYPE_SDECH));
         this.blackKing = !!~kAttackedStr.indexOf(bh.PIECE_TYPE_SDECH);
     }
+
     toString() {
         let str = `${this.whiteKing ? boardHelper.toWhitePiece(boardHelper.PIECE_TYPE_SDECH) : NOT_SET}`;
         str += `${this.blackKing ? boardHelper.PIECE_TYPE_SDECH : NOT_SET}`;
@@ -208,6 +221,7 @@ class CountDown {
             throw new Error(`Invalid countdown string ${countdownStr}`);
         }
     }
+
     toString() {
         let str = `${jsis.isNull(this.white) ? NOT_SET : this.white}`;
         str += `.${jsis.isNull(this.black) ? NOT_SET : this.black}`;
@@ -223,12 +237,13 @@ class Graveyard {
         }
         this.pieces = graveyardStr.split('').map((type, i) => {
             const p = new Piece(type);
-            if (p.type == boardHelper.PIECE_TYPE_SDECH) {
+            if (p.type === boardHelper.PIECE_TYPE_SDECH) {
                 throw new Error(`King cannot die graveyard:${graveyardStr}`);
             }
             return p;
         });
     }
+
     toString() {
         return this.pieces.map((p) => {
             return p.toString();
@@ -255,6 +270,7 @@ class REN {
             throw new Error(`Invalid piece string board:${boardStr}, graveyard:${graveyardStr}, count:${invalidPiecesString}`);
         }
     }
+
     isInvalidPieceCount() {
         const pieces = this.board.poses.map((pos) => {
             return pos.p;
@@ -269,11 +285,12 @@ class REN {
             return obj;
         }, {});
         const str = Object.keys(piecesCount).map((k) => `${k}${piecesCount[k]}`).sort().join('');
-        if (str == STRING_COUNT) {
+        if (str === STRING_COUNT) {
             return false;
         }
         return str;
     }
+
     toString() {
         let str = this.board.toString();
         str += ` ${this.turn.toString()}`;

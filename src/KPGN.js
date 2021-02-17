@@ -24,11 +24,11 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- *----------------------------------------------------------------------------*/
+ *---------------------------------------------------------------------------- */
 
-"use strict";
+'use strict';
 
-const { REN } = require("./REN");
+const { REN } = require('./REN');
 
 class Player {
     name = '';
@@ -37,6 +37,7 @@ class Player {
         this.id = id;
         this.name = name;
     }
+
     toJson() {
         return {
             id: this.id,
@@ -53,6 +54,7 @@ class Result {
         this.draw = draw;
         this.lost = lost;
     }
+
     toJson() {
         return {
             win: this.win,
@@ -72,6 +74,7 @@ class Move {
         this.jump = jump;
         this.capture = capture;
     }
+
     toJson() {
         return {
             from: this.from,
@@ -90,6 +93,7 @@ class Timer {
         this.currentWhite = currentWhite;
         this.currentBlack = currentBlack;
     }
+
     toJson() {
         return {
             totalSecond: this.totalSecond,
@@ -105,8 +109,9 @@ class KPGN {
     location = '';
     players = {
         white: new Player(),
-        black: new Player(),
+        black: new Player()
     }
+
     result = {
         last: {
             whiteWin: false,
@@ -114,11 +119,11 @@ class KPGN {
         },
         white: new Result()
     };
+
     moves = [new Move()];
     ren = new REN();
     timer = new Timer();
-    constructor(kpgnJson) {
-    }
+
     toJson() {
         return {
             event: this.event,
@@ -126,7 +131,7 @@ class KPGN {
             location: this.location,
             players: {
                 white: this.players.white.toJson(),
-                black: this.players.black.toJson(),
+                black: this.players.black.toJson()
             },
             result: {
                 last: {
@@ -138,7 +143,7 @@ class KPGN {
             moves: this.moves.map((m) => m.toJson()),
             ren: this.ren.toString(),
             timer: this.timer.toJson()
-        }
+        };
     }
 }
 

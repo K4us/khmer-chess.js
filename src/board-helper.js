@@ -24,12 +24,12 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- *----------------------------------------------------------------------------*/
+ *---------------------------------------------------------------------------- */
 
-"use strict";
+'use strict';
 
-const jsis = require("./jsis");
-const genMask = require("./gen-mask");
+const jsis = require('./jsis');
+const genMask = require('./gen-mask');
 
 class Rectangle {
     constructor(x, y, width, height) {
@@ -38,6 +38,7 @@ class Rectangle {
         this.width = width;
         this.height = height;
     }
+
     isContainsPoint(point) {
         const { x, y } = point;
         const isContainsPoint = this.x <= x &&
@@ -49,7 +50,7 @@ class Rectangle {
 }
 let allPiecesString = null;
 const boardHelper = {
-    HORIZONTAL_CODE_LETTERS: "abcdefgh",
+    HORIZONTAL_CODE_LETTERS: 'abcdefgh',
     HORIZONTAL_NOTE_LETTERS: ['ក', 'ខ', 'គ', 'ឃ', 'ង', 'ច', 'ឆ', 'ជ'],
     VERTICAL_NOTE_LETTERS: ['១', '២', '៣', '៤', '៥', '៦', '៧', '៨', '៩', '១០',
         '១១', '១២', '១៣', '១៤', '១៥', '១៦', '១៧', '១៨', '១៩', '២០',
@@ -57,18 +58,18 @@ const boardHelper = {
     HORIZONTAL_NOTE_LETTERS_ASCII: 'abcdefgh',
     VERTICAL_NOTE_LETTERS_ASCII: Array.from({ length: 30 }, (_, i) => `${i + 1}`),
 
-    PIECE_COLOR_WHITE: "w",
-    PIECE_COLOR_BLACK: "b",
+    PIECE_COLOR_WHITE: 'w',
+    PIECE_COLOR_BLACK: 'b',
 
-    PIECE_TYPE_TOUK: "b", // Boat
-    PIECE_TYPE_SES: "h", // Horse
-    PIECE_TYPE_KOL: "g", // General
-    PIECE_TYPE_SDECH: "k", // King
-    PIECE_TYPE_NEANG: "q", // Queen
-    PIECE_TYPE_TREY: "f", // Fish
-    PIECE_TYPE_BORK: "t", // Transform fish
-    EMPTY_PIECE: ".",
-    BOARD_SEPARATOR: "/",
+    PIECE_TYPE_TOUK: 'b', // Boat
+    PIECE_TYPE_SES: 'h', // Horse
+    PIECE_TYPE_KOL: 'g', // General
+    PIECE_TYPE_SDECH: 'k', // King
+    PIECE_TYPE_NEANG: 'q', // Queen
+    PIECE_TYPE_TREY: 'f', // Fish
+    PIECE_TYPE_BORK: 't', // Transform fish
+    EMPTY_PIECE: '.',
+    BOARD_SEPARATOR: '/',
 
     ROW_NUMBER: 8,
     ROW_FIRST_INDEX: 0,
@@ -84,13 +85,13 @@ const boardHelper = {
             this.PIECE_TYPE_SDECH,
             this.PIECE_TYPE_NEANG,
             this.PIECE_TYPE_TREY,
-            this.PIECE_TYPE_BORK,
+            this.PIECE_TYPE_BORK
         ];
     },
     getColorArray() {
         return [
             this.PIECE_COLOR_WHITE,
-            this.PIECE_COLOR_BLACK,
+            this.PIECE_COLOR_BLACK
         ];
     },
     isValidPiecesString(str, onlyPiece) {
@@ -99,8 +100,8 @@ const boardHelper = {
                 ...this.getPieceCharArray(),
                 ...this.getPieceCharArray().map((c) => this.toWhitePiece(c)),
                 this.EMPTY_PIECE,
-                this.BOARD_SEPARATOR,
-            ]
+                this.BOARD_SEPARATOR
+            ];
         }
         const ruler = onlyPiece ? allPiecesString.filter((c) => {
             return !~[this.EMPTY_PIECE, this.BOARD_SEPARATOR].indexOf(c);
@@ -123,7 +124,7 @@ const boardHelper = {
         return !jsis.isUndefined(point.x) && !jsis.isUndefined(point.y) &&
             this.rect(0, 0, this.ROW_LAST_INDEX, this.ROW_LAST_INDEX).isContainsPoint(point);
     },
-    isValidPiece: (piece) => piece != boardHelper.EMPTY_PIECE,
+    isValidPiece: (piece) => piece !== boardHelper.EMPTY_PIECE,
     isWhite: (c) => c === boardHelper.PIECE_COLOR_WHITE,
     isBlack: (c) => c === boardHelper.PIECE_COLOR_BLACK,
     codeP: (h, v) => ({ h, v }),
@@ -154,7 +155,7 @@ const boardHelper = {
         return this.nerdXyToPos(x, y);
     },
     pointToIndexCode(p) {
-        return `${this.HORIZONTAL_CODE_LETTERS[p.x]}${p.y + 1}`
+        return `${this.HORIZONTAL_CODE_LETTERS[p.x]}${p.y + 1}`;
     },
     xyToIndexCode(x, y) {
         return this.pointToIndexCode(this.p(x, y));
@@ -184,7 +185,7 @@ const boardHelper = {
         const h = this.pieceHash[code];
         return {
             color: h ? h[0] : this.PIECE_COLOR_EMPTY,
-            type: h ? h[1] : this.EMPTY_PIECE,
+            type: h ? h[1] : this.EMPTY_PIECE
         };
     },
     getCharPieceInPos(posInBoard, piecesString) {
@@ -197,7 +198,7 @@ const boardHelper = {
             piecesString = y;
         }
         const piece = this.getCharPieceInPos(posInBoard, piecesString);
-        let color = this.PIECE_COLOR_WHITE, type = this.PIECE_TYPE_TREY;
+        let color = this.PIECE_COLOR_WHITE; let type = this.PIECE_TYPE_TREY;
         if (this.isValidPiece(piece)) {
             const pr = this.getPieceProperties(piece);
             color = pr.color;
@@ -206,7 +207,7 @@ const boardHelper = {
         return {
             isValidPiece: this.isValidPiece(piece),
             color: color,
-            type: type,
+            type: type
         };
     },
     convertMask(p, pos, color) {
@@ -231,23 +232,23 @@ const boardHelper = {
         const _poses = this.getPieceCanMovePoses(type, pos, color);
         let p, distPiece;
         const poses = [];
-        const n = _poses.length, thisPos = this.nerdPosToXY(pos);
+        const n = _poses.length; const thisPos = this.nerdPosToXY(pos);
         for (let i = 0; i < n; i++) {
             p = this.nerdPosToXY(_poses[i]);
             distPiece = this.getPieceInPos(p.x, p.y, piecesString);
             if (distPiece.isValidPiece) {
                 if (color === distPiece.color ||
-                    type === this.PIECE_TYPE_TREY && p.x === thisPos.x) {
+                    (type === this.PIECE_TYPE_TREY && p.x === thisPos.x)) {
                     p = null;
                 }
             } else {
-                if (type === this.PIECE_TYPE_TREY && p.x != thisPos.x) {
+                if (type === this.PIECE_TYPE_TREY && p.x !== thisPos.x) {
                     p = null;
                 }
             }
             if (!jsis.isNull(p) && type === this.PIECE_TYPE_TOUK) {
-                const _x = thisPos.x,
-                    _y = thisPos.y;
+                const _x = thisPos.x;
+                const _y = thisPos.y;
                 let _n, _s;
                 if (p.x === thisPos.x) {
                     _n = Math.abs(p.y - thisPos.y);
@@ -302,7 +303,7 @@ const boardHelper = {
         let _poses, p, j;
         for (let i = 0; i < n; i++) {
             p = this.getPieceInPos(i, piecesString);
-            if (p.isValidPiece && p.color != color && p.type === this.PIECE_TYPE_TOUK) {
+            if (p.isValidPiece && p.color !== color && p.type === this.PIECE_TYPE_TOUK) {
                 _poses = this.getPieceCanMovePoses(p.type, i, p.color, piecesString);
                 for (j = 0; j < _poses.length; j++) {
                     if (_poses[j] === kingPos) {
@@ -319,7 +320,7 @@ const boardHelper = {
         let _poses, p, j;
         for (let i = 0; i < n; i++) {
             p = this.getPieceInPos(i, piecesString);
-            if (p.isValidPiece && p.color != color) {
+            if (p.isValidPiece && p.color !== color) {
                 _poses = this.getPieceCanMovePosesValid(p.type, i, p.color, piecesString);
                 for (j = 0; j < _poses.length; j++) {
                     if (_poses[j] === kingPos) {
@@ -375,7 +376,7 @@ const boardHelper = {
         return !!~piecesString.indexOf(c);
     },
     getPiecesInBoard(piecesString) {
-        return piecesString.split("").filter((c) => {
+        return piecesString.split('').filter((c) => {
             return this.isValidPiece(c);
         });
     },
@@ -394,7 +395,7 @@ const boardHelper = {
                     color: prop.color,
                     type: prop.type,
                     index: i,
-                    code: this.numToCode(i),
+                    code: this.numToCode(i)
                 };
                 if (this.isWhite(piece.color)) {
                     whitePieces.push(piece);
@@ -405,14 +406,14 @@ const boardHelper = {
         }
         return {
             whitePieces: whitePieces,
-            blackPieces: blackPieces,
+            blackPieces: blackPieces
         };
     },
     extractPiecesToArray(piecesString) {
-        piecesString = piecesString.split("");
+        piecesString = piecesString.split('');
         const pieceAll = {
             [this.PIECE_COLOR_BLACK]: [],
-            [this.PIECE_COLOR_WHITE]: [],
+            [this.PIECE_COLOR_WHITE]: []
         };
         piecesString.forEach((e) => {
             if (e === this.EMPTY_PIECE) {
@@ -435,7 +436,7 @@ const boardHelper = {
     },
     checkCount(color, piecesString, force) {
         const countChar = (str, c) => {
-            return str.join("").split(c).length - 1;
+            return str.join('').split(c).length - 1;
         };
         const charExist = (str, c) => {
             return !!~str.indexOf(c);
@@ -485,28 +486,28 @@ const boardHelper = {
     getPieceKeyByName(name) {
         return this.getPieceKeyByProp({
             color: name[0],
-            type: name[1],
+            type: name[1]
         });
     },
     oppositeColor(color) {
         return this.isWhite(color) ? this.PIECE_COLOR_BLACK : this.PIECE_COLOR_WHITE;
-    },
+    }
 };
 boardHelper.pieceHash = {
-    "a": boardHelper.PIECE_COLOR_WHITE + boardHelper.PIECE_TYPE_TOUK,
-    "b": boardHelper.PIECE_COLOR_WHITE + boardHelper.PIECE_TYPE_SES,
-    "c": boardHelper.PIECE_COLOR_WHITE + boardHelper.PIECE_TYPE_KOL,
-    "d": boardHelper.PIECE_COLOR_WHITE + boardHelper.PIECE_TYPE_SDECH,
-    "e": boardHelper.PIECE_COLOR_WHITE + boardHelper.PIECE_TYPE_NEANG,
-    "f": boardHelper.PIECE_COLOR_WHITE + boardHelper.PIECE_TYPE_TREY,
-    "g": boardHelper.PIECE_COLOR_WHITE + boardHelper.PIECE_TYPE_BORK,
-    "h": boardHelper.PIECE_COLOR_BLACK + boardHelper.PIECE_TYPE_TOUK,
-    "i": boardHelper.PIECE_COLOR_BLACK + boardHelper.PIECE_TYPE_SES,
-    "j": boardHelper.PIECE_COLOR_BLACK + boardHelper.PIECE_TYPE_KOL,
-    "k": boardHelper.PIECE_COLOR_BLACK + boardHelper.PIECE_TYPE_SDECH,
-    "l": boardHelper.PIECE_COLOR_BLACK + boardHelper.PIECE_TYPE_NEANG,
-    "m": boardHelper.PIECE_COLOR_BLACK + boardHelper.PIECE_TYPE_TREY,
-    "n": boardHelper.PIECE_COLOR_BLACK + boardHelper.PIECE_TYPE_BORK,
+    a: boardHelper.PIECE_COLOR_WHITE + boardHelper.PIECE_TYPE_TOUK,
+    b: boardHelper.PIECE_COLOR_WHITE + boardHelper.PIECE_TYPE_SES,
+    c: boardHelper.PIECE_COLOR_WHITE + boardHelper.PIECE_TYPE_KOL,
+    d: boardHelper.PIECE_COLOR_WHITE + boardHelper.PIECE_TYPE_SDECH,
+    e: boardHelper.PIECE_COLOR_WHITE + boardHelper.PIECE_TYPE_NEANG,
+    f: boardHelper.PIECE_COLOR_WHITE + boardHelper.PIECE_TYPE_TREY,
+    g: boardHelper.PIECE_COLOR_WHITE + boardHelper.PIECE_TYPE_BORK,
+    h: boardHelper.PIECE_COLOR_BLACK + boardHelper.PIECE_TYPE_TOUK,
+    i: boardHelper.PIECE_COLOR_BLACK + boardHelper.PIECE_TYPE_SES,
+    j: boardHelper.PIECE_COLOR_BLACK + boardHelper.PIECE_TYPE_KOL,
+    k: boardHelper.PIECE_COLOR_BLACK + boardHelper.PIECE_TYPE_SDECH,
+    l: boardHelper.PIECE_COLOR_BLACK + boardHelper.PIECE_TYPE_NEANG,
+    m: boardHelper.PIECE_COLOR_BLACK + boardHelper.PIECE_TYPE_TREY,
+    n: boardHelper.PIECE_COLOR_BLACK + boardHelper.PIECE_TYPE_BORK
 };
 
 module.exports = boardHelper;

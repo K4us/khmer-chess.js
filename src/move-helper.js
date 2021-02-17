@@ -24,11 +24,11 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- *----------------------------------------------------------------------------*/
+ *---------------------------------------------------------------------------- */
 
-"use strict";
+'use strict';
 
-const boardHelper = require("./board-helper");
+const boardHelper = require('./board-helper');
 
 class MoveHelper {
     init(option) {
@@ -70,7 +70,7 @@ class MoveHelper {
                     pieces[i].index,
                     pieces[i].color,
                     this.piecesString,
-                    isHaveMoved,
+                    isHaveMoved
                 );
                 pieces[i].canMoveIndexes = canMoveIndexes;
             }
@@ -101,19 +101,19 @@ class MoveHelper {
     checkIfKingInDanger() {
         this.whiteKingInDanger = boardHelper.getKingInDanger(
             boardHelper.PIECE_COLOR_WHITE,
-            this.piecesString,
+            this.piecesString
         );
         this.whiteKingWillInDanger = boardHelper.getKingWillInDanger(
             boardHelper.PIECE_COLOR_WHITE,
-            this.piecesString,
+            this.piecesString
         );
         this.blackKingInDanger = boardHelper.getKingInDanger(
             boardHelper.PIECE_COLOR_BLACK,
-            this.piecesString,
+            this.piecesString
         );
         this.blackKingWillInDanger = boardHelper.getKingWillInDanger(
             boardHelper.PIECE_COLOR_BLACK,
-            this.piecesString,
+            this.piecesString
         );
     }
 
@@ -150,9 +150,10 @@ class MoveHelper {
         }
         return {
             moves,
-            anotherMoves,
+            anotherMoves
         };
     }
+
     calcState(option) {
         this.init(option);
         this.generateCanMoves();
@@ -170,24 +171,25 @@ class MoveHelper {
             stuckColor: this.stuckColor,
             blackCountable: boardHelper.checkCountable(
                 boardHelper.PIECE_COLOR_BLACK,
-                this.piecesString,
+                this.piecesString
             ),
             whiteCountable: boardHelper.checkCountable(
                 boardHelper.PIECE_COLOR_WHITE,
-                this.piecesString,
-            ),
+                this.piecesString
+            )
         };
     }
+
     calCount(option) {
         return {
             countingBlack: boardHelper.checkCount(
                 boardHelper.PIECE_COLOR_BLACK,
-                option.piecesString, option.force,
+                option.piecesString, option.force
             ),
             countingWhite: boardHelper.checkCount(
                 boardHelper.PIECE_COLOR_WHITE,
-                option.piecesString, option.force,
-            ),
+                option.piecesString, option.force
+            )
         };
     }
 }
