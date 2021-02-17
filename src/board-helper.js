@@ -154,7 +154,7 @@ const boardHelper = {
         return this.nerdXyToPos(x, y);
     },
     pointToIndexCode(p) {
-        return `${this.HORIZONTAL_CODE_LETTERS[p.x]}${this.ROW_NUMBER + p.y}`
+        return `${this.HORIZONTAL_CODE_LETTERS[p.x]}${p.y + 1}`
     },
     xyToIndexCode(x, y) {
         return this.pointToIndexCode(this.p(x, y));
