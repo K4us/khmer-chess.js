@@ -4,6 +4,7 @@
         "streetsidesoftware.code-spell-checker",
         "mhutchie.git-graph",
         "wayou.vscode-todo-highlight",
-        "editorconfig.editorconfig"
+        "editorconfig.editorconfig",
+        "oouo-diogo-perdigao.docthis"
     ]
 }

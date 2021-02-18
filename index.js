@@ -37,7 +37,7 @@ const KPGN = require('./src/KPGN');
 module.exports = {
     KhmerChess,
     boardHelper,
-    ...REN,
     renHelper,
-    KPGN
+    ...REN,
+    ...KPGN
 };

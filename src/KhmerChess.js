@@ -30,209 +30,212 @@
 
 'use strict';
 
-const { KPGN } = require('./KPGN');
+const { KPGN, Move } = require('./KPGN');
 const MoveHelper = require('./move-helper');
 const renHelper = require('./ren-helper');
 const config = require('../package.json');
 const { asciiTable } = require('./table');
 
 class KhmerChess {
-  static name = config.name;
-  static version = config.version;
-  moveHelper = new MoveHelper();
-  renInstance = renHelper.toRen();
-  kpgnInstance = new KPGN();
-  constructor(renStr) {
-      this.renInstance = renHelper.toRen(renStr);
-  }
+    static name = config.name;
+    static version = config.version;
+    moveHelper = new MoveHelper();
+    renInstance = renHelper.toRen();
+    kpgnInstance = new KPGN();
+    constructor(renStr) {
+        this.renInstance = renHelper.toRen(renStr);
+    }
 
-  load(renStr) {
-      this.renInstance = renHelper.toRen(renStr);
-  }
+    load(renStr) {
+        this.renInstance = renHelper.toRen(renStr);
+    }
 
-  reset() {
-      this.renInstance = renHelper.toRen();
-  }
+    reset() {
+        this.renInstance = renHelper.toRen();
+    }
 
-  /**
-   * Generate all available moves of current turn
-   */
-  moves() {
-      // TODO:
-      return [];
-  }
+    /**
+     * Generate all available moves of current turn
+     */
+    moves() {
+        // TODO:
+        return [];
+    }
 
-  /**
-   * Is King is attacked (អុក), return under attack color
-   *
-   * return color|null
-   */
-  inCheck() {
-      // TODO:
-      return null;
-  }
+    /**
+     * Is King is attacked (អុក), return under attack color
+     *
+     * return color|null
+     */
+    inCheck() {
+        // TODO:
+        return null;
+    }
 
-  /**
-   * Is win, return lost color
-   *
-   * return color|null
-   */
-  inCheckmate() {
-      // TODO:
-      return null;
-  }
+    /**
+     * Is win, return lost color
+     *
+     * return color|null
+     */
+    inCheckmate() {
+        // TODO:
+        return null;
+    }
 
-  /**
-   * Is stuck (អាប់), return stuck color
-   *
-   * return color|null
-   */
-  inStalemate() {
-      // TODO:
-      return null;
-  }
+    /**
+     * Is stuck (អាប់), return stuck color
+     *
+     * return color|null
+     */
+    inStalemate() {
+        // TODO:
+        return null;
+    }
 
-  /**
-   * Is draw (ស្មើ)
-   *
-   * return boolean
-   */
-  inDraw() {
-      // TODO:
-      return false;
-  }
+    /**
+     * Is draw (ស្មើ)
+     *
+     * return boolean
+     */
+    inDraw() {
+        // TODO:
+        return false;
+    }
 
-  /**
-   * Is draw by counting over (ស្មើ​ដោយ​ការ​រាប់), return counter color
-   *
-   * return color|null
-   */
-  inDrawCount() {
-      // TODO:
-      return null;
-  }
+    /**
+     * Is draw by counting over (ស្មើ​ដោយ​ការ​រាប់), return counter color
+     *
+     * return color|null
+     */
+    inDrawCount() {
+        // TODO:
+        return null;
+    }
 
-  /**
-   * Is game over, win|stuck|win-timeout|draw-count-over|win-resign
-   */
-  gameOver() {
-      // TODO:
-      return false;
-  }
+    /**
+     * Is game over, win|stuck|win-timeout|draw-count-over|win-resign
+     */
+    gameOver() {
+        // TODO:
+        return false;
+    }
 
-  validateRen(renStr) {
-      try {
-          renHelper.toRen(renStr);
-          return { valid: true, error_number: 0, error: 'No errors.' };
-      } catch (error) {
-          return { valid: false, error_number: 1, error: error.message };
-      }
-  }
+    validateRen(renStr) {
+        try {
+            renHelper.toRen(renStr);
+            return { valid: true, error_number: 0, error: 'No errors.' };
+        } catch (error) {
+            return { valid: false, error_number: 1, error: error.message };
+        }
+    }
 
-  ren() {
-      return this.renInstance.toString();
-  }
+    ren() {
+        return this.renInstance.toString();
+    }
 
-  board() {
-      return this.renInstance.board.toMultiArray();
-  }
+    board() {
+        return this.renInstance.board.toMultiArray();
+    }
 
-  graveyard() {
-      return this.renInstance.graveyard.pieces;
-  }
+    graveyard() {
+        return this.renInstance.graveyard.pieces;
+    }
 
-  // Khmer Portable Game Notation <file-name>.kpgn.json
-  kpgn() {
-      return this.kpgnInstance.toJson();
-  }
+    // Khmer Portable Game Notation <file-name>.kpgn.json
+    kpgn() {
+        return this.kpgnInstance.toJson();
+    }
 
-  loadKpgn(kpgnJosn, options) {
-      this.kpgnInstance = new KPGN(kpgnJosn);
-  }
+    loadKpgn(kpgnJosn, options) {
+        this.kpgnInstance = new KPGN(kpgnJosn);
+    }
 
-  ascii() {
-      return asciiTable(this.renInstance);
-  }
+    ascii() {
+        return asciiTable(this.renInstance);
+    }
 
-  turn() {
-      return this.renInstance.turn;
-  }
+    turn() {
+        return this.renInstance.turn;
+    }
 
-  /**
-   * Move piece regarding provided Move object
-   *
-   * @param Move move
-   */
-  move(move) {
-      // TODO:
-  }
+    /**
+     * Move piece regarding provided Move object
+     *
+     * @param Move move
+     * @return boolean
+     * @memberof KhmerChess
+     */
+    move(move = new Move()) {
+        // TODO:
+        return true;
+    }
 
-  /**
-   * Undo last move
-   *
-   * return {Piece, Move}|null
-   */
-  undo() {
-      // TODO:
-      return false;
-  }
+    /**
+     * Undo last move
+     *
+     * return {Piece, Move}|null
+     */
+    undo() {
+        // TODO:
+        return false;
+    }
 
-  /**
-   * Move all pieces to graveyard except kings
-   * -> 4k3/8/8/8/8/8/8/3K4 w ---- -- -.- bhgqghbffffffffFFFFFFFFBHGQGHB
-   */
-  clear() {
-      this.renInstance = renHelper.toRen('4k3/8/8/8/8/8/8/3K4 w ---- -- -.- bhgqghbffffffffFFFFFFFFBHGQGHB');
-  }
+    /**
+     * Move all pieces to graveyard except kings
+     * -> 4k3/8/8/8/8/8/8/3K4 w ---- -- -.- bhgqghbffffffffFFFFFFFFBHGQGHB
+     */
+    clear() {
+        this.renInstance = renHelper.toRen('4k3/8/8/8/8/8/8/3K4 w ---- -- -.- bhgqghbffffffffFFFFFFFFBHGQGHB');
+    }
 
-  /**
-   * Move piece to square id location
-   *
-   * @param Piece piece
-   * @param String squareId
-   *
-   * return Piece|null
-   */
-  put(piece, squareId) {
-      // TODO: move piece to square id location
-      return null;
-  }
+    /**
+     * Move piece to square id location
+     *
+     * @param Piece piece
+     * @param String squareId
+     *
+     * return Piece|null
+     */
+    put(piece, squareId) {
+        // TODO: move piece to square id location
+        return null;
+    }
 
-  /**
-   * Get piece at square id location
-   *
-   * @param String squareId 'a1'
-   *
-   * return Piece|null
-   */
-  get(squareId) {
-      // TODO: get piece at square id location
-      return null;
-  }
+    /**
+     * Get piece at square id location
+     *
+     * @param String squareId 'a1'
+     *
+     * return Piece|null
+     */
+    get(squareId) {
+        // TODO: get piece at square id location
+        return null;
+    }
 
-  /**
-   * Move piece to graveyard
-   *
-   * @param String squareId 'a1'
-   *
-   * return Piece|null
-   */
-  remove(squareId) {
-      // TODO: move piece to graveyard
-      return null;
-  }
+    /**
+     * Move piece to graveyard
+     *
+     * @param String squareId 'a1'
+     *
+     * return Piece|null
+     */
+    remove(squareId) {
+        // TODO: move piece to graveyard
+        return null;
+    }
 
-  history() {
-      return this.kpgnInstance.moves;
-  }
+    history() {
+        return this.kpgnInstance.moves;
+    }
 
-  addUpdateRenderEventListener(listener) {
-      // TODO:
-  }
+    addUpdateRenderEventListener(listener) {
+        // TODO:
+    }
 
-  removeUpdateRenderEventListener(listener) {
-      // TODO:
-  }
+    removeUpdateRenderEventListener(listener) {
+        // TODO:
+    }
 }
 
 module.exports = {

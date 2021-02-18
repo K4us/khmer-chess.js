@@ -63,11 +63,26 @@ class Result {
         };
     }
 }
+
+/**
+ * Move piece to another position
+ *
+ * @class Move
+ */
 class Move {
     from = '';
     to = '';
     jump = false;
     capture = ''
+
+    /**
+     * Creates an instance of Move.
+     * @param string [from='']
+     * @param string [to='']
+     * @param boolean [jump=false] king or queen jump over position
+     * @param string [capture='']
+     * @memberof Move
+     */
     constructor(from = '', to = '', jump = false, capture = '') {
         this.from = from;
         this.to = to;
