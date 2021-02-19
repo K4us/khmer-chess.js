@@ -28,17 +28,31 @@
 
 'use strict';
 
-const { REN, DEFAULT_BOARD_STR } = require('./ren');
-const jsis = require('./jsis');
+const Piece = require('./Piece');
 
-const renHelper = {
-    toRen(fen) {
-        if (jsis.isUndefined(fen)) {
-            fen = DEFAULT_BOARD_STR;
+const boardHelper = require('../board-helper');
+
+class Graveyard {
+    pieces = [];
+    constructor(graveyardStr = '') {
+        if (graveyardStr.length > 30 ||
+            !boardHelper.isValidPiecesString(graveyardStr, true)) {
+            throw new Error(`Invalid graveyard string ${graveyardStr}`);
         }
-        const fenArr = fen.split(' ');
-        return new REN(fenArr[0], fenArr[1], fenArr[2], fenArr[3], fenArr[4], fenArr[5]);
+        this.pieces = graveyardStr.split('').map((type, i) => {
+            const p = new Piece(type);
+            if (p.type === boardHelper.PIECE_TYPE_SDECH) {
+                throw new Error(`King cannot die graveyard:${graveyardStr}`);
+            }
+            return p;
+        });
     }
-};
 
-module.exports = renHelper;
+    toString() {
+        return this.pieces.map((p) => {
+            return p.toString();
+        }).join('');
+    }
+}
+
+module.exports = Graveyard;

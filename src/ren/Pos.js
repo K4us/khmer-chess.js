@@ -28,17 +28,35 @@
 
 'use strict';
 
-const { REN, DEFAULT_BOARD_STR } = require('./ren');
-const jsis = require('./jsis');
+const Piece = require('./Piece');
+const boardHelper = require('../board-helper');
+const jsis = require('../jsis');
 
-const renHelper = {
-    toRen(fen) {
-        if (jsis.isUndefined(fen)) {
-            fen = DEFAULT_BOARD_STR;
+class Pos {
+    h = 'a';
+    v = 1;
+    x = 0;
+    y = 0;
+    p = new Piece();
+    constructor(p, h, v) {
+        this.p = p;
+        if (jsis.isUndefined(v)) {
+            v = h.v;
+            h = h.h;
         }
-        const fenArr = fen.split(' ');
-        return new REN(fenArr[0], fenArr[1], fenArr[2], fenArr[3], fenArr[4], fenArr[5]);
+        this.h = h;
+        this.v = v;
+        this.x = boardHelper.HORIZONTAL_CODE_LETTERS.indexOf(this.h);
+        this.y = this.v - 1;
     }
-};
 
-module.exports = renHelper;
+    toString() {
+        return `${this.toPString()}${this.h}${this.v}`;
+    }
+
+    toPString() {
+        return jsis.isNull(this.p) ? boardHelper.EMPTY_PIECE : this.p.toString();
+    }
+}
+
+module.exports = Pos;

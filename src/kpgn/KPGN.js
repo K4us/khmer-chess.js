@@ -28,96 +28,15 @@
 
 'use strict';
 
-const { REN } = require('./REN');
-
-class Player {
-    name = '';
-    id = '';
-    constructor(id = '', name = '') {
-        this.id = id;
-        this.name = name;
-    }
-
-    toJson() {
-        return {
-            id: this.id,
-            name: this.name
-        };
-    }
-}
-class Result {
-    win = 0;
-    draw = 0;
-    lost = 0;
-    constructor(win = 0, draw = 0, lost = 0) {
-        this.win = win;
-        this.draw = draw;
-        this.lost = lost;
-    }
-
-    toJson() {
-        return {
-            win: this.win,
-            draw: this.draw,
-            lost: this.lost
-        };
-    }
-}
+const { REN } = require('../ren');
+const Move = require('./Move');
+const Player = require('./Player');
+const Result = require('./Result');
+const Timer = require('./Timer');
 
 /**
- * Move piece to another position
- *
- * @class Move
+ * Khmer portable game notation
  */
-class Move {
-    from = '';
-    to = '';
-    jump = false;
-    capture = ''
-
-    /**
-     * Creates an instance of Move.
-     * @param string [from='']
-     * @param string [to='']
-     * @param boolean [jump=false] king or queen jump over position
-     * @param string [capture='']
-     * @memberof Move
-     */
-    constructor(from = '', to = '', jump = false, capture = '') {
-        this.from = from;
-        this.to = to;
-        this.jump = jump;
-        this.capture = capture;
-    }
-
-    toJson() {
-        return {
-            from: this.from,
-            to: this.to,
-            jump: this.jump,
-            capture: this.capture
-        };
-    }
-}
-class Timer {
-    totalSecond = 0;
-    currentWhite = 0;
-    currentBlack = 0;
-    constructor(totalSecond = 0, currentWhite = 0, currentBlack = 0) {
-        this.totalSecond = totalSecond;
-        this.currentWhite = currentWhite;
-        this.currentBlack = currentBlack;
-    }
-
-    toJson() {
-        return {
-            totalSecond: this.totalSecond,
-            currentWhite: this.currentWhite,
-            currentBlack: this.currentBlack
-        };
-    }
-}
-
 class KPGN {
     event = '';
     date = '';
@@ -162,10 +81,4 @@ class KPGN {
     }
 }
 
-module.exports = {
-    KPGN,
-    Player,
-    Result,
-    Move,
-    Timer
-};
+module.exports = KPGN;

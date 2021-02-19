@@ -28,17 +28,22 @@
 
 'use strict';
 
-const { REN, DEFAULT_BOARD_STR } = require('./ren');
-const jsis = require('./jsis');
-
-const renHelper = {
-    toRen(fen) {
-        if (jsis.isUndefined(fen)) {
-            fen = DEFAULT_BOARD_STR;
-        }
-        const fenArr = fen.split(' ');
-        return new REN(fenArr[0], fenArr[1], fenArr[2], fenArr[3], fenArr[4], fenArr[5]);
+class Timer {
+    totalSecond = 0;
+    currentWhite = 0;
+    currentBlack = 0;
+    constructor(totalSecond = 0, currentWhite = 0, currentBlack = 0) {
+        this.totalSecond = totalSecond;
+        this.currentWhite = currentWhite;
+        this.currentBlack = currentBlack;
     }
-};
 
-module.exports = renHelper;
+    toJson() {
+        return {
+            totalSecond: this.totalSecond,
+            currentWhite: this.currentWhite,
+            currentBlack: this.currentBlack
+        };
+    }
+}
+module.exports = Timer;

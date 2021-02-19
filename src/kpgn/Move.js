@@ -28,17 +28,40 @@
 
 'use strict';
 
-const { REN, DEFAULT_BOARD_STR } = require('./ren');
-const jsis = require('./jsis');
+/**
+ * Move piece to another position
+ *
+ * @class Move
+ */
+class Move {
+    from = '';
+    to = '';
+    jump = false;
+    capture = ''
 
-const renHelper = {
-    toRen(fen) {
-        if (jsis.isUndefined(fen)) {
-            fen = DEFAULT_BOARD_STR;
-        }
-        const fenArr = fen.split(' ');
-        return new REN(fenArr[0], fenArr[1], fenArr[2], fenArr[3], fenArr[4], fenArr[5]);
+    /**
+     * Creates an instance of Move.
+     * @param string [from='']
+     * @param string [to='']
+     * @param boolean [jump=false] king or queen jump over position
+     * @param string [capture='']
+     * @memberof Move
+     */
+    constructor(from = '', to = '', jump = false, capture = '') {
+        this.from = from;
+        this.to = to;
+        this.jump = jump;
+        this.capture = capture;
     }
-};
 
-module.exports = renHelper;
+    toJson() {
+        return {
+            from: this.from,
+            to: this.to,
+            jump: this.jump,
+            capture: this.capture
+        };
+    }
+}
+
+module.exports = Move;

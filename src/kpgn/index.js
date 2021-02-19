@@ -28,17 +28,16 @@
 
 'use strict';
 
-const { REN, DEFAULT_BOARD_STR } = require('./ren');
-const jsis = require('./jsis');
+const Move = require('./Move');
+const Player = require('./Player');
+const Result = require('./Result');
+const Timer = require('./Timer');
+const KPGN = require('./KPGN');
 
-const renHelper = {
-    toRen(fen) {
-        if (jsis.isUndefined(fen)) {
-            fen = DEFAULT_BOARD_STR;
-        }
-        const fenArr = fen.split(' ');
-        return new REN(fenArr[0], fenArr[1], fenArr[2], fenArr[3], fenArr[4], fenArr[5]);
-    }
+module.exports = {
+    KPGN,
+    Player,
+    Result,
+    Move,
+    Timer
 };
-
-module.exports = renHelper;

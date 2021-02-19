@@ -28,17 +28,50 @@
 
 'use strict';
 
-const { REN, DEFAULT_BOARD_STR } = require('./ren');
-const jsis = require('./jsis');
+const { PIECE_TYPE_BORK } = require('../board-helper');
+const boardHelper = require('../board-helper');
+const jsis = require('../jsis');
 
-const renHelper = {
-    toRen(fen) {
-        if (jsis.isUndefined(fen)) {
-            fen = DEFAULT_BOARD_STR;
+class Piece {
+    type = boardHelper.PIECE_TYPE_TREY;
+    color = boardHelper.PIECE_COLOR_WHITE;
+    get pCode() {
+        if (this.color === boardHelper.PIECE_COLOR_WHITE) {
+            return boardHelper.toWhitePiece(this.type);
         }
-        const fenArr = fen.split(' ');
-        return new REN(fenArr[0], fenArr[1], fenArr[2], fenArr[3], fenArr[4], fenArr[5]);
+        return this.type;
     }
-};
 
-module.exports = renHelper;
+    constructor(type, color) {
+        if (jsis.isUndefined(color)) {
+            if (jsis.isUndefined(type)) {
+                type = boardHelper.toWhitePiece(boardHelper.PIECE_TYPE_TREY);
+            }
+            if (jsis.isUpperCase(type)) {
+                color = boardHelper.PIECE_COLOR_WHITE;
+            } else {
+                color = boardHelper.PIECE_COLOR_BLACK;
+            }
+        }
+        type = boardHelper.toBlackPiece(type);
+        this.type = type;
+        this.color = color;
+    }
+
+    toOrigin() {
+        if (this.type === PIECE_TYPE_BORK) {
+            return new Piece(boardHelper.PIECE_TYPE_TREY, this.color);
+        }
+        return this;
+    }
+
+    toString() {
+        let c = this.type;
+        if (boardHelper.isWhite(this.color)) {
+            c = boardHelper.toWhitePiece(c);
+        }
+        return c;
+    }
+}
+
+module.exports = Piece;

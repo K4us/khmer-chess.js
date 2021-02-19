@@ -28,17 +28,32 @@
 
 'use strict';
 
-const { REN, DEFAULT_BOARD_STR } = require('./ren');
-const jsis = require('./jsis');
+const boardHelper = require('../board-helper');
+const NOT_SET = '-';
 
-const renHelper = {
-    toRen(fen) {
-        if (jsis.isUndefined(fen)) {
-            fen = DEFAULT_BOARD_STR;
-        }
-        const fenArr = fen.split(' ');
-        return new REN(fenArr[0], fenArr[1], fenArr[2], fenArr[3], fenArr[4], fenArr[5]);
+/**
+ * King or Queen has moved, the will effect jumping
+ */
+class KqMoved {
+    whiteKing = false;
+    whiteQueen = false;
+    blackKing = false;
+    blackQueen = false;
+    constructor(kqMovedStr = '') {
+        const bh = boardHelper;
+        this.whiteKing = !!~kqMovedStr.indexOf(bh.toWhitePiece(bh.PIECE_TYPE_SDECH));
+        this.whiteQueen = !!~kqMovedStr.indexOf(bh.toWhitePiece(bh.PIECE_TYPE_NEANG));
+        this.blackKing = !!~kqMovedStr.indexOf(bh.PIECE_TYPE_SDECH);
+        this.blackQueen = !!~kqMovedStr.indexOf(bh.PIECE_TYPE_NEANG);
     }
-};
 
-module.exports = renHelper;
+    toString() {
+        let str = `${this.whiteKing ? boardHelper.toWhitePiece(boardHelper.PIECE_TYPE_SDECH) : NOT_SET}`;
+        str += `${this.whiteQueen ? boardHelper.toWhitePiece(boardHelper.PIECE_TYPE_NEANG) : NOT_SET}`;
+        str += `${this.blackKing ? boardHelper.PIECE_TYPE_SDECH : NOT_SET}`;
+        str += `${this.blackQueen ? boardHelper.PIECE_TYPE_NEANG : NOT_SET}`;
+        return str;
+    }
+}
+
+module.exports = KqMoved;

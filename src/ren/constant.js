@@ -28,17 +28,12 @@
 
 'use strict';
 
-const { REN, DEFAULT_BOARD_STR } = require('./ren');
-const jsis = require('./jsis');
+// BHGQKGHB/8/FFFFFFFF/8/8/ffffffff/8/bhgkqghb w ---- -- -.-
+const STRING_COUNT = 'B2F8G2H2K1Q1b2f8g2h2k1q1';
+// BHGQKGHB/8/FFFFFFFF/8/8/ffffffff/8/bhgkqghb w ---- -- -.-
+const DEFAULT_BOARD_STR = 'BHGQKGHB/8/FFFFFFFF/8/8/ffffffff/8/bhgkqghb';
 
-const renHelper = {
-    toRen(fen) {
-        if (jsis.isUndefined(fen)) {
-            fen = DEFAULT_BOARD_STR;
-        }
-        const fenArr = fen.split(' ');
-        return new REN(fenArr[0], fenArr[1], fenArr[2], fenArr[3], fenArr[4], fenArr[5]);
-    }
+module.exports = {
+    STRING_COUNT,
+    DEFAULT_BOARD_STR
 };
-
-module.exports = renHelper;

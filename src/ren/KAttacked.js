@@ -28,17 +28,26 @@
 
 'use strict';
 
-const { REN, DEFAULT_BOARD_STR } = require('./ren');
-const jsis = require('./jsis');
+const boardHelper = require('../board-helper');
+const NOT_SET = '-';
 
-const renHelper = {
-    toRen(fen) {
-        if (jsis.isUndefined(fen)) {
-            fen = DEFAULT_BOARD_STR;
-        }
-        const fenArr = fen.split(' ');
-        return new REN(fenArr[0], fenArr[1], fenArr[2], fenArr[3], fenArr[4], fenArr[5]);
+/**
+ * King has attacked, this will effect jumping
+ */
+class KAttacked {
+    whiteKing = false;
+    blackKing = false;
+    constructor(kAttackedStr = '') {
+        const bh = boardHelper;
+        this.whiteKing = !!~kAttackedStr.indexOf(bh.toWhitePiece(bh.PIECE_TYPE_SDECH));
+        this.blackKing = !!~kAttackedStr.indexOf(bh.PIECE_TYPE_SDECH);
     }
-};
 
-module.exports = renHelper;
+    toString() {
+        let str = `${this.whiteKing ? boardHelper.toWhitePiece(boardHelper.PIECE_TYPE_SDECH) : NOT_SET}`;
+        str += `${this.blackKing ? boardHelper.PIECE_TYPE_SDECH : NOT_SET}`;
+        return str;
+    }
+}
+
+module.exports = KAttacked;

@@ -28,17 +28,23 @@
 
 'use strict';
 
-const { REN, DEFAULT_BOARD_STR } = require('./ren');
-const jsis = require('./jsis');
-
-const renHelper = {
-    toRen(fen) {
-        if (jsis.isUndefined(fen)) {
-            fen = DEFAULT_BOARD_STR;
-        }
-        const fenArr = fen.split(' ');
-        return new REN(fenArr[0], fenArr[1], fenArr[2], fenArr[3], fenArr[4], fenArr[5]);
+class Result {
+    win = 0;
+    draw = 0;
+    lost = 0;
+    constructor(win = 0, draw = 0, lost = 0) {
+        this.win = win;
+        this.draw = draw;
+        this.lost = lost;
     }
-};
 
-module.exports = renHelper;
+    toJson() {
+        return {
+            win: this.win,
+            draw: this.draw,
+            lost: this.lost
+        };
+    }
+}
+
+module.exports = Result;

@@ -30,7 +30,7 @@
 
 'use strict';
 
-const { KPGN, Move } = require('./KPGN');
+const { KPGN, Move } = require('./kpgn');
 const MoveHelper = require('./move-helper');
 const renHelper = require('./ren-helper');
 const config = require('../package.json');

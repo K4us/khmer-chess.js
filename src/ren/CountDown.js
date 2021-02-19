@@ -28,17 +28,27 @@
 
 'use strict';
 
-const { REN, DEFAULT_BOARD_STR } = require('./ren');
-const jsis = require('./jsis');
+const jsis = require('../jsis');
 
-const renHelper = {
-    toRen(fen) {
-        if (jsis.isUndefined(fen)) {
-            fen = DEFAULT_BOARD_STR;
+const NOT_SET = '-';
+// 23.-
+class CountDown {
+    white = null;
+    black = null;
+    constructor(countdownStr = '') {
+        const newCountdownStr = countdownStr.split('.');
+        this.white = jsis.isStringNumber(newCountdownStr[0]) ? Number(newCountdownStr[0]) : null;
+        this.black = jsis.isStringNumber(newCountdownStr[1]) ? Number(newCountdownStr[1]) : null;
+        if (!jsis.isNull(this.white) && !jsis.isNull(this.white)) {
+            throw new Error(`Invalid countdown string ${countdownStr}`);
         }
-        const fenArr = fen.split(' ');
-        return new REN(fenArr[0], fenArr[1], fenArr[2], fenArr[3], fenArr[4], fenArr[5]);
     }
-};
 
-module.exports = renHelper;
+    toString() {
+        let str = `${jsis.isNull(this.white) ? NOT_SET : this.white}`;
+        str += `.${jsis.isNull(this.black) ? NOT_SET : this.black}`;
+        return str;
+    }
+}
+
+module.exports = CountDown;
