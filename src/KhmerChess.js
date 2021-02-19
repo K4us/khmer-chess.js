@@ -37,7 +37,7 @@ const config = require('../package.json');
 const { asciiTable } = require('./table');
 
 class KhmerChess {
-    static name = config.name;
+    static title = config.name;
     static version = config.version;
     moveHelper = new MoveHelper();
     renInstance = renHelper.toRen();
