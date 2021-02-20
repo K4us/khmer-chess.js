@@ -1,0 +1,35 @@
+{
+    "name": "khmer-chess",
+    "version": "1.0.15",
+    "description": "KhmerChess Javascript library",
+    "main": "index.js",
+    "types": "index.d.ts",
+    "scripts": {
+        "test": "jest",
+        "lint": "eslint . --ext .ts ./src",
+        "build": "rm -rf dist && npm run lint && npx tsc "
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/K4us/khmer-chess.js.git"
+    },
+    "keywords": [
+        "KhmerChess",
+        "Khmer",
+        "Chess",
+        "Node.js",
+        "Library"
+    ],
+    "author": "Raksa Eng <eng.raksa@gmail.com>",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/K4us/khmer-chess.js/issues"
+    },
+    "homepage": "https://github.com/K4us/khmer-chess.js#readme",
+    "devDependencies": {
+        "@typescript-eslint/eslint-plugin": "^4.15.1",
+        "@typescript-eslint/parser": "^4.15.1",
+        "eslint": "^7.20.0",
+        "typescript": "^3.5.1"
+    }
+}
