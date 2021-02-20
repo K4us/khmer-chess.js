@@ -1,6 +1,6 @@
-const rh = require('./src/ren-helper');
+import renHelper from './src/ren/renHelper';
 
-const fen = rh.toFen();
+const fen = renHelper.toRen();
 // console.log(rh.toObject());
 // console.log(boardHelper.isValidPiecesString('sn', true));
 console.log(fen.toString());

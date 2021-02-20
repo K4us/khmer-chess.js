@@ -25,19 +25,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  *---------------------------------------------------------------------------- */
+import KhmerChess from './KhmerChess';
 
-'use strict';
-
-const { KhmerChess } = require('./src/KhmerChess');
-const boardHelper = require('./src/board-helper');
-const REN = require('./src/REN');
-const renHelper = require('./src/ren-helper');
-const KPGN = require('./src/KPGN');
-
-module.exports = {
-    KhmerChess,
-    boardHelper,
-    renHelper,
-    ...REN,
-    ...KPGN
-};
+test('KhmerChess should work', () => {
+    expect(KhmerChess.title).toBe('khmer-chess');
+});
