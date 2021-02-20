@@ -25,18 +25,11 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  *---------------------------------------------------------------------------- */
-import { jsis } from '../board/index';
-import { DEFAULT_BOARD_STR } from './constant';
-import REN from './REN';
+import { KhmerChess, boardHelper as indexBoardHelper } from '.';
+import boardHelper from './board/boardHelper';
 
-const renHelper = {
-    toRen(fen?: string) {
-        if (jsis.isUndefined(fen)) {
-            fen = DEFAULT_BOARD_STR;
-        }
-        const fenArr = fen.split(' ');
-        return new REN(fenArr[0], fenArr[1], fenArr[2], fenArr[3], fenArr[4], fenArr[5]);
-    },
-};
 
-export default renHelper;
+test('KhmerChess should work', () => {
+    expect(KhmerChess.title).toBe('khmer-chess');
+    expect(boardHelper).toBe(boardHelper);
+});

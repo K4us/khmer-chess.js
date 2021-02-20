@@ -37,7 +37,7 @@ export default class KhmerChess {
     moveManager: MoveManager;
     renInstance: REN;
     kpgnInstance = new KPGN();
-    constructor(renStr: string) {
+    constructor(renStr?: string) {
         this.moveManager = new MoveManager();
         this.renInstance = renHelper.toRen(renStr);
     }

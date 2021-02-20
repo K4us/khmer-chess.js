@@ -26,7 +26,11 @@
  *
  *---------------------------------------------------------------------------- */
 import { NOT_SET } from './constant';
-import boardHelper from '../board/boardHelper';
+import {
+    PIECE_TYPE_NEANG,
+    PIECE_TYPE_SDECH,
+    boardHelper,
+} from '../board/index';
 
 /**
  * King or Queen has moved, the will effect jumping
@@ -39,18 +43,18 @@ export default class KqMoved {
     constructor(kqMovedStr?: string) {
         if (kqMovedStr) {
             const bh = boardHelper;
-            this.whiteKing = !!~kqMovedStr.indexOf(bh.toWhitePiece(bh.PIECE_TYPE_SDECH));
-            this.whiteQueen = !!~kqMovedStr.indexOf(bh.toWhitePiece(bh.PIECE_TYPE_NEANG));
-            this.blackKing = !!~kqMovedStr.indexOf(bh.PIECE_TYPE_SDECH);
-            this.blackQueen = !!~kqMovedStr.indexOf(bh.PIECE_TYPE_NEANG);
+            this.whiteKing = !!~kqMovedStr.indexOf(bh.toWhitePiece(PIECE_TYPE_SDECH));
+            this.whiteQueen = !!~kqMovedStr.indexOf(bh.toWhitePiece(PIECE_TYPE_NEANG));
+            this.blackKing = !!~kqMovedStr.indexOf(PIECE_TYPE_SDECH);
+            this.blackQueen = !!~kqMovedStr.indexOf(PIECE_TYPE_NEANG);
         }
     }
 
     toString() {
-        let str = `${this.whiteKing ? boardHelper.toWhitePiece(boardHelper.PIECE_TYPE_SDECH) : NOT_SET}`;
-        str += `${this.whiteQueen ? boardHelper.toWhitePiece(boardHelper.PIECE_TYPE_NEANG) : NOT_SET}`;
-        str += `${this.blackKing ? boardHelper.PIECE_TYPE_SDECH : NOT_SET}`;
-        str += `${this.blackQueen ? boardHelper.PIECE_TYPE_NEANG : NOT_SET}`;
+        let str = `${this.whiteKing ? boardHelper.toWhitePiece(PIECE_TYPE_SDECH) : NOT_SET}`;
+        str += `${this.whiteQueen ? boardHelper.toWhitePiece(PIECE_TYPE_NEANG) : NOT_SET}`;
+        str += `${this.blackKing ? PIECE_TYPE_SDECH : NOT_SET}`;
+        str += `${this.blackQueen ? PIECE_TYPE_NEANG : NOT_SET}`;
         return str;
     }
 }

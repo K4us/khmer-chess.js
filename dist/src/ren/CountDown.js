@@ -1,7 +1,4 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 /*
  * Copyright (c) 2021, K4us
@@ -30,7 +27,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * POSSIBILITY OF SUCH DAMAGE.
  *
  *---------------------------------------------------------------------------- */
-var jsis_1 = __importDefault(require("../board/jsis"));
+var index_1 = require("../board/index");
 var constant_1 = require("./constant");
 // 23.-
 var CountDown = /** @class */ (function () {
@@ -39,15 +36,15 @@ var CountDown = /** @class */ (function () {
         this.white = null;
         this.black = null;
         var newCountdownStr = countdownStr.split('.');
-        this.white = jsis_1.default.isStringNumber(newCountdownStr[0]) ? Number(newCountdownStr[0]) : null;
-        this.black = jsis_1.default.isStringNumber(newCountdownStr[1]) ? Number(newCountdownStr[1]) : null;
-        if (!jsis_1.default.isNull(this.white) && !jsis_1.default.isNull(this.white)) {
+        this.white = index_1.jsis.isStringNumber(newCountdownStr[0]) ? Number(newCountdownStr[0]) : null;
+        this.black = index_1.jsis.isStringNumber(newCountdownStr[1]) ? Number(newCountdownStr[1]) : null;
+        if (!index_1.jsis.isNull(this.white) && !index_1.jsis.isNull(this.white)) {
             throw new Error("Invalid countdown string " + countdownStr);
         }
     }
     CountDown.prototype.toString = function () {
-        var str = "" + (jsis_1.default.isNull(this.white) ? constant_1.NOT_SET : this.white);
-        str += "." + (jsis_1.default.isNull(this.black) ? constant_1.NOT_SET : this.black);
+        var str = "" + (index_1.jsis.isNull(this.white) ? constant_1.NOT_SET : this.white);
+        str += "." + (index_1.jsis.isNull(this.black) ? constant_1.NOT_SET : this.black);
         return str;
     };
     return CountDown;

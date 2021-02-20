@@ -30,12 +30,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * POSSIBILITY OF SUCH DAMAGE.
  *
  *---------------------------------------------------------------------------- */
-var jsis_1 = __importDefault(require("../board/jsis"));
+var index_1 = require("../board/index");
 var constant_1 = require("./constant");
 var REN_1 = __importDefault(require("./REN"));
 var renHelper = {
     toRen: function (fen) {
-        if (jsis_1.default.isUndefined(fen)) {
+        if (index_1.jsis.isUndefined(fen)) {
             fen = constant_1.DEFAULT_BOARD_STR;
         }
         var fenArr = fen.split(' ');

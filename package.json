@@ -2,8 +2,8 @@
   "name": "khmer-chess",
   "version": "1.0.15",
   "description": "KhmerChess Javascript library",
-  "main": "dist/src/KhmerChess.js",
-  "types": "src/KhmerChess.ts",
+  "main": "dist/src/index.js",
+  "types": "src/index.ts",
   "scripts": {
     "start": "ts-node test-index.ts",
     "test": "jest --passWithNoTests",

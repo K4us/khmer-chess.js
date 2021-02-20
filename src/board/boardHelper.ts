@@ -26,21 +26,15 @@
  *
  *---------------------------------------------------------------------------- */
 import jsis from './jsis';
-import genMask from './gen-mask';
+import genMask from './genMask';
 import {
     PIECE_COLOR_WHITE,
     PIECE_COLOR_BLACK,
-    PIECE_TYPE_TOUK,
-    PIECE_TYPE_SES,
-    PIECE_TYPE_KOL,
-    PIECE_TYPE_SDECH,
-    PIECE_TYPE_NEANG,
-    PIECE_TYPE_TREY,
-    PIECE_TYPE_BORK,
     EMPTY_PIECE,
-    BOARD_SEPARATOR,
     pieceHash,
+    ROW_NUMBER,
 } from './constant';
+import { PIECE_COLOR_EMPTY } from './todo-board-helper';
 
 const mask = genMask();
 
@@ -67,31 +61,6 @@ export class Rectangle {
 }
 let allPiecesString: any = null;
 const boardHelper = {
-    HORIZONTAL_CODE_LETTERS: 'abcdefgh',
-    HORIZONTAL_NOTE_LETTERS: ['ក', 'ខ', 'គ', 'ឃ', 'ង', 'ច', 'ឆ', 'ជ'],
-    VERTICAL_NOTE_LETTERS: ['១', '២', '៣', '៤', '៥', '៦', '៧', '៨', '៩', '១០',
-        '១១', '១២', '១៣', '១៤', '១៥', '១៦', '១៧', '១៨', '១៩', '២០',
-        '២១', '២២', '២៣', '២៤', '២៥', '២៦', '២៧', '២៨', '២៩', '៣០'],
-    HORIZONTAL_NOTE_LETTERS_ASCII: 'abcdefgh',
-    VERTICAL_NOTE_LETTERS_ASCII: Array.from({ length: 30 }, (_, i) => `${i + 1}`),
-
-    PIECE_COLOR_WHITE,
-    PIECE_COLOR_BLACK,
-
-    PIECE_TYPE_TOUK,
-    PIECE_TYPE_SES,
-    PIECE_TYPE_KOL,
-    PIECE_TYPE_SDECH,
-    PIECE_TYPE_NEANG,
-    PIECE_TYPE_TREY,
-    PIECE_TYPE_BORK,
-    EMPTY_PIECE,
-    BOARD_SEPARATOR,
-
-    ROW_NUMBER: 8,
-    ROW_FIRST_INDEX: 0,
-    ROW_LAST_INDEX: 7,
-
     getPieceCharArray() {
         return [
             this.PIECE_TYPE_TOUK,
@@ -105,8 +74,8 @@ const boardHelper = {
     },
     getColorArray() {
         return [
-            this.PIECE_COLOR_WHITE,
-            this.PIECE_COLOR_BLACK,
+            PIECE_COLOR_WHITE,
+            PIECE_COLOR_BLACK,
         ];
     },
     isValidPiecesString(str: string, onlyPiece?: any) {
@@ -139,30 +108,30 @@ const boardHelper = {
         return !jsis.isUndefined(point.x) && !jsis.isUndefined(point.y) &&
             this.rect(0, 0, this.ROW_LAST_INDEX, this.ROW_LAST_INDEX).isContainsPoint(point);
     },
-    isValidPiece: (piece: any) => piece !== boardHelper.EMPTY_PIECE,
-    isWhite: (c: any) => c === boardHelper.PIECE_COLOR_WHITE,
-    isBlack: (c: any) => c === boardHelper.PIECE_COLOR_BLACK,
+    isValidPiece: (piece: any) => piece !== EMPTY_PIECE,
+    isWhite: (c: any) => c === PIECE_COLOR_WHITE,
+    isBlack: (c: any) => c === PIECE_COLOR_BLACK,
     codeP: (h: any, v: any) => ({ h, v }),
     p: (x: any, y: any) => ({ x, y }),
     res: (width: any, height: any) => ({ width, height }),
     rect: (x: any, y: any, width: any, height: any) => new Rectangle(x, y, width, height),
-    getSubBoardNumber: () => boardHelper.ROW_NUMBER * boardHelper.ROW_NUMBER,
+    getSubBoardNumber: () => ROW_NUMBER * ROW_NUMBER,
     nerdPosToXY(p: any) {
         if (jsis.isNumber(p.x) && jsis.isNumber(p.y)) {
             return p;
         }
         if (jsis.isNumber(p)) {
-            const x = p % this.ROW_NUMBER;
-            const y = Math.floor(p / this.ROW_NUMBER);
+            const x = p % ROW_NUMBER;
+            const y = Math.floor(p / ROW_NUMBER);
             return this.p(x, y);
         }
         return null;
     },
     nerdXyToPos(x: any, y?: any) {
         if (!jsis.isUndefined(y)) {
-            return x + y * this.ROW_NUMBER;
+            return x + y * ROW_NUMBER;
         }
-        return x.x + x.y * this.ROW_NUMBER;
+        return x.x + x.y * ROW_NUMBER;
     },
     indexCodeToPos(code: any[]) {
         const x = this.HORIZONTAL_CODE_LETTERS.indexOf(code[0]);
@@ -180,8 +149,8 @@ const boardHelper = {
             return this.pointToIndexCode(p);
         }
         if (jsis.isNumber(p)) {
-            const x = p % this.ROW_NUMBER;
-            const y = Math.floor(p / this.ROW_NUMBER);
+            const x = p % ROW_NUMBER;
+            const y = Math.floor(p / ROW_NUMBER);
             return this.xyToIndexCode(x, y);
         }
         return null;
@@ -199,7 +168,7 @@ const boardHelper = {
     getPieceProperties(code: string | number) {
         const h = pieceHash[code];
         return {
-            color: h ? h[0] : this.PIECE_COLOR_EMPTY,
+            color: h ? h[0] : PIECE_COLOR_EMPTY,
             type: h ? h[1] : this.EMPTY_PIECE,
         };
     },
@@ -213,7 +182,7 @@ const boardHelper = {
             piecesString = y;
         }
         const piece = this.getCharPieceInPos(posInBoard, piecesString);
-        let color = this.PIECE_COLOR_WHITE; let type = this.PIECE_TYPE_TREY;
+        let color = PIECE_COLOR_WHITE; let type = this.PIECE_TYPE_TREY;
         if (this.isValidPiece(piece)) {
             const pr = this.getPieceProperties(piece);
             color = pr.color;
@@ -395,7 +364,7 @@ const boardHelper = {
         });
     },
     isHaveCaptured(piecesString: any) {
-        return this.getPiecesInBoard(piecesString).length < this.ROW_NUMBER * 4;
+        return this.getPiecesInBoard(piecesString).length < ROW_NUMBER * 4;
     },
     filterPieceInBoard(piecesString: string) {
         const whitePieces = [];
@@ -426,8 +395,8 @@ const boardHelper = {
     extractPiecesToArray(piecesString: { split: (arg0: string) => any; forEach: (arg0: (e: any) => void) => void; }) {
         piecesString = piecesString.split('');
         const pieceAll: { [x: string]: any[];[x: number]: undefined[]; } = {
-            [this.PIECE_COLOR_BLACK]: [],
-            [this.PIECE_COLOR_WHITE]: [],
+            [PIECE_COLOR_BLACK]: [],
+            [PIECE_COLOR_WHITE]: [],
         };
         piecesString.forEach((e: any) => {
             if (e === this.EMPTY_PIECE) {
@@ -504,7 +473,7 @@ const boardHelper = {
         });
     },
     oppositeColor(color: any) {
-        return this.isWhite(color) ? this.PIECE_COLOR_BLACK : this.PIECE_COLOR_WHITE;
+        return this.isWhite(color) ? PIECE_COLOR_BLACK : PIECE_COLOR_WHITE;
     },
 };
 

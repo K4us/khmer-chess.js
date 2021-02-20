@@ -30,9 +30,9 @@ import KqMoved from './KqMoved';
 import KAttacked from './KAttacked';
 import CountDown from './CountDown';
 import Graveyard from './Graveyard';
-import boardHelper from '../board/boardHelper';
-import jsis from '../board/jsis';
+import { jsis } from '../board/index';
 import { STRING_COUNT } from './constant';
+import { PIECE_COLOR_WHITE } from '../board';
 
 /**
  * Raksa-Eng Notation
@@ -45,7 +45,7 @@ export default class REN {
     kAttacked: KAttacked;
     countdown: CountDown;
     graveyard: Graveyard;
-    constructor(boardStr: any, turnStr = boardHelper.PIECE_COLOR_WHITE,
+    constructor(boardStr: any, turnStr = PIECE_COLOR_WHITE,
         kqMovedStr: any, kAttackedStr: any, countdownStr: any, graveyardStr: any) {
         this.board = new Board(boardStr);
         this.turn = turnStr;

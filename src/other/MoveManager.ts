@@ -25,7 +25,13 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  *---------------------------------------------------------------------------- */
-import boardHelper from '../board/boardHelper';
+import {
+    PIECE_COLOR_BLACK,
+    PIECE_COLOR_WHITE,
+    PIECE_TYPE_NEANG,
+    PIECE_TYPE_SDECH,
+    boardHelper,
+} from '../board/index';
 
 export default class MoveManager {
     piecesString: any;
@@ -42,7 +48,14 @@ export default class MoveManager {
     blackKingWillInDanger: any;
     winColor: any;
     stuckColor: any;
-    init(option: { piecesString: any; currentTurn: any; isNeangMoved: any; isSdechMoved: any; genCanMove: any; genCanMoveForAnother: any; }) {
+    init(option: {
+        piecesString: any;
+        currentTurn: any;
+        isNeangMoved: any;
+        isSdechMoved: any;
+        genCanMove: any;
+        genCanMoveForAnother: any;
+    }) {
         this.piecesString = option.piecesString;
         this.currentTurn = option.currentTurn;
         this.isNeangMoved = option.isNeangMoved;
@@ -70,8 +83,8 @@ export default class MoveManager {
         const genMoves = (pieces: string | any[]) => {
             for (let i = 0; i < pieces.length; i++) {
                 const type = pieces[i].type;
-                const isSdech = type === boardHelper.PIECE_TYPE_SDECH;
-                const isNeang = type === boardHelper.PIECE_TYPE_NEANG;
+                const isSdech = type === PIECE_TYPE_SDECH;
+                const isNeang = type === PIECE_TYPE_NEANG;
                 let isHaveMoved = this.isSdechMoved;
                 if (!isSdech) {
                     isHaveMoved = isNeang ? this.isNeangMoved : false;
@@ -111,28 +124,28 @@ export default class MoveManager {
 
     checkIfKingInDanger() {
         this.whiteKingInDanger = boardHelper.getKingInDanger(
-            boardHelper.PIECE_COLOR_WHITE,
+            PIECE_COLOR_WHITE,
             this.piecesString
         );
         this.whiteKingWillInDanger = boardHelper.getKingWillInDanger(
-            boardHelper.PIECE_COLOR_WHITE,
+            PIECE_COLOR_WHITE,
             this.piecesString
         );
         this.blackKingInDanger = boardHelper.getKingInDanger(
-            boardHelper.PIECE_COLOR_BLACK,
+            PIECE_COLOR_BLACK,
             this.piecesString
         );
         this.blackKingWillInDanger = boardHelper.getKingWillInDanger(
-            boardHelper.PIECE_COLOR_BLACK,
+            PIECE_COLOR_BLACK,
             this.piecesString
         );
     }
 
     genWinLost() {
         if (this.whiteKingInDanger && !this.whiteMoves.length) {
-            this.winColor = boardHelper.PIECE_COLOR_BLACK;
+            this.winColor = PIECE_COLOR_BLACK;
         } else if (this.blackKingInDanger && !this.blackMoves.length) {
-            this.winColor = boardHelper.PIECE_COLOR_WHITE;
+            this.winColor = PIECE_COLOR_WHITE;
         }
     }
 
@@ -141,9 +154,9 @@ export default class MoveManager {
             return;
         }
         if (boardHelper.isWhite(this.currentTurn) && !this.whiteMoves.length) {
-            this.stuckColor = boardHelper.PIECE_COLOR_WHITE;
+            this.stuckColor = PIECE_COLOR_WHITE;
         } else if (boardHelper.isBlack(this.currentTurn) && !this.blackMoves.length) {
-            this.stuckColor = boardHelper.PIECE_COLOR_BLACK;
+            this.stuckColor = PIECE_COLOR_BLACK;
         }
     }
 
@@ -181,11 +194,11 @@ export default class MoveManager {
             winColor: this.winColor,
             stuckColor: this.stuckColor,
             blackCountable: boardHelper.checkCountable(
-                boardHelper.PIECE_COLOR_BLACK,
+                PIECE_COLOR_BLACK,
                 this.piecesString
             ),
             whiteCountable: boardHelper.checkCountable(
-                boardHelper.PIECE_COLOR_WHITE,
+                PIECE_COLOR_WHITE,
                 this.piecesString
             ),
         };
@@ -194,11 +207,11 @@ export default class MoveManager {
     calCount(option: { piecesString: any; force: any; }) {
         return {
             countingBlack: boardHelper.checkCount(
-                boardHelper.PIECE_COLOR_BLACK,
+                PIECE_COLOR_BLACK,
                 option.piecesString, option.force
             ),
             countingWhite: boardHelper.checkCount(
-                boardHelper.PIECE_COLOR_WHITE,
+                PIECE_COLOR_WHITE,
                 option.piecesString, option.force
             ),
         };

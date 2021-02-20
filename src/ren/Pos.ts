@@ -26,8 +26,11 @@
  *
  *---------------------------------------------------------------------------- */
 import Piece from './Piece';
-import boardHelper from '../board/boardHelper';
-import jsis from '../board/jsis';
+import {
+    boardHelper,
+    jsis,
+    EMPTY_PIECE,
+} from '../board/index';
 
 export default class Pos {
     x = 0;
@@ -45,6 +48,6 @@ export default class Pos {
     }
 
     toPString() {
-        return jsis.isNull(this.piece) ? boardHelper.EMPTY_PIECE : this.piece.toString();
+        return jsis.isNull(this.piece) ? EMPTY_PIECE : this.piece.toString();
     }
 }

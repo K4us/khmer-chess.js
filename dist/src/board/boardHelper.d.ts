@@ -10,27 +10,8 @@ export declare class Rectangle {
     }): boolean;
 }
 declare const boardHelper: {
-    HORIZONTAL_CODE_LETTERS: string;
-    HORIZONTAL_NOTE_LETTERS: string[];
-    VERTICAL_NOTE_LETTERS: string[];
-    HORIZONTAL_NOTE_LETTERS_ASCII: string;
-    VERTICAL_NOTE_LETTERS_ASCII: string[];
-    PIECE_COLOR_WHITE: string;
-    PIECE_COLOR_BLACK: string;
-    PIECE_TYPE_TOUK: string;
-    PIECE_TYPE_SES: string;
-    PIECE_TYPE_KOL: string;
-    PIECE_TYPE_SDECH: string;
-    PIECE_TYPE_NEANG: string;
-    PIECE_TYPE_TREY: string;
-    PIECE_TYPE_BORK: string;
-    EMPTY_PIECE: string;
-    BOARD_SEPARATOR: string;
-    ROW_NUMBER: number;
-    ROW_FIRST_INDEX: number;
-    ROW_LAST_INDEX: number;
     getPieceCharArray(): any[];
-    getColorArray(): any[];
+    getColorArray(): string[];
     isValidPiecesString(str: string, onlyPiece?: any): boolean;
     toWhitePiece: (str: string) => string;
     toBlackPiece: (str: string) => string;
@@ -67,13 +48,13 @@ declare const boardHelper: {
     isPosInBoard(posInBoard: number): boolean;
     getCharPieceFromString(piecesString: string, posInBoard: any): any;
     getPieceProperties(code: string | number): {
-        color: any;
+        color: string;
         type: any;
     };
     getCharPieceInPos(posInBoard: any, piecesString: any): any;
     getPieceInPos(posInBoard: any, y: any, piecesString: any): {
         isValidPiece: any;
-        color: any;
+        color: string;
         type: any;
     };
     convertMask(p: {
@@ -116,6 +97,6 @@ declare const boardHelper: {
         type: any;
     }): any;
     getPieceKeyByName(name: any[]): any;
-    oppositeColor(color: any): any;
+    oppositeColor(color: any): "w" | "b";
 };
 export default boardHelper;

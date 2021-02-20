@@ -40,7 +40,7 @@ exports.pieceHash = exports.oppositeColor = exports.getPieceKeyByName = exports.
  *---------------------------------------------------------------------------- */
 // TODO: make migration success
 var jsis_1 = __importDefault(require("./jsis"));
-var gen_mask_1 = __importDefault(require("./gen-mask"));
+var genMask_1 = __importDefault(require("./genMask"));
 var Rectangle_1 = __importDefault(require("./Rectangle"));
 exports.PIECE_COLOR_WHITE = 'w';
 exports.PIECE_COLOR_BLACK = 'b';
@@ -205,7 +205,7 @@ exports.convertMask = function (point1, point2, color) {
 };
 exports.getPieceCanMovePoses = function (type, index, color) {
     var indices = [];
-    mask = mask || gen_mask_1.default();
+    mask = mask || genMask_1.default();
     mask[type].forEach(function (_pos) {
         var point = exports.indexToPoint(index);
         var p = exports.convertMask(new Point(_pos[0], _pos[1]), point, color);

@@ -1,7 +1,4 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 /*
  * Copyright (c) 2021, K4us
@@ -30,7 +27,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * POSSIBILITY OF SUCH DAMAGE.
  *
  *---------------------------------------------------------------------------- */
-var boardHelper_1 = __importDefault(require("../board/boardHelper"));
+var index_1 = require("../board/index");
 var MoveManager = /** @class */ (function () {
     function MoveManager() {
     }
@@ -52,19 +49,19 @@ var MoveManager = /** @class */ (function () {
     };
     MoveManager.prototype.generateCanMoves = function () {
         var _this = this;
-        var filter = boardHelper_1.default.filterPieceInBoard(this.piecesString);
+        var filter = index_1.boardHelper.filterPieceInBoard(this.piecesString);
         this.whiteMoves = filter.whitePieces;
         this.blackMoves = filter.blackPieces;
         var genMoves = function (pieces) {
             for (var i = 0; i < pieces.length; i++) {
                 var type = pieces[i].type;
-                var isSdech = type === boardHelper_1.default.PIECE_TYPE_SDECH;
-                var isNeang = type === boardHelper_1.default.PIECE_TYPE_NEANG;
+                var isSdech = type === index_1.PIECE_TYPE_SDECH;
+                var isNeang = type === index_1.PIECE_TYPE_NEANG;
                 var isHaveMoved = _this.isSdechMoved;
                 if (!isSdech) {
                     isHaveMoved = isNeang ? _this.isNeangMoved : false;
                 }
-                var canMoveIndexes = boardHelper_1.default.generatePosesCanMove(type, pieces[i].index, pieces[i].color, _this.piecesString, isHaveMoved);
+                var canMoveIndexes = index_1.boardHelper.generatePosesCanMove(type, pieces[i].index, pieces[i].color, _this.piecesString, isHaveMoved);
                 pieces[i].canMoveIndexes = canMoveIndexes;
             }
         };
@@ -90,28 +87,28 @@ var MoveManager = /** @class */ (function () {
         cleanMoves(this.blackMoves);
     };
     MoveManager.prototype.checkIfKingInDanger = function () {
-        this.whiteKingInDanger = boardHelper_1.default.getKingInDanger(boardHelper_1.default.PIECE_COLOR_WHITE, this.piecesString);
-        this.whiteKingWillInDanger = boardHelper_1.default.getKingWillInDanger(boardHelper_1.default.PIECE_COLOR_WHITE, this.piecesString);
-        this.blackKingInDanger = boardHelper_1.default.getKingInDanger(boardHelper_1.default.PIECE_COLOR_BLACK, this.piecesString);
-        this.blackKingWillInDanger = boardHelper_1.default.getKingWillInDanger(boardHelper_1.default.PIECE_COLOR_BLACK, this.piecesString);
+        this.whiteKingInDanger = index_1.boardHelper.getKingInDanger(index_1.PIECE_COLOR_WHITE, this.piecesString);
+        this.whiteKingWillInDanger = index_1.boardHelper.getKingWillInDanger(index_1.PIECE_COLOR_WHITE, this.piecesString);
+        this.blackKingInDanger = index_1.boardHelper.getKingInDanger(index_1.PIECE_COLOR_BLACK, this.piecesString);
+        this.blackKingWillInDanger = index_1.boardHelper.getKingWillInDanger(index_1.PIECE_COLOR_BLACK, this.piecesString);
     };
     MoveManager.prototype.genWinLost = function () {
         if (this.whiteKingInDanger && !this.whiteMoves.length) {
-            this.winColor = boardHelper_1.default.PIECE_COLOR_BLACK;
+            this.winColor = index_1.PIECE_COLOR_BLACK;
         }
         else if (this.blackKingInDanger && !this.blackMoves.length) {
-            this.winColor = boardHelper_1.default.PIECE_COLOR_WHITE;
+            this.winColor = index_1.PIECE_COLOR_WHITE;
         }
     };
     MoveManager.prototype.getStuck = function () {
         if (this.winColor) {
             return;
         }
-        if (boardHelper_1.default.isWhite(this.currentTurn) && !this.whiteMoves.length) {
-            this.stuckColor = boardHelper_1.default.PIECE_COLOR_WHITE;
+        if (index_1.boardHelper.isWhite(this.currentTurn) && !this.whiteMoves.length) {
+            this.stuckColor = index_1.PIECE_COLOR_WHITE;
         }
-        else if (boardHelper_1.default.isBlack(this.currentTurn) && !this.blackMoves.length) {
-            this.stuckColor = boardHelper_1.default.PIECE_COLOR_BLACK;
+        else if (index_1.boardHelper.isBlack(this.currentTurn) && !this.blackMoves.length) {
+            this.stuckColor = index_1.PIECE_COLOR_BLACK;
         }
     };
     MoveManager.prototype.calcCanMove = function (option) {
@@ -120,11 +117,11 @@ var MoveManager = /** @class */ (function () {
         this.cleanPieceNoMove();
         var moves = [];
         if (this.genCanMove) {
-            moves = boardHelper_1.default.isWhite(this.currentTurn) ? this.whiteMoves : this.blackMoves;
+            moves = index_1.boardHelper.isWhite(this.currentTurn) ? this.whiteMoves : this.blackMoves;
         }
         var anotherMoves = [];
         if (this.genCanMoveForAnother) {
-            anotherMoves = boardHelper_1.default.isBlack(this.currentTurn) ? this.whiteMoves : this.blackMoves;
+            anotherMoves = index_1.boardHelper.isBlack(this.currentTurn) ? this.whiteMoves : this.blackMoves;
         }
         return {
             moves: moves,
@@ -145,14 +142,14 @@ var MoveManager = /** @class */ (function () {
             whiteKingWillInDanger: this.whiteKingWillInDanger,
             winColor: this.winColor,
             stuckColor: this.stuckColor,
-            blackCountable: boardHelper_1.default.checkCountable(boardHelper_1.default.PIECE_COLOR_BLACK, this.piecesString),
-            whiteCountable: boardHelper_1.default.checkCountable(boardHelper_1.default.PIECE_COLOR_WHITE, this.piecesString),
+            blackCountable: index_1.boardHelper.checkCountable(index_1.PIECE_COLOR_BLACK, this.piecesString),
+            whiteCountable: index_1.boardHelper.checkCountable(index_1.PIECE_COLOR_WHITE, this.piecesString),
         };
     };
     MoveManager.prototype.calCount = function (option) {
         return {
-            countingBlack: boardHelper_1.default.checkCount(boardHelper_1.default.PIECE_COLOR_BLACK, option.piecesString, option.force),
-            countingWhite: boardHelper_1.default.checkCount(boardHelper_1.default.PIECE_COLOR_WHITE, option.piecesString, option.force),
+            countingBlack: index_1.boardHelper.checkCount(index_1.PIECE_COLOR_BLACK, option.piecesString, option.force),
+            countingWhite: index_1.boardHelper.checkCount(index_1.PIECE_COLOR_WHITE, option.piecesString, option.force),
         };
     };
     return MoveManager;

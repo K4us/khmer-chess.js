@@ -25,14 +25,20 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  *---------------------------------------------------------------------------- */
-import boardHelper from '../board/boardHelper';
-import jsis from '../board/jsis';
+import {
+    PIECE_COLOR_BLACK,
+    PIECE_COLOR_WHITE,
+    PIECE_TYPE_BORK,
+    PIECE_TYPE_TREY,
+    boardHelper,
+    jsis,
+} from '../board/index';
 
 export default class Piece {
     type: string;
     color: string;
     get pCode() {
-        if (this.color === boardHelper.PIECE_COLOR_WHITE) {
+        if (this.color === PIECE_COLOR_WHITE) {
             return boardHelper.toWhitePiece(this.type);
         }
         return this.type;
@@ -41,12 +47,12 @@ export default class Piece {
     constructor(type: string, color?: string) {
         if (jsis.isUndefined(color)) {
             if (jsis.isUndefined(type)) {
-                type = boardHelper.toWhitePiece(boardHelper.PIECE_TYPE_TREY);
+                type = boardHelper.toWhitePiece(PIECE_TYPE_TREY);
             }
             if (jsis.isUpperCase(type)) {
-                color = boardHelper.PIECE_COLOR_WHITE;
+                color = PIECE_COLOR_WHITE;
             } else {
-                color = boardHelper.PIECE_COLOR_BLACK;
+                color = PIECE_COLOR_BLACK;
             }
         }
         type = boardHelper.toBlackPiece(type);
@@ -55,8 +61,8 @@ export default class Piece {
     }
 
     toOrigin() {
-        if (this.type === boardHelper.PIECE_TYPE_BORK) {
-            return new Piece(boardHelper.PIECE_TYPE_TREY, this.color);
+        if (this.type === PIECE_TYPE_BORK) {
+            return new Piece(PIECE_TYPE_TREY, this.color);
         }
         return this;
     }

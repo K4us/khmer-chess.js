@@ -1,3 +1,15 @@
+"use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __exportStar = (this && this.__exportStar) || function(m, exports) {
+    for (var p in m) if (p !== "default" && !exports.hasOwnProperty(p)) __createBinding(exports, m, p);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
 /*
  * Copyright (c) 2021, K4us
  * Author: Raksa Eng <eng.raksa@gmail.com>
@@ -25,18 +37,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  *---------------------------------------------------------------------------- */
-import { jsis } from '../board/index';
-import { DEFAULT_BOARD_STR } from './constant';
-import REN from './REN';
-
-const renHelper = {
-    toRen(fen?: string) {
-        if (jsis.isUndefined(fen)) {
-            fen = DEFAULT_BOARD_STR;
-        }
-        const fenArr = fen.split(' ');
-        return new REN(fenArr[0], fenArr[1], fenArr[2], fenArr[3], fenArr[4], fenArr[5]);
-    },
-};
-
-export default renHelper;
+__exportStar(require("./board"), exports);
+__exportStar(require("./kpgn"), exports);
+__exportStar(require("./ren"), exports);
+var KhmerChess_1 = require("./KhmerChess");
+Object.defineProperty(exports, "KhmerChess", { enumerable: true, get: function () { return KhmerChess_1.default; } });

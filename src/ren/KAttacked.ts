@@ -25,7 +25,10 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  *---------------------------------------------------------------------------- */
-import boardHelper from '../board/boardHelper';
+import {
+    boardHelper,
+    PIECE_TYPE_SDECH,
+} from '../board/index';
 import { NOT_SET } from './constant';
 
 /**
@@ -37,14 +40,14 @@ export default class KAttacked {
     constructor(kAttackedStr?: string) {
         if (kAttackedStr) {
             const bh = boardHelper;
-            this.whiteKing = !!~kAttackedStr.indexOf(bh.toWhitePiece(bh.PIECE_TYPE_SDECH));
-            this.blackKing = !!~kAttackedStr.indexOf(bh.PIECE_TYPE_SDECH);
+            this.whiteKing = !!~kAttackedStr.indexOf(bh.toWhitePiece(PIECE_TYPE_SDECH));
+            this.blackKing = !!~kAttackedStr.indexOf(PIECE_TYPE_SDECH);
         }
     }
 
     toString() {
-        let str = `${this.whiteKing ? boardHelper.toWhitePiece(boardHelper.PIECE_TYPE_SDECH) : NOT_SET}`;
-        str += `${this.blackKing ? boardHelper.PIECE_TYPE_SDECH : NOT_SET}`;
+        let str = `${this.whiteKing ? boardHelper.toWhitePiece(PIECE_TYPE_SDECH) : NOT_SET}`;
+        str += `${this.blackKing ? PIECE_TYPE_SDECH : NOT_SET}`;
         return str;
     }
 }

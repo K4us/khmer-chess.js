@@ -9,6 +9,14 @@ export declare const PIECE_TYPE_TREY = "f";
 export declare const PIECE_TYPE_BORK = "t";
 export declare const EMPTY_PIECE = ".";
 export declare const BOARD_SEPARATOR = "/";
+export declare const ROW_NUMBER = 8;
+export declare const ROW_FIRST_INDEX = 0;
+export declare const ROW_LAST_INDEX = 7;
+export declare const HORIZONTAL_CODE_LETTERS = "abcdefgh";
+export declare const HORIZONTAL_NOTE_LETTERS: string[];
+export declare const VERTICAL_NOTE_LETTERS: string[];
+export declare const HORIZONTAL_NOTE_LETTERS_ASCII = "abcdefgh";
+export declare const VERTICAL_NOTE_LETTERS_ASCII: string[];
 export declare const pieceHash: {
     [key: string]: string;
 };

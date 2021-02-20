@@ -1,7 +1,4 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 /*
  * Copyright (c) 2021, K4us
@@ -30,29 +27,28 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * POSSIBILITY OF SUCH DAMAGE.
  *
  *---------------------------------------------------------------------------- */
-var boardHelper_1 = __importDefault(require("../board/boardHelper"));
-var jsis_1 = __importDefault(require("../board/jsis"));
+var index_1 = require("../board/index");
 var Piece = /** @class */ (function () {
     function Piece(type, color) {
-        if (jsis_1.default.isUndefined(color)) {
-            if (jsis_1.default.isUndefined(type)) {
-                type = boardHelper_1.default.toWhitePiece(boardHelper_1.default.PIECE_TYPE_TREY);
+        if (index_1.jsis.isUndefined(color)) {
+            if (index_1.jsis.isUndefined(type)) {
+                type = index_1.boardHelper.toWhitePiece(index_1.PIECE_TYPE_TREY);
             }
-            if (jsis_1.default.isUpperCase(type)) {
-                color = boardHelper_1.default.PIECE_COLOR_WHITE;
+            if (index_1.jsis.isUpperCase(type)) {
+                color = index_1.PIECE_COLOR_WHITE;
             }
             else {
-                color = boardHelper_1.default.PIECE_COLOR_BLACK;
+                color = index_1.PIECE_COLOR_BLACK;
             }
         }
-        type = boardHelper_1.default.toBlackPiece(type);
+        type = index_1.boardHelper.toBlackPiece(type);
         this.type = type;
         this.color = color;
     }
     Object.defineProperty(Piece.prototype, "pCode", {
         get: function () {
-            if (this.color === boardHelper_1.default.PIECE_COLOR_WHITE) {
-                return boardHelper_1.default.toWhitePiece(this.type);
+            if (this.color === index_1.PIECE_COLOR_WHITE) {
+                return index_1.boardHelper.toWhitePiece(this.type);
             }
             return this.type;
         },
@@ -60,15 +56,15 @@ var Piece = /** @class */ (function () {
         configurable: true
     });
     Piece.prototype.toOrigin = function () {
-        if (this.type === boardHelper_1.default.PIECE_TYPE_BORK) {
-            return new Piece(boardHelper_1.default.PIECE_TYPE_TREY, this.color);
+        if (this.type === index_1.PIECE_TYPE_BORK) {
+            return new Piece(index_1.PIECE_TYPE_TREY, this.color);
         }
         return this;
     };
     Piece.prototype.toString = function () {
         var c = this.type;
-        if (boardHelper_1.default.isWhite(this.color)) {
-            c = boardHelper_1.default.toWhitePiece(c);
+        if (index_1.boardHelper.isWhite(this.color)) {
+            c = index_1.boardHelper.toWhitePiece(c);
         }
         return c;
     };

@@ -35,16 +35,16 @@ var KqMoved_1 = __importDefault(require("./KqMoved"));
 var KAttacked_1 = __importDefault(require("./KAttacked"));
 var CountDown_1 = __importDefault(require("./CountDown"));
 var Graveyard_1 = __importDefault(require("./Graveyard"));
-var boardHelper_1 = __importDefault(require("../board/boardHelper"));
-var jsis_1 = __importDefault(require("../board/jsis"));
+var index_1 = require("../board/index");
 var constant_1 = require("./constant");
+var board_1 = require("../board");
 /**
  * Raksa-Eng Notation
  * fen: <pieces on board> <turn w|b> <king&queen moved ----|SNsn> <king attack --|Kk> <countdown -.-|-.4> <pieces in graveyard>
  */
 var REN = /** @class */ (function () {
     function REN(boardStr, turnStr, kqMovedStr, kAttackedStr, countdownStr, graveyardStr) {
-        if (turnStr === void 0) { turnStr = boardHelper_1.default.PIECE_COLOR_WHITE; }
+        if (turnStr === void 0) { turnStr = board_1.PIECE_COLOR_WHITE; }
         this.board = new Board_1.default(boardStr);
         this.turn = turnStr;
         this.kqMoved = new KqMoved_1.default(kqMovedStr);
@@ -60,7 +60,7 @@ var REN = /** @class */ (function () {
         var pieces = this.board.poses.map(function (pos) {
             return pos.piece;
         }).filter(function (p) {
-            return !jsis_1.default.isNull(p);
+            return !index_1.jsis.isNull(p);
         }).concat(this.graveyard.pieces).map(function (p) {
             return p.toOrigin();
         });

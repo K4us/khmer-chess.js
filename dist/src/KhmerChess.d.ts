@@ -7,7 +7,7 @@ export default class KhmerChess {
     moveManager: MoveManager;
     renInstance: REN;
     kpgnInstance: KPGN;
-    constructor(renStr: string);
+    constructor(renStr?: string);
     load(renStr: string): void;
     reset(): void;
     moves(): Move[];

@@ -26,8 +26,7 @@
  *
  *---------------------------------------------------------------------------- */
 import Piece from './Piece';
-
-import boardHelper from '../board/boardHelper';
+import { boardHelper, PIECE_TYPE_SDECH } from '../board/index';
 
 export default class Graveyard {
     pieces: Piece[] = [];
@@ -39,7 +38,7 @@ export default class Graveyard {
             }
             this.pieces = graveyardStr.split('').map((type, i) => {
                 const p = new Piece(type);
-                if (p.type === boardHelper.PIECE_TYPE_SDECH) {
+                if (p.type === PIECE_TYPE_SDECH) {
                     throw new Error(`King cannot die graveyard:${graveyardStr}`);
                 }
                 return p;

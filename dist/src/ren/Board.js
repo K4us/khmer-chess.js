@@ -32,8 +32,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  *---------------------------------------------------------------------------- */
 var Piece_1 = __importDefault(require("./Piece"));
 var Pos_1 = __importDefault(require("./Pos"));
-var boardHelper_1 = __importDefault(require("../board/boardHelper"));
-var jsis_1 = __importDefault(require("../board/jsis"));
+var index_1 = require("../board/index");
 var constant_1 = require("./constant");
 /**
  * BHGQKGHB/8/FFFFFFFF/8/8/ffffffff/8/bhgkqghb => bhgqkghb/......../ffffffff/......../......../FFFFFFFF/......../BHGKQGHB
@@ -41,22 +40,22 @@ var constant_1 = require("./constant");
 var Board = /** @class */ (function () {
     function Board(boardStr) {
         this.poses = Array.from({
-            length: boardHelper_1.default.getSubBoardNumber(),
+            length: index_1.boardHelper.getSubBoardNumber(),
         }, function (_, i) {
-            var codeP = boardHelper_1.default.nerdPosToXY(i);
+            var codeP = index_1.boardHelper.nerdPosToXY(i);
             return new Pos_1.default(codeP.x, codeP.y, null);
         });
-        if (jsis_1.default.isUndefined(boardStr)) {
+        if (index_1.jsis.isUndefined(boardStr)) {
             boardStr = constant_1.DEFAULT_BOARD_STR;
         }
         var newBoardStr = this.extract(boardStr).replace(/\//g, '');
-        if (newBoardStr.length < boardHelper_1.default.getSubBoardNumber() ||
-            !boardHelper_1.default.isValidPiecesString(newBoardStr)) {
+        if (newBoardStr.length < index_1.boardHelper.getSubBoardNumber() ||
+            !index_1.boardHelper.isValidPiecesString(newBoardStr)) {
             throw new Error("Invalid board string " + boardStr);
         }
         this.poses = newBoardStr.split('').map(function (type, i) {
-            var xy = boardHelper_1.default.nerdPosToXY(i);
-            return new Pos_1.default(xy.x, xy.y, type === boardHelper_1.default.EMPTY_PIECE ? null : new Piece_1.default(type));
+            var xy = index_1.boardHelper.nerdPosToXY(i);
+            return new Pos_1.default(xy.x, xy.y, type === index_1.EMPTY_PIECE ? null : new Piece_1.default(type));
         });
     }
     Board.prototype.toMultiArray = function () {
@@ -67,7 +66,7 @@ var Board = /** @class */ (function () {
         return arr;
     };
     Board.prototype.compress = function (str) {
-        var reg = new RegExp("(\\" + boardHelper_1.default.EMPTY_PIECE + "+)", 'g');
+        var reg = new RegExp("(\\" + index_1.EMPTY_PIECE + "+)", 'g');
         return str.replace(reg, function ($1) { return $1.length; });
     };
     Board.prototype.extract = function (str) {
@@ -75,14 +74,14 @@ var Board = /** @class */ (function () {
             // $1 == 3 => '...', bh6 => 'bh......'
             return Array.from({
                 length: $1,
-            }, function () { return boardHelper_1.default.EMPTY_PIECE; }).join('');
+            }, function () { return index_1.EMPTY_PIECE; }).join('');
         });
     };
     Board.prototype.toStringFull = function () {
         var str = this.poses.map(function (pos, i) {
             var p = pos.toPString();
-            if (i && i % 8 === 0 && i !== boardHelper_1.default.getSubBoardNumber()) {
-                return "" + boardHelper_1.default.BOARD_SEPARATOR + p;
+            if (i && i % 8 === 0 && i !== index_1.boardHelper.getSubBoardNumber()) {
+                return "" + index_1.BOARD_SEPARATOR + p;
             }
             return p;
         }).join('');

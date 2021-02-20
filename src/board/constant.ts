@@ -38,6 +38,18 @@ export const PIECE_TYPE_BORK = 't'; // Transform fish
 export const EMPTY_PIECE = '.';
 export const BOARD_SEPARATOR = '/';
 
+export const ROW_NUMBER = 8;
+export const ROW_FIRST_INDEX = 0;
+export const ROW_LAST_INDEX = 7;
+
+export const HORIZONTAL_CODE_LETTERS = 'abcdefgh';
+export const HORIZONTAL_NOTE_LETTERS = ['ក', 'ខ', 'គ', 'ឃ', 'ង', 'ច', 'ឆ', 'ជ'];
+export const VERTICAL_NOTE_LETTERS = ['១', '២', '៣', '៤', '៥', '៦', '៧', '៨', '៩', '១០',
+    '១១', '១២', '១៣', '១៤', '១៥', '១៦', '១៧', '១៨', '១៩', '២០',
+    '២១', '២២', '២៣', '២៤', '២៥', '២៦', '២៧', '២៨', '២៩', '៣០'];
+export const HORIZONTAL_NOTE_LETTERS_ASCII = 'abcdefgh';
+export const VERTICAL_NOTE_LETTERS_ASCII = Array.from({ length: 30 }, (_, i) => `${i + 1}`);
+
 export const pieceHash: { [key: string]: string } = {
     a: PIECE_COLOR_WHITE + PIECE_TYPE_TOUK,
     b: PIECE_COLOR_WHITE + PIECE_TYPE_SES,

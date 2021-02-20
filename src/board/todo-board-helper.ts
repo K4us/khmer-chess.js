@@ -27,7 +27,7 @@
  *---------------------------------------------------------------------------- */
 // TODO: make migration success
 import jsis from './jsis';
-import genMask from './gen-mask';
+import genMask from './genMask';
 import Rectangle from './Rectangle';
 
 export const PIECE_COLOR_WHITE = 'w';

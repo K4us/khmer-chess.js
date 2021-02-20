@@ -1,4 +1,4 @@
-import renHelper from './src/ren/renHelper';
+import { renHelper } from './src/index';
 
 const fen = renHelper.toRen();
 // console.log(rh.toObject());

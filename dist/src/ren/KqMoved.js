@@ -1,7 +1,4 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 /*
  * Copyright (c) 2021, K4us
@@ -31,7 +28,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  *
  *---------------------------------------------------------------------------- */
 var constant_1 = require("./constant");
-var boardHelper_1 = __importDefault(require("../board/boardHelper"));
+var index_1 = require("../board/index");
 /**
  * King or Queen has moved, the will effect jumping
  */
@@ -42,18 +39,18 @@ var KqMoved = /** @class */ (function () {
         this.blackKing = false;
         this.blackQueen = false;
         if (kqMovedStr) {
-            var bh = boardHelper_1.default;
-            this.whiteKing = !!~kqMovedStr.indexOf(bh.toWhitePiece(bh.PIECE_TYPE_SDECH));
-            this.whiteQueen = !!~kqMovedStr.indexOf(bh.toWhitePiece(bh.PIECE_TYPE_NEANG));
-            this.blackKing = !!~kqMovedStr.indexOf(bh.PIECE_TYPE_SDECH);
-            this.blackQueen = !!~kqMovedStr.indexOf(bh.PIECE_TYPE_NEANG);
+            var bh = index_1.boardHelper;
+            this.whiteKing = !!~kqMovedStr.indexOf(bh.toWhitePiece(index_1.PIECE_TYPE_SDECH));
+            this.whiteQueen = !!~kqMovedStr.indexOf(bh.toWhitePiece(index_1.PIECE_TYPE_NEANG));
+            this.blackKing = !!~kqMovedStr.indexOf(index_1.PIECE_TYPE_SDECH);
+            this.blackQueen = !!~kqMovedStr.indexOf(index_1.PIECE_TYPE_NEANG);
         }
     }
     KqMoved.prototype.toString = function () {
-        var str = "" + (this.whiteKing ? boardHelper_1.default.toWhitePiece(boardHelper_1.default.PIECE_TYPE_SDECH) : constant_1.NOT_SET);
-        str += "" + (this.whiteQueen ? boardHelper_1.default.toWhitePiece(boardHelper_1.default.PIECE_TYPE_NEANG) : constant_1.NOT_SET);
-        str += "" + (this.blackKing ? boardHelper_1.default.PIECE_TYPE_SDECH : constant_1.NOT_SET);
-        str += "" + (this.blackQueen ? boardHelper_1.default.PIECE_TYPE_NEANG : constant_1.NOT_SET);
+        var str = "" + (this.whiteKing ? index_1.boardHelper.toWhitePiece(index_1.PIECE_TYPE_SDECH) : constant_1.NOT_SET);
+        str += "" + (this.whiteQueen ? index_1.boardHelper.toWhitePiece(index_1.PIECE_TYPE_NEANG) : constant_1.NOT_SET);
+        str += "" + (this.blackKing ? index_1.PIECE_TYPE_SDECH : constant_1.NOT_SET);
+        str += "" + (this.blackQueen ? index_1.PIECE_TYPE_NEANG : constant_1.NOT_SET);
         return str;
     };
     return KqMoved;

@@ -39,9 +39,10 @@ exports.Rectangle = void 0;
  *
  *---------------------------------------------------------------------------- */
 var jsis_1 = __importDefault(require("./jsis"));
-var gen_mask_1 = __importDefault(require("./gen-mask"));
+var genMask_1 = __importDefault(require("./genMask"));
 var constant_1 = require("./constant");
-var mask = gen_mask_1.default();
+var todo_board_helper_1 = require("./todo-board-helper");
+var mask = genMask_1.default();
 var Rectangle = /** @class */ (function () {
     function Rectangle(x, y, width, height) {
         this.x = x;
@@ -62,27 +63,6 @@ var Rectangle = /** @class */ (function () {
 exports.Rectangle = Rectangle;
 var allPiecesString = null;
 var boardHelper = {
-    HORIZONTAL_CODE_LETTERS: 'abcdefgh',
-    HORIZONTAL_NOTE_LETTERS: ['ក', 'ខ', 'គ', 'ឃ', 'ង', 'ច', 'ឆ', 'ជ'],
-    VERTICAL_NOTE_LETTERS: ['១', '២', '៣', '៤', '៥', '៦', '៧', '៨', '៩', '១០',
-        '១១', '១២', '១៣', '១៤', '១៥', '១៦', '១៧', '១៨', '១៩', '២០',
-        '២១', '២២', '២៣', '២៤', '២៥', '២៦', '២៧', '២៨', '២៩', '៣០'],
-    HORIZONTAL_NOTE_LETTERS_ASCII: 'abcdefgh',
-    VERTICAL_NOTE_LETTERS_ASCII: Array.from({ length: 30 }, function (_, i) { return "" + (i + 1); }),
-    PIECE_COLOR_WHITE: constant_1.PIECE_COLOR_WHITE,
-    PIECE_COLOR_BLACK: constant_1.PIECE_COLOR_BLACK,
-    PIECE_TYPE_TOUK: constant_1.PIECE_TYPE_TOUK,
-    PIECE_TYPE_SES: constant_1.PIECE_TYPE_SES,
-    PIECE_TYPE_KOL: constant_1.PIECE_TYPE_KOL,
-    PIECE_TYPE_SDECH: constant_1.PIECE_TYPE_SDECH,
-    PIECE_TYPE_NEANG: constant_1.PIECE_TYPE_NEANG,
-    PIECE_TYPE_TREY: constant_1.PIECE_TYPE_TREY,
-    PIECE_TYPE_BORK: constant_1.PIECE_TYPE_BORK,
-    EMPTY_PIECE: constant_1.EMPTY_PIECE,
-    BOARD_SEPARATOR: constant_1.BOARD_SEPARATOR,
-    ROW_NUMBER: 8,
-    ROW_FIRST_INDEX: 0,
-    ROW_LAST_INDEX: 7,
     getPieceCharArray: function () {
         return [
             this.PIECE_TYPE_TOUK,
@@ -96,8 +76,8 @@ var boardHelper = {
     },
     getColorArray: function () {
         return [
-            this.PIECE_COLOR_WHITE,
-            this.PIECE_COLOR_BLACK,
+            constant_1.PIECE_COLOR_WHITE,
+            constant_1.PIECE_COLOR_BLACK,
         ];
     },
     isValidPiecesString: function (str, onlyPiece) {
@@ -127,30 +107,30 @@ var boardHelper = {
         return !jsis_1.default.isUndefined(point.x) && !jsis_1.default.isUndefined(point.y) &&
             this.rect(0, 0, this.ROW_LAST_INDEX, this.ROW_LAST_INDEX).isContainsPoint(point);
     },
-    isValidPiece: function (piece) { return piece !== boardHelper.EMPTY_PIECE; },
-    isWhite: function (c) { return c === boardHelper.PIECE_COLOR_WHITE; },
-    isBlack: function (c) { return c === boardHelper.PIECE_COLOR_BLACK; },
+    isValidPiece: function (piece) { return piece !== constant_1.EMPTY_PIECE; },
+    isWhite: function (c) { return c === constant_1.PIECE_COLOR_WHITE; },
+    isBlack: function (c) { return c === constant_1.PIECE_COLOR_BLACK; },
     codeP: function (h, v) { return ({ h: h, v: v }); },
     p: function (x, y) { return ({ x: x, y: y }); },
     res: function (width, height) { return ({ width: width, height: height }); },
     rect: function (x, y, width, height) { return new Rectangle(x, y, width, height); },
-    getSubBoardNumber: function () { return boardHelper.ROW_NUMBER * boardHelper.ROW_NUMBER; },
+    getSubBoardNumber: function () { return constant_1.ROW_NUMBER * constant_1.ROW_NUMBER; },
     nerdPosToXY: function (p) {
         if (jsis_1.default.isNumber(p.x) && jsis_1.default.isNumber(p.y)) {
             return p;
         }
         if (jsis_1.default.isNumber(p)) {
-            var x = p % this.ROW_NUMBER;
-            var y = Math.floor(p / this.ROW_NUMBER);
+            var x = p % constant_1.ROW_NUMBER;
+            var y = Math.floor(p / constant_1.ROW_NUMBER);
             return this.p(x, y);
         }
         return null;
     },
     nerdXyToPos: function (x, y) {
         if (!jsis_1.default.isUndefined(y)) {
-            return x + y * this.ROW_NUMBER;
+            return x + y * constant_1.ROW_NUMBER;
         }
-        return x.x + x.y * this.ROW_NUMBER;
+        return x.x + x.y * constant_1.ROW_NUMBER;
     },
     indexCodeToPos: function (code) {
         var x = this.HORIZONTAL_CODE_LETTERS.indexOf(code[0]);
@@ -168,8 +148,8 @@ var boardHelper = {
             return this.pointToIndexCode(p);
         }
         if (jsis_1.default.isNumber(p)) {
-            var x = p % this.ROW_NUMBER;
-            var y = Math.floor(p / this.ROW_NUMBER);
+            var x = p % constant_1.ROW_NUMBER;
+            var y = Math.floor(p / constant_1.ROW_NUMBER);
             return this.xyToIndexCode(x, y);
         }
         return null;
@@ -187,7 +167,7 @@ var boardHelper = {
     getPieceProperties: function (code) {
         var h = constant_1.pieceHash[code];
         return {
-            color: h ? h[0] : this.PIECE_COLOR_EMPTY,
+            color: h ? h[0] : todo_board_helper_1.PIECE_COLOR_EMPTY,
             type: h ? h[1] : this.EMPTY_PIECE,
         };
     },
@@ -202,7 +182,7 @@ var boardHelper = {
             piecesString = y;
         }
         var piece = this.getCharPieceInPos(posInBoard, piecesString);
-        var color = this.PIECE_COLOR_WHITE;
+        var color = constant_1.PIECE_COLOR_WHITE;
         var type = this.PIECE_TYPE_TREY;
         if (this.isValidPiece(piece)) {
             var pr = this.getPieceProperties(piece);
@@ -391,7 +371,7 @@ var boardHelper = {
         });
     },
     isHaveCaptured: function (piecesString) {
-        return this.getPiecesInBoard(piecesString).length < this.ROW_NUMBER * 4;
+        return this.getPiecesInBoard(piecesString).length < constant_1.ROW_NUMBER * 4;
     },
     filterPieceInBoard: function (piecesString) {
         var whitePieces = [];
@@ -425,8 +405,8 @@ var boardHelper = {
         var _this = this;
         piecesString = piecesString.split('');
         var pieceAll = (_a = {},
-            _a[this.PIECE_COLOR_BLACK] = [],
-            _a[this.PIECE_COLOR_WHITE] = [],
+            _a[constant_1.PIECE_COLOR_BLACK] = [],
+            _a[constant_1.PIECE_COLOR_WHITE] = [],
             _a);
         piecesString.forEach(function (e) {
             if (e === _this.EMPTY_PIECE) {
@@ -505,7 +485,7 @@ var boardHelper = {
         });
     },
     oppositeColor: function (color) {
-        return this.isWhite(color) ? this.PIECE_COLOR_BLACK : this.PIECE_COLOR_WHITE;
+        return this.isWhite(color) ? constant_1.PIECE_COLOR_BLACK : constant_1.PIECE_COLOR_WHITE;
     },
 };
 exports.default = boardHelper;

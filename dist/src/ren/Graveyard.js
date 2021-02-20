@@ -31,18 +31,18 @@ Object.defineProperty(exports, "__esModule", { value: true });
  *
  *---------------------------------------------------------------------------- */
 var Piece_1 = __importDefault(require("./Piece"));
-var boardHelper_1 = __importDefault(require("../board/boardHelper"));
+var index_1 = require("../board/index");
 var Graveyard = /** @class */ (function () {
     function Graveyard(graveyardStr) {
         this.pieces = [];
         if (graveyardStr) {
             if (graveyardStr.length > 30 ||
-                !boardHelper_1.default.isValidPiecesString(graveyardStr, true)) {
+                !index_1.boardHelper.isValidPiecesString(graveyardStr, true)) {
                 throw new Error("Invalid graveyard string " + graveyardStr);
             }
             this.pieces = graveyardStr.split('').map(function (type, i) {
                 var p = new Piece_1.default(type);
-                if (p.type === boardHelper_1.default.PIECE_TYPE_SDECH) {
+                if (p.type === index_1.PIECE_TYPE_SDECH) {
                     throw new Error("King cannot die graveyard:" + graveyardStr);
                 }
                 return p;

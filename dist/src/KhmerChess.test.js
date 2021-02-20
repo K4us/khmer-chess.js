@@ -1,3 +1,8 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
 /*
  * Copyright (c) 2021, K4us
  * Author: Raksa Eng <eng.raksa@gmail.com>
@@ -25,18 +30,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  *---------------------------------------------------------------------------- */
-import { jsis } from '../board/index';
-import { DEFAULT_BOARD_STR } from './constant';
-import REN from './REN';
-
-const renHelper = {
-    toRen(fen?: string) {
-        if (jsis.isUndefined(fen)) {
-            fen = DEFAULT_BOARD_STR;
-        }
-        const fenArr = fen.split(' ');
-        return new REN(fenArr[0], fenArr[1], fenArr[2], fenArr[3], fenArr[4], fenArr[5]);
-    },
-};
-
-export default renHelper;
+var KhmerChess_1 = __importDefault(require("./KhmerChess"));
+test('KhmerChess should work', function () {
+    expect(KhmerChess_1.default.title).toBe('khmer-chess');
+});

@@ -1,7 +1,4 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 /*
  * Copyright (c) 2021, K4us
@@ -30,7 +27,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * POSSIBILITY OF SUCH DAMAGE.
  *
  *---------------------------------------------------------------------------- */
-var boardHelper_1 = __importDefault(require("../board/boardHelper"));
+var index_1 = require("../board/index");
 var constant_1 = require("./constant");
 /**
  * King has attacked, this will effect jumping
@@ -40,14 +37,14 @@ var KAttacked = /** @class */ (function () {
         this.whiteKing = false;
         this.blackKing = false;
         if (kAttackedStr) {
-            var bh = boardHelper_1.default;
-            this.whiteKing = !!~kAttackedStr.indexOf(bh.toWhitePiece(bh.PIECE_TYPE_SDECH));
-            this.blackKing = !!~kAttackedStr.indexOf(bh.PIECE_TYPE_SDECH);
+            var bh = index_1.boardHelper;
+            this.whiteKing = !!~kAttackedStr.indexOf(bh.toWhitePiece(index_1.PIECE_TYPE_SDECH));
+            this.blackKing = !!~kAttackedStr.indexOf(index_1.PIECE_TYPE_SDECH);
         }
     }
     KAttacked.prototype.toString = function () {
-        var str = "" + (this.whiteKing ? boardHelper_1.default.toWhitePiece(boardHelper_1.default.PIECE_TYPE_SDECH) : constant_1.NOT_SET);
-        str += "" + (this.blackKing ? boardHelper_1.default.PIECE_TYPE_SDECH : constant_1.NOT_SET);
+        var str = "" + (this.whiteKing ? index_1.boardHelper.toWhitePiece(index_1.PIECE_TYPE_SDECH) : constant_1.NOT_SET);
+        str += "" + (this.blackKing ? index_1.PIECE_TYPE_SDECH : constant_1.NOT_SET);
         return str;
     };
     return KAttacked;

@@ -27,8 +27,12 @@
  *---------------------------------------------------------------------------- */
 import Piece from './Piece';
 import Pos from './Pos';
-import boardHelper from '../board/boardHelper';
-import jsis from '../board/jsis';
+import {
+    boardHelper,
+    jsis,
+    BOARD_SEPARATOR,
+    EMPTY_PIECE,
+} from '../board/index';
 import { DEFAULT_BOARD_STR } from './constant';
 
 /**
@@ -53,7 +57,7 @@ export default class Board {
         }
         this.poses = newBoardStr.split('').map((type: string, i: number) => {
             const xy = boardHelper.nerdPosToXY(i);
-            return new Pos(xy.x, xy.y, type === boardHelper.EMPTY_PIECE ? null : new Piece(type));
+            return new Pos(xy.x, xy.y, type === EMPTY_PIECE ? null : new Piece(type));
         });
     }
 
@@ -66,7 +70,7 @@ export default class Board {
     }
 
     compress(str: string) {
-        const reg = new RegExp(`(\\${boardHelper.EMPTY_PIECE}+)`, 'g');
+        const reg = new RegExp(`(\\${EMPTY_PIECE}+)`, 'g');
         return str.replace(reg, ($1: any) => $1.length);
     }
 
@@ -75,7 +79,7 @@ export default class Board {
             // $1 == 3 => '...', bh6 => 'bh......'
             return Array.from({
                 length: $1,
-            }, () => boardHelper.EMPTY_PIECE).join('');
+            }, () => EMPTY_PIECE).join('');
         });
     }
 
@@ -83,7 +87,7 @@ export default class Board {
         const str = this.poses.map((pos, i) => {
             const p = pos.toPString();
             if (i && i % 8 === 0 && i !== boardHelper.getSubBoardNumber()) {
-                return `${boardHelper.BOARD_SEPARATOR}${p}`;
+                return `${BOARD_SEPARATOR}${p}`;
             }
             return p;
         }).join('');
