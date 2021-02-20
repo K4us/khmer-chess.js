@@ -1,31 +1,29 @@
 import Rectangle from './Rectangle';
-declare const boardHelper: {
+import Point from './Point';
+declare class BoardHelper {
     getPieceCharArray(): string[];
     getColorArray(): string[];
     isValidPiecesString(str: string, onlyPiece?: any): boolean;
-    toWhitePiece: (str: string) => string;
-    toBlackPiece: (str: string) => string;
-    isValidPosXY(point: {
-        x: any;
-        y: any;
-    }, y: any): any;
-    isValidPiece: (piece: any) => boolean;
-    isWhite: (c: any) => boolean;
-    isBlack: (c: any) => boolean;
-    codeP: (h: any, v: any) => {
+    toWhitePiece(str: string): string;
+    toBlackPiece(str: string): string;
+    isValidPosXY(point: Point | number, y?: number): boolean;
+    isValidPiece(piece: any): boolean;
+    isWhite(c: any): boolean;
+    isBlack(c: any): boolean;
+    codeP(h: any, v: any): {
         h: any;
         v: any;
     };
-    p: (x: any, y: any) => {
+    p(x: any, y: any): {
         x: any;
         y: any;
     };
-    res: (width: any, height: any) => {
+    res(width: any, height: any): {
         width: any;
         height: any;
     };
-    rect: (x: any, y: any, width: any, height: any) => Rectangle;
-    getSubBoardNumber: () => number;
+    rect(x: any, y: any, width: any, height: any): Rectangle;
+    getSubBoardNumber(): number;
     nerdPosToXY(p: any): any;
     nerdXyToPos(x: any, y?: any): any;
     indexCodeToPos(code: string): any;
@@ -33,17 +31,17 @@ declare const boardHelper: {
         x: string | number;
         y: number;
     }): string;
-    xyToIndexCode(x: any, y: any): any;
-    posToIndexCode(p: any): any;
+    xyToIndexCode(x: any, y: any): string;
+    posToIndexCode(p: any): string;
     isPosInBoard(posInBoard: number): boolean;
     getCharPieceFromString(piecesString: string, posInBoard: any): string;
     getPieceProperties(code: string | number): {
         color: string;
         type: string;
     };
-    getCharPieceInPos(posInBoard: any, piecesString: any): any;
-    getPieceInPos(posInBoard: any, y: any, piecesString: any): {
-        isValidPiece: any;
+    getCharPieceInPos(posInBoard: any, piecesString: any): string;
+    getPieceInPos(posInBoard: any, y: any, piecesString?: any): {
+        isValidPiece: boolean;
         color: string;
         type: string;
     };
@@ -54,14 +52,17 @@ declare const boardHelper: {
         x: number;
         y: number;
     }, color: any): any;
-    getPieceCanMovePoses(type: string | number, pos: any, color: any): any[];
+    getPieceCanMovePoses(type: string, pos: any, color: any): any[];
     getPieceCanMovePosesValid(type: any, pos: any, color: any, piecesString: any): any[];
     replacePiecesString(piecesString: string, c: any, p: number): string;
     injectPiece(piecesString: string, pos1: any, pos2: any): string;
     getPieceCode(color: any, type: any): string;
-    getKingWillInDanger(color: any, piecesString: string | any[]): any[];
-    getKingInDanger(color: any, piecesString: string | any[]): any[];
-    numToCodeP(number: number): any;
+    getKingWillInDanger(color: any, piecesString: string | any[]): string[];
+    getKingInDanger(color: any, piecesString: string | any[]): string[];
+    numToCodeP(number: number): {
+        h: any;
+        v: any;
+    };
     numToCode(number: any): string;
     generatePosesCanMove(type: any, pos: any, color: any, piecesString: any, isHaveMoved: any): any[];
     isCharPiecesInBoard(c: any, piecesString: string | any[]): boolean;
@@ -80,13 +81,14 @@ declare const boardHelper: {
     };
     isStateCount(c: string | number, piecesString: any): boolean;
     checkCountable(color: string | number, piecesString: any): boolean;
-    checkCount(color: string | number, piecesString: any, force: any): any[];
+    checkCount(color: string | number, piecesString: any, force: any): number[];
     getHashKey(val: any): string;
     getPieceKeyByProp(prop: {
         color: any;
         type: any;
     }): string;
-    getPieceKeyByName(name: any[]): any;
+    getPieceKeyByName(name: any[]): string;
     oppositeColor(color: any): "w" | "b";
-};
-export default boardHelper;
+}
+declare const _default: BoardHelper;
+export default _default;

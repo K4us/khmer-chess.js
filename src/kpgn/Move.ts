@@ -30,7 +30,7 @@ export default class Move {
     to: string;
     jump = false;
     capture: string
-    constructor(from: string, to: string, jump = false, capture: string) {
+    constructor(from: string, to: string, jump = false, capture: string = '') {
         this.from = from;
         this.to = to;
         this.jump = jump;

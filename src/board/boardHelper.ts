@@ -51,7 +51,7 @@ import Point from './Point';
 const mask = genMask();
 
 let allPiecesString: any = null;
-const boardHelper = {
+class BoardHelper {
     getPieceCharArray() {
         return [
             PIECE_TYPE_TOUK,
@@ -62,13 +62,13 @@ const boardHelper = {
             PIECE_TYPE_TREY,
             PIECE_TYPE_BORK,
         ];
-    },
+    }
     getColorArray() {
         return [
             PIECE_COLOR_WHITE,
             PIECE_COLOR_BLACK,
         ];
-    },
+    }
     isValidPiecesString(str: string, onlyPiece?: any) {
         if (jsis.isNull(allPiecesString)) {
             allPiecesString = [
@@ -84,16 +84,16 @@ const boardHelper = {
         return !str.split('').some((c: any) => {
             return !~ruler.indexOf(c);
         });
-    },
+    }
 
     toWhitePiece(str: string) {
         return str.toUpperCase();
-    },
+    }
     toBlackPiece(str: string) {
         return str.toLowerCase();
-    },
+    }
 
-    isValidPosXY(point: Point | number, y: number) {
+    isValidPosXY(point: Point | number, y?: number) {
         if (jsis.isUndefined(point)) {
             return false;
         }
@@ -103,15 +103,31 @@ const boardHelper = {
         const newPoint = point as Point;
         return !jsis.isUndefined(newPoint.x) && !jsis.isUndefined(newPoint.y) &&
             this.rect(0, 0, ROW_LAST_INDEX, ROW_LAST_INDEX).isContainsPoint(newPoint);
-    },
-    isValidPiece: (piece: any) => piece !== EMPTY_PIECE,
-    isWhite: (c: any) => c === PIECE_COLOR_WHITE,
-    isBlack: (c: any) => c === PIECE_COLOR_BLACK,
-    codeP: (h: any, v: any) => ({ h, v }),
-    p: (x: any, y: any) => ({ x, y }),
-    res: (width: any, height: any) => ({ width, height }),
-    rect: (x: any, y: any, width: any, height: any) => new Rectangle(x, y, width, height),
-    getSubBoardNumber: () => ROW_NUMBER * ROW_NUMBER,
+    }
+    isValidPiece(piece: any) {
+        return piece !== EMPTY_PIECE;
+    }
+    isWhite(c: any) {
+        return c === PIECE_COLOR_WHITE;
+    }
+    isBlack(c: any) {
+        return c === PIECE_COLOR_BLACK;
+    }
+    codeP(h: any, v: any) {
+        return ({ h, v });
+    }
+    p(x: any, y: any) {
+        return ({ x, y });
+    }
+    res(width: any, height: any) {
+        return ({ width, height });
+    }
+    rect(x: any, y: any, width: any, height: any) {
+        return new Rectangle(x, y, width, height);
+    }
+    getSubBoardNumber() {
+        return ROW_NUMBER * ROW_NUMBER;
+    }
     nerdPosToXY(p: any) {
         if (jsis.isNumber(p.x) && jsis.isNumber(p.y)) {
             return p;
@@ -122,24 +138,24 @@ const boardHelper = {
             return new Point(x, y);
         }
         return null;
-    },
+    }
     nerdXyToPos(x: any, y?: any) {
         if (!jsis.isUndefined(y)) {
             return x + y * ROW_NUMBER;
         }
         return x.x + x.y * ROW_NUMBER;
-    },
+    }
     indexCodeToPos(code: string) {
         const x = HORIZONTAL_CODE_LETTERS.indexOf(code[0]);
         const y = Number(code[1]) - 1;
         return this.nerdXyToPos(x, y);
-    },
-    pointToIndexCode(p: { x: string | number; y: number; }) {
+    }
+    pointToIndexCode(p: { x: number; y: number; }) {
         return `${HORIZONTAL_CODE_LETTERS[p.x]}${p.y + 1}`;
-    },
+    }
     xyToIndexCode(x: any, y: any) {
         return this.pointToIndexCode(new Point(x, y));
-    },
+    }
     posToIndexCode(p: any) {
         if (jsis.isNumber(p.x) && jsis.isNumber(p.y)) {
             return this.pointToIndexCode(p);
@@ -150,28 +166,28 @@ const boardHelper = {
             return this.xyToIndexCode(x, y);
         }
         return null;
-    },
+    }
     isPosInBoard(posInBoard: number) {
         return jsis.isNumber(posInBoard) &&
             posInBoard >= 0 && posInBoard <= this.getSubBoardNumber() - 1;
-    },
+    }
     getCharPieceFromString(piecesString: string, posInBoard: any) {
         if (this.isPosInBoard(posInBoard) && piecesString.length === this.getSubBoardNumber()) {
             return piecesString.charAt(posInBoard);
         }
         return EMPTY_PIECE;
-    },
+    }
     getPieceProperties(code: string | number) {
         const h = pieceHash[code];
         return {
             color: h ? h[0] : PIECE_COLOR_EMPTY,
             type: h ? h[1] : EMPTY_PIECE,
         };
-    },
+    }
     getCharPieceInPos(posInBoard: any, piecesString: any) {
         return this.getCharPieceFromString(piecesString, posInBoard);
-    },
-    getPieceInPos(posInBoard: any, y: any, piecesString: any) {
+    }
+    getPieceInPos(posInBoard: any, y: any, piecesString?: any) {
         if (jsis.isNumber(y)) {
             posInBoard = this.nerdXyToPos(posInBoard, y);
         } else if (jsis.isString(y)) {
@@ -189,15 +205,15 @@ const boardHelper = {
             color: color,
             type: type,
         };
-    },
+    }
     convertMask(p: { x: number; y: number; }, pos: { x: number; y: number; }, color: any) {
         const sign = this.isWhite(color) ? 1 : -1;
         pos = this.nerdPosToXY(pos);
         p.x = p.x * sign + pos.x;
         p.y = p.y * sign + pos.y;
-        return this.isValidPosXY(p) ? this.nerdXyToPos(p) : null;
-    },
-    getPieceCanMovePoses(type: string | number, pos: any, color: any) {
+        return this.isValidPosXY(p as Point) ? this.nerdXyToPos(p) : null;
+    }
+    getPieceCanMovePoses(type: string, pos: any, color: any) {
         const poses: any[] = [];
         mask[type].forEach((_pos: any[]) => {
             const p = this.convertMask(new Point(_pos[0], _pos[1]), pos, color);
@@ -206,7 +222,7 @@ const boardHelper = {
             }
         });
         return poses;
-    },
+    }
     getPieceCanMovePosesValid(type: any, pos: any, color: any, piecesString: any) {
         const _poses = this.getPieceCanMovePoses(type, pos, color);
         let p, distPiece;
@@ -254,10 +270,10 @@ const boardHelper = {
             }
         }
         return poses;
-    },
+    }
     replacePiecesString(piecesString: string, c: any, p: number) {
         return piecesString.substring(0, p) + c + piecesString.substring(p + 1);
-    },
+    }
     injectPiece(piecesString: string, pos1: any, pos2: any) {
         const c = piecesString.charAt(pos1);
         if (!this.isCharPiecesInBoard(c, piecesString)) {
@@ -266,7 +282,7 @@ const boardHelper = {
         piecesString = this.replacePiecesString(piecesString, EMPTY_PIECE, pos1);
         piecesString = this.replacePiecesString(piecesString, c, pos2);
         return piecesString;
-    },
+    }
     getPieceCode(color: any, type: any) {
         const val = color + type;
         for (const k in pieceHash) {
@@ -275,7 +291,7 @@ const boardHelper = {
             }
         }
         return EMPTY_PIECE;
-    },
+    }
     getKingWillInDanger(color: any, piecesString: string | any[]) {
         const kingPos = piecesString.indexOf(this.getPieceCode(color, PIECE_TYPE_SDECH));
         const n = piecesString.length;
@@ -283,7 +299,7 @@ const boardHelper = {
         for (let i = 0; i < n; i++) {
             p = this.getPieceInPos(i, piecesString);
             if (p.isValidPiece && p.color !== color && p.type === PIECE_TYPE_TOUK) {
-                _poses = this.getPieceCanMovePoses(p.type, i, p.color, piecesString);
+                _poses = this.getPieceCanMovePoses(p.type, i, p.color);
                 for (j = 0; j < _poses.length; j++) {
                     if (_poses[j] === kingPos) {
                         return [this.numToCode(i), this.numToCode(kingPos)];
@@ -292,7 +308,7 @@ const boardHelper = {
             }
         }
         return null;
-    },
+    }
     getKingInDanger(color: any, piecesString: string | any[]) {
         const kingPos = piecesString.indexOf(this.getPieceCode(color, PIECE_TYPE_SDECH));
         const n = piecesString.length;
@@ -309,14 +325,14 @@ const boardHelper = {
             }
         }
         return null;
-    },
+    }
     numToCodeP(number: number) {
         return this.codeP(HORIZONTAL_CODE_LETTERS[number % 8], ((number / 8 | 0) + 1));
-    },
+    }
     numToCode(number: any) {
         const codeP = this.numToCodeP(number);
         return `${codeP.h}${codeP.v}`;
-    },
+    }
     generatePosesCanMove(type: any, pos: any, color: any, piecesString: any, isHaveMoved: any) {
         let p;
         const _poses = this.getPieceCanMovePosesValid(type, pos, color, piecesString);
@@ -350,18 +366,18 @@ const boardHelper = {
             }
         }
         return poses;
-    },
+    }
     isCharPiecesInBoard(c: any, piecesString: string | any[]) {
         return !!~piecesString.indexOf(c);
-    },
+    }
     getPiecesInBoard(piecesString: string) {
         return piecesString.split('').filter((c: any) => {
             return this.isValidPiece(c);
         });
-    },
+    }
     isHaveCaptured(piecesString: any) {
         return this.getPiecesInBoard(piecesString).length < ROW_NUMBER * 4;
-    },
+    }
     filterPieceInBoard(piecesString: string) {
         const whitePieces = [];
         const blackPieces = [];
@@ -387,7 +403,7 @@ const boardHelper = {
             whitePieces: whitePieces,
             blackPieces: blackPieces,
         };
-    },
+    }
     extractPiecesToArray(piecesString: { split: (arg0: string) => any; forEach: (arg0: (e: any) => void) => void; }) {
         piecesString = piecesString.split('');
         const pieceAll: { [x: string]: any[];[x: number]: undefined[]; } = {
@@ -402,19 +418,19 @@ const boardHelper = {
             pieceAll[prop.color].push(prop.type);
         });
         return pieceAll;
-    },
+    }
     isStateCount(c: string | number, piecesString: any) {
         const allPieces = this.extractPiecesToArray(piecesString);
         return allPieces[c].length === 1;
-    },
+    }
     checkCountable(color: string | number, piecesString: any) {
         const pieceAll = this.extractPiecesToArray(piecesString);
         const weaker = pieceAll[color];
         const stronger = pieceAll[this.oppositeColor(color)];
         return weaker.length <= 2 && stronger.length >= 2;
-    },
+    }
     checkCount(color: string | number, piecesString: any, force: any) {
-        const countChar = (str: { join: (arg0: string) => { (): any; new(): any; split: { (arg0: any): { (): any; new(): any; length: number; }; new(): any; }; }; }, c: any) => {
+        const countChar = (str: string[], c: string) => {
             return str.join('').split(c).length - 1;
         };
         const charExist = (str: string | any[], c: any) => {
@@ -444,14 +460,14 @@ const boardHelper = {
             return [0, 64];
         }
         return null;
-    },
+    }
 
     getHashKey(val: any) {
         const keys = Object.keys(pieceHash).filter((key) => {
             return pieceHash[key] === val;
         });
         return keys.length === 1 ? keys[0] : EMPTY_PIECE;
-    },
+    }
     getPieceKeyByProp(prop: { color: any; type: any; }) {
         let prop1;
         for (const key in pieceHash) {
@@ -461,16 +477,16 @@ const boardHelper = {
             }
         }
         return EMPTY_PIECE;
-    },
+    }
     getPieceKeyByName(name: any[]) {
         return this.getPieceKeyByProp({
             color: name[0],
             type: name[1],
         });
-    },
+    }
     oppositeColor(color: any) {
         return this.isWhite(color) ? PIECE_COLOR_BLACK : PIECE_COLOR_WHITE;
-    },
+    }
 };
 
-export default boardHelper;
+export default new BoardHelper();

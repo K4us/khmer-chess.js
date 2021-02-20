@@ -4,6 +4,6 @@ export default class Pos {
     y: number;
     piece: Piece;
     constructor(x: number, y: number, piece: Piece | null);
-    toString(): any;
+    toString(): string;
     toPString(): string;
 }

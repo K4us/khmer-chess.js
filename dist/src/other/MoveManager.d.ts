@@ -44,7 +44,7 @@ export default class MoveManager {
         piecesString: any;
         force: any;
     }): {
-        countingBlack: any[];
-        countingWhite: any[];
+        countingBlack: number[];
+        countingWhite: number[];
     };
 }
