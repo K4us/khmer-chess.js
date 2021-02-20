@@ -25,24 +25,39 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  *---------------------------------------------------------------------------- */
+import { Piece } from '../ren';
+
 export default class Move {
-    from: string;
-    to: string;
-    jump = false;
-    capture: string
-    constructor(from: string, to: string, jump = false, capture: string = '') {
-        this.from = from;
-        this.to = to;
-        this.jump = jump;
-        this.capture = capture;
+    fromIndex: number;
+    toIndex: number;
+    isJumping = false; // King or Queen would jump on first start
+    capturedPiece: Piece | null;
+    constructor(fromIndex: number, toIndex: number,
+        capturedPiece: Piece | null,
+        isJumping?: boolean) {
+        this.fromIndex = fromIndex;
+        this.toIndex = toIndex;
+        this.capturedPiece = capturedPiece;
+        this.isJumping = !!isJumping;
+    }
+
+    // Spec: Fc5d6xf => White fish (F) moved from c5 to d6 killed black fish (f)
+    static fromMovedString() {
+        // TODO: translate string
+        return new Move(0, 8, null, false);
+    }
+
+    toString() {
+        // TODO: implement this
+        return 'Fc5d6xf';
     }
 
     toJson() {
         return {
-            from: this.from,
-            to: this.to,
-            jump: this.jump,
-            capture: this.capture,
+            fromIndex: this.fromIndex,
+            toIndex: this.toIndex,
+            isJumping: this.isJumping,
+            capturedPiece: this.capturedPiece ? this.capturedPiece.toString() : null,
         };
     }
 }
