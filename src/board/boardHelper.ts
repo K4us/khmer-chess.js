@@ -46,6 +46,7 @@ import {
 } from './constant';
 import { PIECE_COLOR_EMPTY } from './todo-board-helper';
 import Rectangle from './Rectangle';
+import Point from './Point';
 
 const mask = genMask();
 
@@ -85,18 +86,23 @@ const boardHelper = {
         });
     },
 
-    toWhitePiece: (str: string) => str.toUpperCase(),
-    toBlackPiece: (str: string) => str.toLowerCase(),
+    toWhitePiece(str: string) {
+        return str.toUpperCase();
+    },
+    toBlackPiece(str: string) {
+        return str.toLowerCase();
+    },
 
-    isValidPosXY(point: { x: any; y: any; }, y: any) {
+    isValidPosXY(point: Point | number, y: number) {
         if (jsis.isUndefined(point)) {
             return false;
         }
         if (!jsis.isUndefined(y)) {
-            point = this.p(point, y);
+            point = new Point(point as number, y);
         }
-        return !jsis.isUndefined(point.x) && !jsis.isUndefined(point.y) &&
-            this.rect(0, 0, ROW_LAST_INDEX, ROW_LAST_INDEX).isContainsPoint(point);
+        const newPoint = point as Point;
+        return !jsis.isUndefined(newPoint.x) && !jsis.isUndefined(newPoint.y) &&
+            this.rect(0, 0, ROW_LAST_INDEX, ROW_LAST_INDEX).isContainsPoint(newPoint);
     },
     isValidPiece: (piece: any) => piece !== EMPTY_PIECE,
     isWhite: (c: any) => c === PIECE_COLOR_WHITE,
@@ -113,7 +119,7 @@ const boardHelper = {
         if (jsis.isNumber(p)) {
             const x = p % ROW_NUMBER;
             const y = Math.floor(p / ROW_NUMBER);
-            return this.p(x, y);
+            return new Point(x, y);
         }
         return null;
     },
@@ -132,7 +138,7 @@ const boardHelper = {
         return `${HORIZONTAL_CODE_LETTERS[p.x]}${p.y + 1}`;
     },
     xyToIndexCode(x: any, y: any) {
-        return this.pointToIndexCode(this.p(x, y));
+        return this.pointToIndexCode(new Point(x, y));
     },
     posToIndexCode(p: any) {
         if (jsis.isNumber(p.x) && jsis.isNumber(p.y)) {
@@ -194,7 +200,7 @@ const boardHelper = {
     getPieceCanMovePoses(type: string | number, pos: any, color: any) {
         const poses: any[] = [];
         mask[type].forEach((_pos: any[]) => {
-            const p = this.convertMask(this.p(_pos[0], _pos[1]), pos, color);
+            const p = this.convertMask(new Point(_pos[0], _pos[1]), pos, color);
             if (!jsis.isNull(p)) {
                 poses.push(p);
             }
@@ -317,18 +323,18 @@ const boardHelper = {
         const isHaveCaptured = this.isHaveCaptured(piecesString);
         if (type === PIECE_TYPE_SDECH) {
             if (!isHaveCaptured && !isHaveMoved) {
-                p = this.convertMask(this.p(2, 1), pos, color);
+                p = this.convertMask(new Point(2, 1), pos, color);
                 if (p && !this.getPieceInPos(p, piecesString).isValidPiece) {
                     _poses.push(p);
                 }
-                p = this.convertMask(this.p(-2, 1), pos, color);
+                p = this.convertMask(new Point(-2, 1), pos, color);
                 if (p && !this.getPieceInPos(p, piecesString).isValidPiece) {
                     _poses.push(p);
                 }
             }
         } else if (type === PIECE_TYPE_NEANG) {
             if (!isHaveCaptured && !isHaveMoved) {
-                p = this.convertMask(this.p(-0, 2), pos, color);
+                p = this.convertMask(new Point(-0, 2), pos, color);
                 if (p && !this.getPieceInPos(p, piecesString).isValidPiece) {
                     _poses.push(p);
                 }
