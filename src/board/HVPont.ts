@@ -1,7 +1,3 @@
-import { HORIZONTAL_CODE_LETTERS } from "./constant";
-import jsis from "./jsis";
-import Point from "./Point";
-
 /*
  * Copyright (c) 2021, K4us
  * Author: Raksa Eng <eng.raksa@gmail.com>
@@ -29,6 +25,9 @@ import Point from "./Point";
  * POSSIBILITY OF SUCH DAMAGE.
  *
  *---------------------------------------------------------------------------- */
+import { HORIZONTAL_CODE_LETTERS } from './constant';
+import jsis from './jsis';
+
 export default class HVPont {
     h: string;
     v: number;

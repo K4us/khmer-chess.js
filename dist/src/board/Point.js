@@ -1,3 +1,8 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
 /*
  * Copyright (c) 2021, K4us
  * Author: Raksa Eng <eng.raksa@gmail.com>
@@ -25,21 +30,24 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  *---------------------------------------------------------------------------- */
-import { ROW_NUMBER } from './constant';
-import jsis from './jsis';
-
-export default class Point {
-    x: number;
-    y: number;
-    get index() {
-        return this.y * ROW_NUMBER + this.x;
-    }
-    constructor(x: number, y?: number) {
-        if (jsis.isUndefined(y)) {
-            x = x % ROW_NUMBER;
-            y = Math.floor(x / ROW_NUMBER);
+var constant_1 = require("./constant");
+var jsis_1 = __importDefault(require("./jsis"));
+var Point = /** @class */ (function () {
+    function Point(x, y) {
+        if (jsis_1.default.isUndefined(y)) {
+            x = x % constant_1.ROW_NUMBER;
+            y = Math.floor(x / constant_1.ROW_NUMBER);
         }
         this.x = x;
         this.y = y;
     }
-}
+    Object.defineProperty(Point.prototype, "index", {
+        get: function () {
+            return this.y * constant_1.ROW_NUMBER + this.x;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    return Point;
+}());
+exports.default = Point;

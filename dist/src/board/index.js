@@ -47,4 +47,8 @@ var genMask_1 = require("./genMask");
 Object.defineProperty(exports, "genMask", { enumerable: true, get: function () { return genMask_1.default; } });
 var jsis_1 = require("./jsis");
 Object.defineProperty(exports, "jsis", { enumerable: true, get: function () { return jsis_1.default; } });
+var Point_1 = require("./Point");
+Object.defineProperty(exports, "Point", { enumerable: true, get: function () { return Point_1.default; } });
+var HVPont_1 = require("./HVPont");
+Object.defineProperty(exports, "HVPont", { enumerable: true, get: function () { return HVPont_1.default; } });
 __exportStar(require("./constant"), exports);

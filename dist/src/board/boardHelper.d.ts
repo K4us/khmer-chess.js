@@ -1,16 +1,6 @@
-export declare class Rectangle {
-    x: any;
-    y: any;
-    width: any;
-    height: any;
-    constructor(x: any, y: any, width: any, height: any);
-    isContainsPoint(point: {
-        x: any;
-        y: any;
-    }): boolean;
-}
+import Rectangle from './Rectangle';
 declare const boardHelper: {
-    getPieceCharArray(): any[];
+    getPieceCharArray(): string[];
     getColorArray(): string[];
     isValidPiecesString(str: string, onlyPiece?: any): boolean;
     toWhitePiece: (str: string) => string;
@@ -38,7 +28,7 @@ declare const boardHelper: {
     getSubBoardNumber: () => number;
     nerdPosToXY(p: any): any;
     nerdXyToPos(x: any, y?: any): any;
-    indexCodeToPos(code: any[]): any;
+    indexCodeToPos(code: string): any;
     pointToIndexCode(p: {
         x: string | number;
         y: number;
@@ -46,16 +36,16 @@ declare const boardHelper: {
     xyToIndexCode(x: any, y: any): any;
     posToIndexCode(p: any): any;
     isPosInBoard(posInBoard: number): boolean;
-    getCharPieceFromString(piecesString: string, posInBoard: any): any;
+    getCharPieceFromString(piecesString: string, posInBoard: any): string;
     getPieceProperties(code: string | number): {
         color: string;
-        type: any;
+        type: string;
     };
     getCharPieceInPos(posInBoard: any, piecesString: any): any;
     getPieceInPos(posInBoard: any, y: any, piecesString: any): {
         isValidPiece: any;
         color: string;
-        type: any;
+        type: string;
     };
     convertMask(p: {
         x: number;
@@ -68,7 +58,7 @@ declare const boardHelper: {
     getPieceCanMovePosesValid(type: any, pos: any, color: any, piecesString: any): any[];
     replacePiecesString(piecesString: string, c: any, p: number): string;
     injectPiece(piecesString: string, pos1: any, pos2: any): string;
-    getPieceCode(color: any, type: any): any;
+    getPieceCode(color: any, type: any): string;
     getKingWillInDanger(color: any, piecesString: string | any[]): any[];
     getKingInDanger(color: any, piecesString: string | any[]): any[];
     numToCodeP(number: number): any;
@@ -91,11 +81,11 @@ declare const boardHelper: {
     isStateCount(c: string | number, piecesString: any): boolean;
     checkCountable(color: string | number, piecesString: any): boolean;
     checkCount(color: string | number, piecesString: any, force: any): any[];
-    getHashKey(val: any): any;
+    getHashKey(val: any): string;
     getPieceKeyByProp(prop: {
         color: any;
         type: any;
-    }): any;
+    }): string;
     getPieceKeyByName(name: any[]): any;
     oppositeColor(color: any): "w" | "b";
 };

@@ -1,3 +1,8 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
 /*
  * Copyright (c) 2021, K4us
  * Author: Raksa Eng <eng.raksa@gmail.com>
@@ -25,21 +30,38 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  *---------------------------------------------------------------------------- */
-import { ROW_NUMBER } from './constant';
-import jsis from './jsis';
-
-export default class Point {
-    x: number;
-    y: number;
-    get index() {
-        return this.y * ROW_NUMBER + this.x;
-    }
-    constructor(x: number, y?: number) {
-        if (jsis.isUndefined(y)) {
-            x = x % ROW_NUMBER;
-            y = Math.floor(x / ROW_NUMBER);
+var constant_1 = require("./constant");
+var jsis_1 = __importDefault(require("./jsis"));
+var HVPont = /** @class */ (function () {
+    function HVPont(h, v) {
+        if (jsis_1.default.isUndefined(v)) {
+            h = h[0];
+            v = h[1];
         }
-        this.x = x;
-        this.y = y;
+        this.h = h;
+        this.v = Number(v);
     }
-}
+    Object.defineProperty(HVPont.prototype, "x", {
+        get: function () {
+            return constant_1.HORIZONTAL_CODE_LETTERS.indexOf(this.h);
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(HVPont.prototype, "y", {
+        get: function () {
+            return this.v - 1;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(HVPont.prototype, "indexCode", {
+        get: function () {
+            return "" + this.h + this.v;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    return HVPont;
+}());
+exports.default = HVPont;

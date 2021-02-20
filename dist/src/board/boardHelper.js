@@ -10,7 +10,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Rectangle = void 0;
 /*
  * Copyright (c) 2021, K4us
  * Author: Raksa Eng <eng.raksa@gmail.com>
@@ -42,36 +41,19 @@ var jsis_1 = __importDefault(require("./jsis"));
 var genMask_1 = __importDefault(require("./genMask"));
 var constant_1 = require("./constant");
 var todo_board_helper_1 = require("./todo-board-helper");
+var Rectangle_1 = __importDefault(require("./Rectangle"));
 var mask = genMask_1.default();
-var Rectangle = /** @class */ (function () {
-    function Rectangle(x, y, width, height) {
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
-    }
-    Rectangle.prototype.isContainsPoint = function (point) {
-        var x = point.x, y = point.y;
-        var isContainsPoint = this.x <= x &&
-            (this.x + this.width) >= x &&
-            this.y <= y &&
-            (this.y + this.height) >= y;
-        return isContainsPoint;
-    };
-    return Rectangle;
-}());
-exports.Rectangle = Rectangle;
 var allPiecesString = null;
 var boardHelper = {
     getPieceCharArray: function () {
         return [
-            this.PIECE_TYPE_TOUK,
-            this.PIECE_TYPE_SES,
-            this.PIECE_TYPE_KOL,
-            this.PIECE_TYPE_SDECH,
-            this.PIECE_TYPE_NEANG,
-            this.PIECE_TYPE_TREY,
-            this.PIECE_TYPE_BORK,
+            constant_1.PIECE_TYPE_TOUK,
+            constant_1.PIECE_TYPE_SES,
+            constant_1.PIECE_TYPE_KOL,
+            constant_1.PIECE_TYPE_SDECH,
+            constant_1.PIECE_TYPE_NEANG,
+            constant_1.PIECE_TYPE_TREY,
+            constant_1.PIECE_TYPE_BORK,
         ];
     },
     getColorArray: function () {
@@ -84,12 +66,12 @@ var boardHelper = {
         var _this = this;
         if (jsis_1.default.isNull(allPiecesString)) {
             allPiecesString = __spreadArrays(this.getPieceCharArray(), this.getPieceCharArray().map(function (c) { return _this.toWhitePiece(c); }), [
-                this.EMPTY_PIECE,
-                this.BOARD_SEPARATOR,
+                constant_1.EMPTY_PIECE,
+                constant_1.BOARD_SEPARATOR,
             ]);
         }
         var ruler = onlyPiece ? allPiecesString.filter(function (c) {
-            return !~[_this.EMPTY_PIECE, _this.BOARD_SEPARATOR].indexOf(c);
+            return !~[constant_1.EMPTY_PIECE, constant_1.BOARD_SEPARATOR].indexOf(c);
         }) : allPiecesString;
         return !str.split('').some(function (c) {
             return !~ruler.indexOf(c);
@@ -105,7 +87,7 @@ var boardHelper = {
             point = this.p(point, y);
         }
         return !jsis_1.default.isUndefined(point.x) && !jsis_1.default.isUndefined(point.y) &&
-            this.rect(0, 0, this.ROW_LAST_INDEX, this.ROW_LAST_INDEX).isContainsPoint(point);
+            this.rect(0, 0, constant_1.ROW_LAST_INDEX, constant_1.ROW_LAST_INDEX).isContainsPoint(point);
     },
     isValidPiece: function (piece) { return piece !== constant_1.EMPTY_PIECE; },
     isWhite: function (c) { return c === constant_1.PIECE_COLOR_WHITE; },
@@ -113,7 +95,7 @@ var boardHelper = {
     codeP: function (h, v) { return ({ h: h, v: v }); },
     p: function (x, y) { return ({ x: x, y: y }); },
     res: function (width, height) { return ({ width: width, height: height }); },
-    rect: function (x, y, width, height) { return new Rectangle(x, y, width, height); },
+    rect: function (x, y, width, height) { return new Rectangle_1.default(x, y, width, height); },
     getSubBoardNumber: function () { return constant_1.ROW_NUMBER * constant_1.ROW_NUMBER; },
     nerdPosToXY: function (p) {
         if (jsis_1.default.isNumber(p.x) && jsis_1.default.isNumber(p.y)) {
@@ -133,12 +115,12 @@ var boardHelper = {
         return x.x + x.y * constant_1.ROW_NUMBER;
     },
     indexCodeToPos: function (code) {
-        var x = this.HORIZONTAL_CODE_LETTERS.indexOf(code[0]);
+        var x = constant_1.HORIZONTAL_CODE_LETTERS.indexOf(code[0]);
         var y = Number(code[1]) - 1;
         return this.nerdXyToPos(x, y);
     },
     pointToIndexCode: function (p) {
-        return "" + this.HORIZONTAL_CODE_LETTERS[p.x] + (p.y + 1);
+        return "" + constant_1.HORIZONTAL_CODE_LETTERS[p.x] + (p.y + 1);
     },
     xyToIndexCode: function (x, y) {
         return this.pointToIndexCode(this.p(x, y));
@@ -162,13 +144,13 @@ var boardHelper = {
         if (this.isPosInBoard(posInBoard) && piecesString.length === this.getSubBoardNumber()) {
             return piecesString.charAt(posInBoard);
         }
-        return this.EMPTY_PIECE;
+        return constant_1.EMPTY_PIECE;
     },
     getPieceProperties: function (code) {
         var h = constant_1.pieceHash[code];
         return {
             color: h ? h[0] : todo_board_helper_1.PIECE_COLOR_EMPTY,
-            type: h ? h[1] : this.EMPTY_PIECE,
+            type: h ? h[1] : constant_1.EMPTY_PIECE,
         };
     },
     getCharPieceInPos: function (posInBoard, piecesString) {
@@ -183,7 +165,7 @@ var boardHelper = {
         }
         var piece = this.getCharPieceInPos(posInBoard, piecesString);
         var color = constant_1.PIECE_COLOR_WHITE;
-        var type = this.PIECE_TYPE_TREY;
+        var type = constant_1.PIECE_TYPE_TREY;
         if (this.isValidPiece(piece)) {
             var pr = this.getPieceProperties(piece);
             color = pr.color;
@@ -224,16 +206,16 @@ var boardHelper = {
             distPiece = this.getPieceInPos(p.x, p.y, piecesString);
             if (distPiece.isValidPiece) {
                 if (color === distPiece.color ||
-                    (type === this.PIECE_TYPE_TREY && p.x === thisPos.x)) {
+                    (type === constant_1.PIECE_TYPE_TREY && p.x === thisPos.x)) {
                     p = null;
                 }
             }
             else {
-                if (type === this.PIECE_TYPE_TREY && p.x !== thisPos.x) {
+                if (type === constant_1.PIECE_TYPE_TREY && p.x !== thisPos.x) {
                     p = null;
                 }
             }
-            if (!jsis_1.default.isNull(p) && type === this.PIECE_TYPE_TOUK) {
+            if (!jsis_1.default.isNull(p) && type === constant_1.PIECE_TYPE_TOUK) {
                 var _x = thisPos.x;
                 var _y = thisPos.y;
                 var _n = void 0, _s = void 0;
@@ -272,7 +254,7 @@ var boardHelper = {
         if (!this.isCharPiecesInBoard(c, piecesString)) {
             return null;
         }
-        piecesString = this.replacePiecesString(piecesString, this.EMPTY_PIECE, pos1);
+        piecesString = this.replacePiecesString(piecesString, constant_1.EMPTY_PIECE, pos1);
         piecesString = this.replacePiecesString(piecesString, c, pos2);
         return piecesString;
     },
@@ -283,15 +265,15 @@ var boardHelper = {
                 return k;
             }
         }
-        return this.EMPTY_PIECE;
+        return constant_1.EMPTY_PIECE;
     },
     getKingWillInDanger: function (color, piecesString) {
-        var kingPos = piecesString.indexOf(this.getPieceCode(color, this.PIECE_TYPE_SDECH));
+        var kingPos = piecesString.indexOf(this.getPieceCode(color, constant_1.PIECE_TYPE_SDECH));
         var n = piecesString.length;
         var _poses, p, j;
         for (var i = 0; i < n; i++) {
             p = this.getPieceInPos(i, piecesString);
-            if (p.isValidPiece && p.color !== color && p.type === this.PIECE_TYPE_TOUK) {
+            if (p.isValidPiece && p.color !== color && p.type === constant_1.PIECE_TYPE_TOUK) {
                 _poses = this.getPieceCanMovePoses(p.type, i, p.color, piecesString);
                 for (j = 0; j < _poses.length; j++) {
                     if (_poses[j] === kingPos) {
@@ -303,7 +285,7 @@ var boardHelper = {
         return null;
     },
     getKingInDanger: function (color, piecesString) {
-        var kingPos = piecesString.indexOf(this.getPieceCode(color, this.PIECE_TYPE_SDECH));
+        var kingPos = piecesString.indexOf(this.getPieceCode(color, constant_1.PIECE_TYPE_SDECH));
         var n = piecesString.length;
         var _poses, p, j;
         for (var i = 0; i < n; i++) {
@@ -320,7 +302,7 @@ var boardHelper = {
         return null;
     },
     numToCodeP: function (number) {
-        return this.codeP(this.HORIZONTAL_CODE_LETTERS[number % 8], ((number / 8 | 0) + 1));
+        return this.codeP(constant_1.HORIZONTAL_CODE_LETTERS[number % 8], ((number / 8 | 0) + 1));
     },
     numToCode: function (number) {
         var codeP = this.numToCodeP(number);
@@ -330,7 +312,7 @@ var boardHelper = {
         var p;
         var _poses = this.getPieceCanMovePosesValid(type, pos, color, piecesString);
         var isHaveCaptured = this.isHaveCaptured(piecesString);
-        if (type === this.PIECE_TYPE_SDECH) {
+        if (type === constant_1.PIECE_TYPE_SDECH) {
             if (!isHaveCaptured && !isHaveMoved) {
                 p = this.convertMask(this.p(2, 1), pos, color);
                 if (p && !this.getPieceInPos(p, piecesString).isValidPiece) {
@@ -342,7 +324,7 @@ var boardHelper = {
                 }
             }
         }
-        else if (type === this.PIECE_TYPE_NEANG) {
+        else if (type === constant_1.PIECE_TYPE_NEANG) {
             if (!isHaveCaptured && !isHaveMoved) {
                 p = this.convertMask(this.p(-0, 2), pos, color);
                 if (p && !this.getPieceInPos(p, piecesString).isValidPiece) {
@@ -409,7 +391,7 @@ var boardHelper = {
             _a[constant_1.PIECE_COLOR_WHITE] = [],
             _a);
         piecesString.forEach(function (e) {
-            if (e === _this.EMPTY_PIECE) {
+            if (e === constant_1.EMPTY_PIECE) {
                 return;
             }
             var prop = _this.getPieceProperties(e);
@@ -438,19 +420,19 @@ var boardHelper = {
         var weaker = pieceAll[color];
         var stronger = pieceAll[this.oppositeColor(color)];
         if (weaker.length === 1 && stronger.length > 1) {
-            if (!charExist(stronger, this.PIECE_TYPE_TREY)) {
+            if (!charExist(stronger, constant_1.PIECE_TYPE_TREY)) {
                 var count = 64;
-                var toukCount = countChar(stronger, this.PIECE_TYPE_TOUK);
+                var toukCount = countChar(stronger, constant_1.PIECE_TYPE_TOUK);
                 if (toukCount) {
                     count = toukCount > 1 ? 8 : 16;
                 }
-                else if (countChar(stronger, this.PIECE_TYPE_KOL) > 1) {
+                else if (countChar(stronger, constant_1.PIECE_TYPE_KOL) > 1) {
                     count = 22;
                 }
-                else if (countChar(stronger, this.PIECE_TYPE_SES) > 1) {
+                else if (countChar(stronger, constant_1.PIECE_TYPE_SES) > 1) {
                     count = 32;
                 }
-                else if (countChar(stronger, this.PIECE_TYPE_KOL)) {
+                else if (countChar(stronger, constant_1.PIECE_TYPE_KOL)) {
                     count = 44;
                 }
                 return [stronger.length + 1, count];
@@ -466,7 +448,7 @@ var boardHelper = {
         var keys = Object.keys(constant_1.pieceHash).filter(function (key) {
             return constant_1.pieceHash[key] === val;
         });
-        return keys.length === 1 ? keys[0] : this.EMPTY_PIECE;
+        return keys.length === 1 ? keys[0] : constant_1.EMPTY_PIECE;
     },
     getPieceKeyByProp: function (prop) {
         var prop1;
@@ -476,7 +458,7 @@ var boardHelper = {
                 return key;
             }
         }
-        return this.EMPTY_PIECE;
+        return constant_1.EMPTY_PIECE;
     },
     getPieceKeyByName: function (name) {
         return this.getPieceKeyByProp({

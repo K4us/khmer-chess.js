@@ -1,4 +1,7 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 /*
  * Copyright (c) 2021, K4us
@@ -28,6 +31,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
  *
  *---------------------------------------------------------------------------- */
 var _1 = require(".");
+var boardHelper_1 = __importDefault(require("./board/boardHelper"));
 test('KhmerChess should work', function () {
     expect(_1.KhmerChess.title).toBe('khmer-chess');
+    expect(boardHelper_1.default).toBe(boardHelper_1.default);
 });

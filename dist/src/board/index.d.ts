@@ -3,4 +3,6 @@ export { default as boardEventController } from './boardEventController';
 export { default as boardHelper } from './boardHelper';
 export { default as genMask } from './genMask';
 export { default as jsis } from './jsis';
+export { default as Point } from './Point';
+export { default as HVPont } from './HVPont';
 export * from './constant';
