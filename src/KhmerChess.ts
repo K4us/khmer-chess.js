@@ -25,8 +25,6 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  *---------------------------------------------------------------------------- */
-
-/* eslint-disable no-irregular-whitespace */
 import config from '../package.json';
 import { KPGN, Move } from './kpgn/index';
 import MoveManager from './other/MoveManager';
