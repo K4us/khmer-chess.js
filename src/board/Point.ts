@@ -1,3 +1,6 @@
+import { HORIZONTAL_CODE_LETTERS, ROW_NUMBER } from "./constant";
+import jsis from "./jsis";
+
 /*
  * Copyright (c) 2021, K4us
  * Author: Raksa Eng <eng.raksa@gmail.com>
@@ -25,11 +28,18 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  *---------------------------------------------------------------------------- */
-export { default as Rectangle } from './Rectangle';
-export { default as boardEventController } from './boardEventController';
-export { default as boardHelper } from './boardHelper';
-export { default as genMask } from './genMask';
-export { default as jsis } from './jsis';
-export { default as Point } from './Point';
-export { default as HVPont } from './HVPont';
-export * from './constant';
+export default class Point {
+    x: number;
+    y: number;
+    get index() {
+        return this.y * ROW_NUMBER + this.x;
+    }
+    constructor(x: number, y?: number) {
+        if (jsis.isUndefined(y)) {
+            x = x % ROW_NUMBER;
+            y = Math.floor(x / ROW_NUMBER);
+        }
+        this.x = x;
+        this.y = y;
+    }
+}

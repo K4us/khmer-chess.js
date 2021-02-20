@@ -1,3 +1,7 @@
+import { HORIZONTAL_CODE_LETTERS } from "./constant";
+import jsis from "./jsis";
+import Point from "./Point";
+
 /*
  * Copyright (c) 2021, K4us
  * Author: Raksa Eng <eng.raksa@gmail.com>
@@ -25,11 +29,25 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  *---------------------------------------------------------------------------- */
-export { default as Rectangle } from './Rectangle';
-export { default as boardEventController } from './boardEventController';
-export { default as boardHelper } from './boardHelper';
-export { default as genMask } from './genMask';
-export { default as jsis } from './jsis';
-export { default as Point } from './Point';
-export { default as HVPont } from './HVPont';
-export * from './constant';
+export default class HVPont {
+    h: string;
+    v: number;
+    get x() {
+        return HORIZONTAL_CODE_LETTERS.indexOf(this.h);
+    }
+    get y() {
+        return this.v - 1;
+    }
+    get indexCode() {
+        return `${this.h}${this.v}`;
+    }
+    constructor(h: string, v?: string | number) {
+        if (jsis.isUndefined(v)) {
+            h = h[0];
+            v = h[1];
+        }
+        this.h = h;
+        this.v = Number(v);
+    }
+
+}

@@ -133,7 +133,7 @@ const boardHelper = {
         }
         return x.x + x.y * ROW_NUMBER;
     },
-    indexCodeToPos(code: any[]) {
+    indexCodeToPos(code: string) {
         const x = this.HORIZONTAL_CODE_LETTERS.indexOf(code[0]);
         const y = Number(code[1]) - 1;
         return this.nerdXyToPos(x, y);
