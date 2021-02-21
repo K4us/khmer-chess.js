@@ -29,7 +29,7 @@ import Piece from './Piece';
 import {
     jsis,
     EMPTY_PIECE,
-} from '../board/index';
+} from '../brain/index';
 import Point from './Point';
 
 export default class PieceIndex {

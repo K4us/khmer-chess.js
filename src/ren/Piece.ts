@@ -37,8 +37,8 @@ import {
     PIECE_TYPE_NEANG,
     EMPTY_PIECE,
     BOARD_SEPARATOR,
-} from '../board/constant';
-import jsis from '../board/jsis';
+} from '../brain/constant';
+import jsis from '../brain/jsis';
 
 
 export default class Piece {

@@ -25,7 +25,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  *---------------------------------------------------------------------------- */
-export * from './board';
+export * from './brain';
 export * from './kpgn';
 export * from './ren';
 export { default as KhmerChess } from './KhmerChess';

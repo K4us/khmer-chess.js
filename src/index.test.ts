@@ -26,7 +26,7 @@
  *
  *---------------------------------------------------------------------------- */
 import { KhmerChess } from '.';
-import boardHelper from './board/boardHelper';
+import boardHelper from './brain/boardHelper';
 
 
 test('KhmerChess should work', () => {

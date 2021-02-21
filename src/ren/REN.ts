@@ -30,9 +30,9 @@ import KqMoved from './KqMoved';
 import KAttacked from './KAttacked';
 import CountDown from './CountDown';
 import Graveyard from './Graveyard';
-import { jsis } from '../board/index';
+import { jsis } from '../brain/index';
 import { DEFAULT_BOARD_STR, STRING_COUNT } from './constant';
-import { PIECE_COLOR_WHITE } from '../board';
+import { PIECE_COLOR_WHITE } from '../brain';
 
 /**
  * Raksa-Eng Notation

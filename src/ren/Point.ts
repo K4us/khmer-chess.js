@@ -29,7 +29,7 @@ import {
     HORIZONTAL_CODE_LETTERS,
     ROW_NUMBER,
     CELL_COUNT,
-} from '../board/index';
+} from '../brain/index';
 
 export default class Point {
     x: number;

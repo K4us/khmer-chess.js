@@ -26,7 +26,7 @@
  *
  *---------------------------------------------------------------------------- */
 import Piece from './Piece';
-import { boardHelper, PIECE_TYPE_SDECH } from '../board/index';
+import { boardHelper, PIECE_TYPE_SDECH } from '../brain/index';
 
 export default class Graveyard {
     pieces: Piece[] = [];

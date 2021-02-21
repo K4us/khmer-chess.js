@@ -30,7 +30,7 @@ import {
     PIECE_TYPE_NEANG,
     PIECE_TYPE_SDECH,
     boardHelper,
-} from '../board/index';
+} from '../brain/index';
 import Piece from './Piece';
 
 /**

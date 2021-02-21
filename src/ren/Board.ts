@@ -28,8 +28,8 @@
 import Piece from './Piece';
 import PieceIndex from './PieceIndex';
 import { DEFAULT_BOARD_STR } from './constant';
-import { BOARD_SEPARATOR, CELL_COUNT, EMPTY_PIECE } from '../board/constant';
-import jsis from '../board/jsis';
+import { BOARD_SEPARATOR, CELL_COUNT, EMPTY_PIECE } from '../brain/constant';
+import jsis from '../brain/jsis';
 import Point from './Point';
 
 /**

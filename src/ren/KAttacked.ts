@@ -28,7 +28,7 @@
 import {
     boardHelper,
     PIECE_TYPE_SDECH,
-} from '../board/index';
+} from '../brain/index';
 import { NOT_SET } from './constant';
 import Piece from './Piece';
 

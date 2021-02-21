@@ -27,7 +27,7 @@
  *---------------------------------------------------------------------------- */
 import config from '../package.json';
 import { KPGN, Move } from './kpgn/index';
-import MoveManager from './board/MoveManager';
+import MoveManager from './brain/MoveManager';
 import asciiTable from './other/table';
 import { Piece, REN } from './ren/index';
 
