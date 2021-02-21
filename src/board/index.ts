@@ -31,4 +31,5 @@ export { default as boardHelper } from './boardHelper';
 export { default as genMask } from './genMask';
 export { default as jsis } from './jsis';
 export { default as HVPont } from './HVPont';
+export { default as MoveManager } from './MoveManager';
 export * from './constant';

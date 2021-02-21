@@ -55,6 +55,9 @@ export default class Piece {
     }
 
     static fromCharCode(charCode: string) {
+        if (!Piece.isValidPiece(charCode)) {
+            return null;
+        }
         const color = Piece.isWhiteCharCode(charCode) ? PIECE_COLOR_WHITE : PIECE_COLOR_BLACK;
         const type = Piece.toNormalCharCode(charCode);
         return new Piece(type, color);

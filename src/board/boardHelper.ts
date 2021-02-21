@@ -45,7 +45,7 @@ import {
     CELL_COUNT,
 } from './constant';
 import Rectangle from './Rectangle';
-import { Piece, Point } from '../ren/index';
+import { Piece, PieceIndex, Point } from '../ren/index';
 
 const mask = genMask();
 
@@ -77,66 +77,56 @@ class BoardHelper {
     }
     getPieceProperties(pieceCode: string) {
         const h = pieceHash[pieceCode];
-        return {
-            color: h ? h[0] : PIECE_COLOR_EMPTY,
-            type: h ? h[1] : EMPTY_PIECE,
-        };
+        return new Piece(h ? h[1] : EMPTY_PIECE, h ? h[0] : PIECE_COLOR_EMPTY);
     }
     getCharPieceInPos(index: number, piecesString: string) {
         return this.getCharPieceFromString(piecesString, index);
     }
-    getPieceByIndex(index: number, piecesString: string) {
+    getPieceByIndex(index: number, piecesString: string): {
+        isValidPiece: boolean, piece: Piece | null
+    } {
         const piece = this.getCharPieceInPos(index, piecesString);
-        let color = PIECE_COLOR_WHITE; let type = PIECE_TYPE_TREY;
-        if (Piece.isValidPiece(piece)) {
-            const pr = this.getPieceProperties(piece);
-            color = pr.color;
-            type = pr.type;
-        }
         return {
             isValidPiece: Piece.isValidPiece(piece),
-            color: color,
-            type: type,
+            piece: Piece.fromCharCode(piece),
         };
     }
-    convertMask(point: Point, index: number, color: string) {
+    convertMask = (point1: Point, index: number, color: string) => {
         const sign = Piece.isWhiteColor(color) ? 1 : -1;
-        const indexPoint = Point.fromIndex(index);
-        point.x = point.x * sign + indexPoint.x;
-        point.y = point.y * sign + indexPoint.y;
-        const rect = new Rectangle(0, 0, ROW_LAST_INDEX, ROW_LAST_INDEX);
-        return rect.isContainsPoint(point);
-    }
-    getPieceCanMovePoses(index: number, type: string, color: string) {
+        const point2 = Point.fromIndex(index);
+        point1.x = point1.x * sign + point2.x;
+        point1.y = point1.y * sign + point2.y;
+        return point1.index;
+    };
+    getPieceCanMovePoses(index: number, piece: Piece) {
         const pieceIndices: any[] = [];
-        mask[type].forEach((_pos: any[]) => {
-            const newIndex = this.convertMask(new Point(_pos[0], _pos[1]), index, color);
+        mask[piece.type].forEach((_pos: any[]) => {
+            const newIndex = this.convertMask(new Point(_pos[0], _pos[1]), index, piece.color);
             if (!jsis.isNull(newIndex)) {
                 pieceIndices.push(newIndex);
             }
         });
         return pieceIndices;
     }
-    getPieceCanMovePosesValid(index: number, type: string, color: string, piecesString: string) {
-        const _poses = this.getPieceCanMovePoses(index, type, color);
-        let p, distPiece;
+    getPieceCanMovePosesValid(index: number, piece: Piece, piecesString: string) {
+        const _poses = this.getPieceCanMovePoses(index, piece);
         const pieceIndices = [];
         const n = _poses.length;
         const thisPos = Point.fromIndex(index);
         for (let i = 0; i < n; i++) {
-            p = Point.fromIndex(_poses[i]);
-            distPiece = this.getPieceByIndex(p, piecesString);
+            let p = Point.fromIndex(_poses[i]);
+            const distPiece = this.getPieceByIndex(p.index, piecesString);
             if (distPiece.isValidPiece) {
-                if (color === distPiece.color ||
-                    (type === PIECE_TYPE_TREY && p.x === thisPos.x)) {
+                if (piece.color === distPiece.piece.color ||
+                    (piece.type === PIECE_TYPE_TREY && p.x === thisPos.x)) {
                     p = null;
                 }
             } else {
-                if (type === PIECE_TYPE_TREY && p.x !== thisPos.x) {
+                if (piece.type === PIECE_TYPE_TREY && p.x !== thisPos.x) {
                     p = null;
                 }
             }
-            if (!jsis.isNull(p) && type === PIECE_TYPE_TOUK) {
+            if (!jsis.isNull(p) && piece.type === PIECE_TYPE_TOUK) {
                 const _x = thisPos.x;
                 const _y = thisPos.y;
                 let _n, _s;
@@ -178,8 +168,8 @@ class BoardHelper {
         piecesString = this.replacePiecesStringAtIndex(piecesString, c, index2);
         return piecesString;
     }
-    getPieceCode(color: string, type: string) {
-        const val = color + type;
+    getPieceCode(piece: Piece) {
+        const val = piece.color + piece.type;
         for (const k in pieceHash) {
             if (val === pieceHash[k]) {
                 return k;
@@ -188,14 +178,15 @@ class BoardHelper {
         return EMPTY_PIECE;
     }
     getKingWillInDanger(color: string, piecesString: string) {
-        const kingPos = piecesString.indexOf(this.getPieceCode(color, PIECE_TYPE_SDECH));
+        const kingPos = piecesString.indexOf(this.getPieceCode(new Piece(PIECE_TYPE_SDECH, color)));
         const n = piecesString.length;
-        let _poses, p, j;
+        let _poses;
         for (let i = 0; i < n; i++) {
-            p = this.getPieceByIndex(i, piecesString);
-            if (p.isValidPiece && p.color !== color && p.type === PIECE_TYPE_TOUK) {
-                _poses = this.getPieceCanMovePoses(i, p.type, p.color);
-                for (j = 0; j < _poses.length; j++) {
+            const p = this.getPieceByIndex(i, piecesString);
+            if (p.isValidPiece && p.piece.color !== color &&
+                p.piece.type === PIECE_TYPE_TOUK) {
+                _poses = this.getPieceCanMovePoses(i, p.piece);
+                for (let j = 0; j < _poses.length; j++) {
                     if (_poses[j] === kingPos) {
                         return [Point.fromIndex(i), Point.fromIndex(kingPos)];
                     }
@@ -205,14 +196,14 @@ class BoardHelper {
         return null;
     }
     getKingInDanger(color: string, piecesString: string) {
-        const kingPos = piecesString.indexOf(this.getPieceCode(color, PIECE_TYPE_SDECH));
+        const kingPos = piecesString.indexOf(this.getPieceCode(new Piece(PIECE_TYPE_SDECH, color)));
         const n = piecesString.length;
-        let _poses, p, j;
+        let _poses;
         for (let i = 0; i < n; i++) {
-            p = this.getPieceByIndex(i, piecesString);
-            if (p.isValidPiece && p.color !== color) {
-                _poses = this.getPieceCanMovePosesValid(i, p.type, p.color, piecesString);
-                for (j = 0; j < _poses.length; j++) {
+            const p = this.getPieceByIndex(i, piecesString);
+            if (p.isValidPiece && p.piece.color !== color) {
+                _poses = this.getPieceCanMovePosesValid(i, p.piece, piecesString);
+                for (let j = 0; j < _poses.length; j++) {
                     if (_poses[j] === kingPos) {
                         return [Point.fromIndex(i), Point.fromIndex(kingPos)];
                     }
@@ -221,24 +212,23 @@ class BoardHelper {
         }
         return null;
     }
-    generatePosesCanMove(type: string, index: number, color: string, piecesString: string, isHaveMoved: boolean) {
-        let p;
-        const _poses = this.getPieceCanMovePosesValid(index, type, color, piecesString);
+    generatePosesCanMove(index: number, piece: Piece, piecesString: string, isHaveMoved: boolean) {
+        const _poses = this.getPieceCanMovePosesValid(index, piece, piecesString);
         const isHaveCaptured = this.isHaveCaptured(piecesString);
-        if (type === PIECE_TYPE_SDECH) {
+        if (piece.type === PIECE_TYPE_SDECH) {
             if (!isHaveCaptured && !isHaveMoved) {
-                p = this.convertMask(new Point(2, 1), index, color);
+                let p = this.convertMask(new Point(2, 1), index, piece.color);
                 if (p && !this.getPieceByIndex(p, piecesString).isValidPiece) {
                     _poses.push(p);
                 }
-                p = this.convertMask(new Point(-2, 1), index, color);
+                p = this.convertMask(new Point(-2, 1), index, piece.color);
                 if (p && !this.getPieceByIndex(p, piecesString).isValidPiece) {
                     _poses.push(p);
                 }
             }
-        } else if (type === PIECE_TYPE_NEANG) {
+        } else if (piece.type === PIECE_TYPE_NEANG) {
             if (!isHaveCaptured && !isHaveMoved) {
-                p = this.convertMask(new Point(-0, 2), index, color);
+                const p = this.convertMask(new Point(-0, 2), index, piece.color);
                 if (p && !this.getPieceByIndex(p, piecesString).isValidPiece) {
                     _poses.push(p);
                 }
@@ -249,7 +239,7 @@ class BoardHelper {
         let str;
         for (let i = 0; i < n; i++) {
             str = this.injectPiece(piecesString, index, _poses[i]);
-            if (jsis.isNull(this.getKingInDanger(color, str))) {
+            if (jsis.isNull(this.getKingInDanger(piece.color, str))) {
                 pieceIndices.push(Point.fromIndex(_poses[i]));
             }
         }
@@ -267,19 +257,15 @@ class BoardHelper {
         return this.getPiecesInBoard(piecesString).length < ROW_NUMBER * 4;
     }
     filterPieceInBoard(piecesString: string) {
-        const whitePieces = [];
-        const blackPieces = [];
+        const whitePieces: PieceIndex[] = [];
+        const blackPieces: PieceIndex[] = [];
         let c, prop, piece;
         for (let i = 0; i < piecesString.length; i++) {
             c = piecesString.charAt(i);
             if (Piece.isValidPiece(c)) {
                 prop = this.getPieceProperties(c);
-                piece = {
-                    color: prop.color,
-                    type: prop.type,
-                    index: i,
-                    code: Point.fromIndex(i),
-                };
+                const point = Point.fromIndex(i);
+                piece = new PieceIndex(point.x, point.y, prop);
                 if (Piece.isWhiteColor(piece.color)) {
                     whitePieces.push(piece);
                 } else {
@@ -288,8 +274,8 @@ class BoardHelper {
             }
         }
         return {
-            whitePieces: whitePieces,
-            blackPieces: blackPieces,
+            whitePieces,
+            blackPieces,
         };
     }
     extractPiecesToArray(piecesString: string) {
@@ -321,7 +307,7 @@ class BoardHelper {
         const countChar = (str: string[], c: string) => {
             return str.join('').split(c).length - 1;
         };
-        const charExist = (str: string | any[], c: any) => {
+        const charExist = (str: string[], c: string) => {
             return !!~str.indexOf(c);
         };
 
@@ -355,7 +341,7 @@ class BoardHelper {
         });
         return keys.length === 1 ? keys[0] : EMPTY_PIECE;
     }
-    getPieceKeyByProp(prop: { color: string; type: string; }) {
+    getPieceKeyByProp(prop: Piece) {
         let prop1;
         for (const key in pieceHash) {
             prop1 = this.getPieceProperties(key);
@@ -366,10 +352,7 @@ class BoardHelper {
         return EMPTY_PIECE;
     }
     getPieceKeyByName(name: any[]) {
-        return this.getPieceKeyByProp({
-            color: name[0],
-            type: name[1],
-        });
+        return this.getPieceKeyByProp(new Piece(name[1], name[0]));
     }
 };
 

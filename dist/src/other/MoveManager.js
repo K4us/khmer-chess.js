@@ -55,15 +55,16 @@ var MoveManager = /** @class */ (function () {
         this.blackMoves = filter.blackPieces;
         var genMoves = function (pieces) {
             for (var i = 0; i < pieces.length; i++) {
-                var type = pieces[i].type;
+                var piece = pieces[i];
+                var type = piece.type;
                 var isSdech = type === index_1.PIECE_TYPE_SDECH;
                 var isNeang = type === index_1.PIECE_TYPE_NEANG;
                 var isHaveMoved = _this.isSdechMoved;
                 if (!isSdech) {
                     isHaveMoved = isNeang ? _this.isNeangMoved : false;
                 }
-                var canMoveIndexes = index_1.boardHelper.generatePosesCanMove(type, pieces[i].index, pieces[i].color, _this.piecesString, isHaveMoved);
-                pieces[i].canMoveIndexes = canMoveIndexes;
+                var canMoveIndexes = index_1.boardHelper.generatePosesCanMove(piece.index, piece, _this.piecesString, isHaveMoved);
+                piece.canMoveIndexes = canMoveIndexes;
             }
         };
         genMoves(this.whiteMoves);

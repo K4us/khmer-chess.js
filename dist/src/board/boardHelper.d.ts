@@ -1,4 +1,4 @@
-import { Point } from '../ren/index';
+import { Piece, Point } from '../ren/index';
 declare class BoardHelper {
     isValidPiecesString(str: string, onlyPiece?: boolean): boolean;
     getCharPieceFromString(piecesString: string, index: number): string;
@@ -13,14 +13,14 @@ declare class BoardHelper {
         type: string;
     };
     convertMask(point: Point, index: number, color: string): boolean;
-    getPieceCanMovePoses(index: number, type: string, color: string): any[];
-    getPieceCanMovePosesValid(index: number, type: string, color: string, piecesString: string): any[];
+    getPieceCanMovePoses(index: number, piece: Piece): any[];
+    getPieceCanMovePosesValid(index: number, piece: Piece, piecesString: string): any[];
     replacePiecesStringAtIndex(piecesString: string, c: string, index: number): string;
     injectPiece(piecesString: string, index1: number, index2: number): string;
-    getPieceCode(color: string, type: string): string;
+    getPieceCode(piece: Piece): string;
     getKingWillInDanger(color: string, piecesString: string): Point[];
     getKingInDanger(color: string, piecesString: string): Point[];
-    generatePosesCanMove(type: string, index: number, color: string, piecesString: string, isHaveMoved: boolean): any[];
+    generatePosesCanMove(index: number, piece: Piece, piecesString: string, isHaveMoved: boolean): any[];
     isCharPiecesInBoard(code: string, piecesString: string): boolean;
     getPiecesInBoard(piecesString: string): string[];
     isHaveCaptured(piecesString: string): boolean;
@@ -35,10 +35,7 @@ declare class BoardHelper {
     checkCountable(color: string, piecesString: string): boolean;
     checkCount(color: string, piecesString: string, force: boolean): number[];
     getHashKey(val: string): string;
-    getPieceKeyByProp(prop: {
-        color: string;
-        type: string;
-    }): string;
+    getPieceKeyByProp(prop: Piece): string;
     getPieceKeyByName(name: any[]): string;
 }
 declare const _default: BoardHelper;

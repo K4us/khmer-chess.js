@@ -31,14 +31,22 @@ import {
     PIECE_TYPE_NEANG,
     PIECE_TYPE_SDECH,
     boardHelper,
-} from '../board/index';
+} from './index';
 import { Piece } from '../ren';
 
+type OptionsType = {
+    piecesString: string;
+    currentTurn: string;
+    isNeangMoved: boolean;
+    isSdechMoved: boolean;
+    genCanMove: boolean;
+    genCanMoveForAnother: boolean;
+};
 export default class MoveManager {
-    piecesString: any;
-    currentTurn: any;
-    isNeangMoved: any;
-    isSdechMoved: any;
+    piecesString: string;
+    currentTurn: string;
+    isNeangMoved: boolean;
+    isSdechMoved: boolean;
     genCanMove: any;
     genCanMoveForAnother: any;
     whiteMoves: any[];
@@ -49,14 +57,7 @@ export default class MoveManager {
     blackKingWillInDanger: any;
     winColor: any;
     stuckColor: any;
-    init(option: {
-        piecesString: any;
-        currentTurn: any;
-        isNeangMoved: any;
-        isSdechMoved: any;
-        genCanMove: any;
-        genCanMoveForAnother: any;
-    }) {
+    init(option: OptionsType) {
         this.piecesString = option.piecesString;
         this.currentTurn = option.currentTurn;
         this.isNeangMoved = option.isNeangMoved;
@@ -83,7 +84,8 @@ export default class MoveManager {
         this.blackMoves = filter.blackPieces;
         const genMoves = (pieces: string | any[]) => {
             for (let i = 0; i < pieces.length; i++) {
-                const type = pieces[i].type;
+                const piece = pieces[i];
+                const type = piece.type;
                 const isSdech = type === PIECE_TYPE_SDECH;
                 const isNeang = type === PIECE_TYPE_NEANG;
                 let isHaveMoved = this.isSdechMoved;
@@ -91,13 +93,12 @@ export default class MoveManager {
                     isHaveMoved = isNeang ? this.isNeangMoved : false;
                 }
                 const canMoveIndexes = boardHelper.generatePosesCanMove(
-                    type,
-                    pieces[i].index,
-                    pieces[i].color,
+                    piece.index,
+                    piece,
                     this.piecesString,
                     isHaveMoved
                 );
-                pieces[i].canMoveIndexes = canMoveIndexes;
+                piece.canMoveIndexes = canMoveIndexes;
             }
         };
         genMoves(this.whiteMoves);
@@ -161,7 +162,7 @@ export default class MoveManager {
         }
     }
 
-    calcCanMove(option: any) {
+    calcCanMove(option: OptionsType) {
         this.init(option);
         this.generateCanMoves();
         this.cleanPieceNoMove();
@@ -179,7 +180,7 @@ export default class MoveManager {
         };
     }
 
-    calcState(option: any) {
+    calcState(option: OptionsType) {
         this.init(option);
         this.generateCanMoves();
         this.cleanPieceNoMove();
@@ -205,7 +206,7 @@ export default class MoveManager {
         };
     }
 
-    calCount(option: { piecesString: any; force: any; }) {
+    calCount(option: { piecesString: string; force: boolean; }) {
         return {
             countingBlack: boardHelper.checkCount(
                 PIECE_COLOR_BLACK,
