@@ -67,7 +67,9 @@ export default class REN {
         this.graveyard = new Graveyard(graveyardStr);
         const invalidPiecesString = this.isInvalidPieceCount();
         if (invalidPiecesString) {
-            throw new Error(`Invalid piece string board:${boardStr}, graveyard:${graveyardStr}, count:${invalidPiecesString}`);
+            let msg = `Invalid piece string board:${boardStr}`;
+            msg += `, graveyard:${graveyardStr}, count:${invalidPiecesString}`;
+            throw new Error(msg);
         }
     }
 
