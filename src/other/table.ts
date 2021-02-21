@@ -55,7 +55,7 @@ export default function asciiTable(renInstance: REN) {
   const arr = renInstance.board.toMultiArray();
   const str = '  ┏━━━┳━━━┳━━━┳━━━┳━━━┳━━━┳━━━┳━━━┓';
   const result = arr.reverse().reduce((s, subArr, i) => {
-    const rs = subArr.map((p) => ` ${p ? p.toString() : ' '} `).join('┃');
+    const rs = subArr.map((p) => ` ${p ? p.pieceCharCode : ' '} `).join('┃');
     const bottom = i === arr.length - 1 ? '┗━━━┻━━━┻━━━┻━━━┻━━━┻━━━┻━━━┻━━━┛' : '┣━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━┫';
     s += `
 ${8 - i} ┃${rs}┃
@@ -63,7 +63,7 @@ ${8 - i} ┃${rs}┃
     return s;
   }, str);
   const gyTStr = renInstance.graveyard.pieces.map(() => '━━━').join('┳');
-  const gyStr = renInstance.graveyard.pieces.map((p) => ` ${p ? p.toString() : ' '} `).join('┃');
+  const gyStr = renInstance.graveyard.pieces.map((p) => ` ${p ? p.pieceCharCode : ' '} `).join('┃');
   const gyBStr = renInstance.graveyard.pieces.map(() => '━━━').join('┻');
   const graveyardStr = `  ┏${gyTStr}┓
   ┃${gyStr}┃

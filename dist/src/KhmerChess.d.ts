@@ -51,10 +51,10 @@ export default class KhmerChess {
             };
         };
         moves: {
-            from: string;
-            to: string;
-            jump: boolean;
-            capture: string;
+            fromIndex: number;
+            toIndex: number;
+            isJumping: boolean;
+            capturedPiece: string;
         }[];
         ren: string;
         timer: {

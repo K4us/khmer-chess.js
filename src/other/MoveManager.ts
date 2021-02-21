@@ -32,6 +32,7 @@ import {
     PIECE_TYPE_SDECH,
     boardHelper,
 } from '../board/index';
+import { Piece } from '../ren';
 
 export default class MoveManager {
     piecesString: any;
@@ -153,9 +154,9 @@ export default class MoveManager {
         if (this.winColor) {
             return;
         }
-        if (boardHelper.isWhite(this.currentTurn) && !this.whiteMoves.length) {
+        if (Piece.isWhiteColor(this.currentTurn) && !this.whiteMoves.length) {
             this.stuckColor = PIECE_COLOR_WHITE;
-        } else if (boardHelper.isBlack(this.currentTurn) && !this.blackMoves.length) {
+        } else if (Piece.isBlackColor(this.currentTurn) && !this.blackMoves.length) {
             this.stuckColor = PIECE_COLOR_BLACK;
         }
     }
@@ -166,11 +167,11 @@ export default class MoveManager {
         this.cleanPieceNoMove();
         let moves = [];
         if (this.genCanMove) {
-            moves = boardHelper.isWhite(this.currentTurn) ? this.whiteMoves : this.blackMoves;
+            moves = Piece.isWhiteColor(this.currentTurn) ? this.whiteMoves : this.blackMoves;
         }
         let anotherMoves = [];
         if (this.genCanMoveForAnother) {
-            anotherMoves = boardHelper.isBlack(this.currentTurn) ? this.whiteMoves : this.blackMoves;
+            anotherMoves = Piece.isBlackColor(this.currentTurn) ? this.whiteMoves : this.blackMoves;
         }
         return {
             moves,

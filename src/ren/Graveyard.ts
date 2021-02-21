@@ -36,8 +36,8 @@ export default class Graveyard {
                 !boardHelper.isValidPiecesString(graveyardStr, true)) {
                 throw new Error(`Invalid graveyard string ${graveyardStr}`);
             }
-            this.pieces = graveyardStr.split('').map((type, i) => {
-                const p = new Piece(type);
+            this.pieces = graveyardStr.split('').map((charCode, i) => {
+                const p = Piece.fromCharCode(charCode);
                 if (p.type === PIECE_TYPE_SDECH) {
                     throw new Error(`King cannot die graveyard:${graveyardStr}`);
                 }
@@ -48,7 +48,7 @@ export default class Graveyard {
 
     toString() {
         return this.pieces.map((p) => {
-            return p.toString();
+            return p.pieceCharCode;
         }).join('');
     }
 }

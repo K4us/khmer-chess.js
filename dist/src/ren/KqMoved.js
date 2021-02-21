@@ -1,4 +1,7 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 /*
  * Copyright (c) 2021, K4us
@@ -29,6 +32,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  *---------------------------------------------------------------------------- */
 var constant_1 = require("./constant");
 var index_1 = require("../board/index");
+var Piece_1 = __importDefault(require("./Piece"));
 /**
  * King or Queen has moved, the will effect jumping
  */
@@ -40,15 +44,15 @@ var KqMoved = /** @class */ (function () {
         this.blackQueen = false;
         if (kqMovedStr) {
             var bh = index_1.boardHelper;
-            this.whiteKing = !!~kqMovedStr.indexOf(bh.toWhitePiece(index_1.PIECE_TYPE_SDECH));
-            this.whiteQueen = !!~kqMovedStr.indexOf(bh.toWhitePiece(index_1.PIECE_TYPE_NEANG));
+            this.whiteKing = !!~kqMovedStr.indexOf(Piece_1.default.toWhiteCharCode(index_1.PIECE_TYPE_SDECH));
+            this.whiteQueen = !!~kqMovedStr.indexOf(Piece_1.default.toWhiteCharCode(index_1.PIECE_TYPE_NEANG));
             this.blackKing = !!~kqMovedStr.indexOf(index_1.PIECE_TYPE_SDECH);
             this.blackQueen = !!~kqMovedStr.indexOf(index_1.PIECE_TYPE_NEANG);
         }
     }
     KqMoved.prototype.toString = function () {
-        var str = "" + (this.whiteKing ? index_1.boardHelper.toWhitePiece(index_1.PIECE_TYPE_SDECH) : constant_1.NOT_SET);
-        str += "" + (this.whiteQueen ? index_1.boardHelper.toWhitePiece(index_1.PIECE_TYPE_NEANG) : constant_1.NOT_SET);
+        var str = "" + (this.whiteKing ? Piece_1.default.toWhiteCharCode(index_1.PIECE_TYPE_SDECH) : constant_1.NOT_SET);
+        str += "" + (this.whiteQueen ? Piece_1.default.toWhiteCharCode(index_1.PIECE_TYPE_NEANG) : constant_1.NOT_SET);
         str += "" + (this.blackKing ? index_1.PIECE_TYPE_SDECH : constant_1.NOT_SET);
         str += "" + (this.blackQueen ? index_1.PIECE_TYPE_NEANG : constant_1.NOT_SET);
         return str;

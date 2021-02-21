@@ -60,16 +60,16 @@ export default class REN {
     }
 
     isInvalidPieceCount() {
-        const pieces = this.board.poses.map((pos) => {
+        const pieces = this.board.pieceIndices.map((pos) => {
             return pos.piece;
         }).filter((p) => {
             return !jsis.isNull(p);
         }).concat(this.graveyard.pieces).map((p) => {
-            return p.toOrigin();
+            return p.toOriginPiece();
         });
         const piecesCount = pieces.reduce((obj: any, p) => {
-            obj[p.toString()] = obj[p.toString()] || 0;
-            obj[p.toString()]++;
+            obj[p.pieceCharCode] = obj[p.pieceCharCode] || 0;
+            obj[p.pieceCharCode]++;
             return obj;
         }, {});
         const str = Object.keys(piecesCount).map((k) => `${k}${piecesCount[k]}`).sort().join('');

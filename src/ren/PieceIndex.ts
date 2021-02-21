@@ -27,27 +27,24 @@
  *---------------------------------------------------------------------------- */
 import Piece from './Piece';
 import {
-    boardHelper,
     jsis,
     EMPTY_PIECE,
 } from '../board/index';
+import Point from './Point';
 
-export default class Pos {
-    x = 0;
-    y = 0;
-    piece: Piece = null;
+export default class PieceIndex {
+    point: Point;
+    piece: Piece;
     constructor(x: number, y: number, piece: Piece | null) {
-        this.x = x;
-        this.y = y;
+        this.point = new Point(x, y);
         this.piece = piece;
     }
 
-    toString() {
-        const indexCode = boardHelper.xyToIndexCode(this.x, this.y);
-        return indexCode;
+    toCode() {
+        return `${this.piece.pieceCharCode}${this.point.indexCode}`;
     }
 
-    toPString() {
-        return jsis.isNull(this.piece) ? EMPTY_PIECE : this.piece.toString();
+    toCharCode() {
+        return jsis.isNull(this.piece) ? EMPTY_PIECE : this.piece.pieceCharCode;
     }
 }

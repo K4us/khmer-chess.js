@@ -27,21 +27,51 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * POSSIBILITY OF SUCH DAMAGE.
  *
  *---------------------------------------------------------------------------- */
+var ren_1 = require("../ren");
 var Move = /** @class */ (function () {
-    function Move(from, to, jump, capture) {
-        if (jump === void 0) { jump = false; }
-        this.jump = false;
-        this.from = from;
-        this.to = to;
-        this.jump = jump;
-        this.capture = capture;
+    function Move(moveFromIndex, moveToIndex, capturedPiece, isJumping) {
+        this.isJumping = false; // King or Queen would jump on first start
+        this.moveFromIndex = moveFromIndex;
+        this.moveToIndex = moveToIndex;
+        this.capturedPiece = capturedPiece;
+        this.isJumping = !!isJumping;
     }
+    // Spec: Fc5d6xf => White fish (F) moved from c5 to d6 killed black fish (f)
+    Move.fromMovedString = function () {
+        // const str = 'Fc5d6j';
+        var str = 'Fc5d6xf';
+        var piece = ren_1.Piece.fromCharCode(str[0]);
+        var fromIndexCode = str.substr(1, 2);
+        var toIndexCode = str.substr(3, 2);
+        if (str[5] === 'x') {
+            var capturedPieceChar = str[6];
+        }
+        else if (str[5] === 'j') {
+            var isJumping = true;
+        }
+        return 'c5d6';
+    };
+    Move.prototype.toString = function () {
+        // TODO: implement this
+        // const str = 'Fc5d6j';
+        var str = 'Fc5d6xf';
+        var pieceChar = str[0];
+        var fromIndexCode = str.substr(1, 2);
+        var toIndexCode = str.substr(3, 2);
+        if (str[5] === 'x') {
+            var capturedPieceChar = str[6];
+        }
+        else if (str[5] === 'j') {
+            var isJumping = true;
+        }
+        return 'c5d6';
+    };
     Move.prototype.toJson = function () {
         return {
-            from: this.from,
-            to: this.to,
-            jump: this.jump,
-            capture: this.capture,
+            fromIndex: this.moveFromIndex,
+            toIndex: this.moveToIndex,
+            isJumping: this.isJumping,
+            capturedPiece: this.capturedPiece ? this.capturedPiece.pieceCharCode : null,
         };
     };
     return Move;

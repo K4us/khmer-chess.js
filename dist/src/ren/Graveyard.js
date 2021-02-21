@@ -40,8 +40,8 @@ var Graveyard = /** @class */ (function () {
                 !index_1.boardHelper.isValidPiecesString(graveyardStr, true)) {
                 throw new Error("Invalid graveyard string " + graveyardStr);
             }
-            this.pieces = graveyardStr.split('').map(function (type, i) {
-                var p = new Piece_1.default(type);
+            this.pieces = graveyardStr.split('').map(function (charCode, i) {
+                var p = Piece_1.default.fromCharCode(charCode);
                 if (p.type === index_1.PIECE_TYPE_SDECH) {
                     throw new Error("King cannot die graveyard:" + graveyardStr);
                 }
@@ -51,7 +51,7 @@ var Graveyard = /** @class */ (function () {
     }
     Graveyard.prototype.toString = function () {
         return this.pieces.map(function (p) {
-            return p.toString();
+            return p.pieceCharCode;
         }).join('');
     };
     return Graveyard;

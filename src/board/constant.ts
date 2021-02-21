@@ -36,11 +36,13 @@ export const PIECE_TYPE_NEANG = 'q'; // Queen
 export const PIECE_TYPE_TREY = 'f'; // Fish
 export const PIECE_TYPE_BORK = 't'; // Transform fish
 export const EMPTY_PIECE = '.';
+export const PIECE_COLOR_EMPTY = '.';
 export const BOARD_SEPARATOR = '/';
 
 export const ROW_NUMBER = 8;
 export const ROW_FIRST_INDEX = 0;
 export const ROW_LAST_INDEX = 7;
+export const CELL_COUNT = ROW_NUMBER * ROW_NUMBER;
 
 export const HORIZONTAL_CODE_LETTERS = 'abcdefgh';
 export const HORIZONTAL_NOTE_LETTERS = ['ក', 'ខ', 'គ', 'ឃ', 'ង', 'ច', 'ឆ', 'ជ'];

@@ -1,7 +1,4 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 /*
  * Copyright (c) 2021, K4us
@@ -30,24 +27,59 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * POSSIBILITY OF SUCH DAMAGE.
  *
  *---------------------------------------------------------------------------- */
-var constant_1 = require("./constant");
-var jsis_1 = __importDefault(require("./jsis"));
+var index_1 = require("../board/index");
 var Point = /** @class */ (function () {
     function Point(x, y) {
-        if (jsis_1.default.isUndefined(y)) {
-            x = x % constant_1.ROW_NUMBER;
-            y = Math.floor(x / constant_1.ROW_NUMBER);
+        if (x < 0 || x >= index_1.ROW_NUMBER || y < 0 || y >= index_1.ROW_NUMBER) {
+            throw new Error('Invalid point x y');
         }
         this.x = x;
         this.y = y;
     }
     Object.defineProperty(Point.prototype, "index", {
         get: function () {
-            return this.y * constant_1.ROW_NUMBER + this.x;
+            return Point.xyToIndex(this.x, this.y);
         },
         enumerable: false,
         configurable: true
     });
+    Object.defineProperty(Point.prototype, "indexCode", {
+        get: function () {
+            return "" + this.h + this.v;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(Point.prototype, "h", {
+        get: function () {
+            return index_1.HORIZONTAL_CODE_LETTERS[this.x];
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(Point.prototype, "v", {
+        get: function () {
+            return this.y + 1;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Point.fromIndexCode = function (indexCode) {
+        var x = index_1.HORIZONTAL_CODE_LETTERS.indexOf(indexCode[0]);
+        var y = Number(indexCode[1]) - 1;
+        return new Point(x, y);
+    };
+    Point.fromIndex = function (index) {
+        var x = index % index_1.ROW_NUMBER;
+        var y = Math.floor(index / index_1.ROW_NUMBER);
+        return new Point(x, y);
+    };
+    Point.xyToIndex = function (x, y) {
+        return y * index_1.ROW_NUMBER + x;
+    };
+    Point.isIndexInBoard = function (index) {
+        return index >= 0 && index <= index_1.CELL_COUNT - 1;
+    };
     return Point;
 }());
 exports.default = Point;

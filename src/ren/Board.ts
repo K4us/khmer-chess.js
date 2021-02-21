@@ -26,24 +26,26 @@
  *
  *---------------------------------------------------------------------------- */
 import Piece from './Piece';
-import Pos from './Pos';
+import PieceIndex from './PieceIndex';
 import {
     boardHelper,
     jsis,
     BOARD_SEPARATOR,
     EMPTY_PIECE,
+    CELL_COUNT,
 } from '../board/index';
 import { DEFAULT_BOARD_STR } from './constant';
+import { Point } from '.';
 
 /**
  * BHGQKGHB/8/FFFFFFFF/8/8/ffffffff/8/bhgkqghb => bhgqkghb/......../ffffffff/......../......../FFFFFFFF/......../BHGKQGHB
  */
 export default class Board {
-    poses = Array.from({
-        length: boardHelper.getSubBoardNumber(),
+    pieceIndices = Array.from({
+        length: CELL_COUNT,
     }, (_, i) => {
-        const codeP = boardHelper.nerdPosToXY(i);
-        return new Pos(codeP.x, codeP.y, null);
+        const point = Point.fromIndex(i);
+        return new PieceIndex(point.x, point.y, null);
     });
 
     constructor(boardStr: any) {
@@ -51,20 +53,20 @@ export default class Board {
             boardStr = DEFAULT_BOARD_STR;
         }
         const newBoardStr = this.extract(boardStr).replace(/\//g, '');
-        if (newBoardStr.length < boardHelper.getSubBoardNumber() ||
+        if (newBoardStr.length < CELL_COUNT ||
             !boardHelper.isValidPiecesString(newBoardStr)) {
             throw new Error(`Invalid board string ${boardStr}`);
         }
-        this.poses = newBoardStr.split('').map((type: string, i: number) => {
-            const xy = boardHelper.nerdPosToXY(i);
-            return new Pos(xy.x, xy.y, type === EMPTY_PIECE ? null : new Piece(type));
+        this.pieceIndices = newBoardStr.split('').map((charCode: string, i: number) => {
+            const point = Point.fromIndex(i);
+            return new PieceIndex(point.x, point.y, charCode === EMPTY_PIECE ? null : Piece.fromCharCode(charCode));
         });
     }
 
     toMultiArray() {
         const arr: Piece[][] = [[], [], [], [], [], [], [], []];
-        this.poses.forEach((pos) => {
-            arr[pos.y][pos.x] = pos.piece;
+        this.pieceIndices.forEach((pieceIndex) => {
+            arr[pieceIndex.point.y][pieceIndex.point.x] = pieceIndex.piece;
         });
         return arr;
     }
@@ -84,9 +86,9 @@ export default class Board {
     }
 
     toStringFull() {
-        const str = this.poses.map((pos, i) => {
-            const p = pos.toPString();
-            if (i && i % 8 === 0 && i !== boardHelper.getSubBoardNumber()) {
+        const str = this.pieceIndices.map((pos, i) => {
+            const p = pos.toCharCode();
+            if (i && i % 8 === 0 && i !== CELL_COUNT) {
                 return `${BOARD_SEPARATOR}${p}`;
             }
             return p;

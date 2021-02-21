@@ -1,13 +1,16 @@
+import { Piece } from '../ren';
 export default class Move {
-    from: string;
-    to: string;
-    jump: boolean;
-    capture: string;
-    constructor(from: string, to: string, jump: boolean, capture: string);
+    moveFromIndex: number;
+    moveToIndex: number;
+    isJumping: boolean;
+    capturedPiece: Piece | null;
+    constructor(moveFromIndex: number, moveToIndex: number, capturedPiece: Piece | null, isJumping?: boolean);
+    static fromMovedString(): string;
+    toString(): string;
     toJson(): {
-        from: string;
-        to: string;
-        jump: boolean;
-        capture: string;
+        fromIndex: number;
+        toIndex: number;
+        isJumping: boolean;
+        capturedPiece: string;
     };
 }

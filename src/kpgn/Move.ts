@@ -28,36 +28,57 @@
 import { Piece } from '../ren';
 
 export default class Move {
-    fromIndex: number;
-    toIndex: number;
+    moveFromIndex: number;
+    moveToIndex: number;
     isJumping = false; // King or Queen would jump on first start
     capturedPiece: Piece | null;
-    constructor(fromIndex: number, toIndex: number,
+    constructor(moveFromIndex: number, moveToIndex: number,
         capturedPiece: Piece | null,
         isJumping?: boolean) {
-        this.fromIndex = fromIndex;
-        this.toIndex = toIndex;
+        this.moveFromIndex = moveFromIndex;
+        this.moveToIndex = moveToIndex;
         this.capturedPiece = capturedPiece;
         this.isJumping = !!isJumping;
     }
 
     // Spec: Fc5d6xf => White fish (F) moved from c5 to d6 killed black fish (f)
     static fromMovedString() {
-        // TODO: translate string
-        return new Move(0, 8, null, false);
+        // const str = 'Fc5d6j';
+        const str = 'Fc5d6xf';
+        const piece = Piece.fromCharCode(str[0]);
+        const fromIndexCode = str.substr(1, 2);
+        const toIndexCode = str.substr(3, 2);
+        if (str[5] === 'x') {
+            const capturedPieceChar = str[6];
+        } else if (str[5] === 'j') {
+            const isJumping = true;
+        }
+
+        return 'c5d6';
     }
 
     toString() {
         // TODO: implement this
-        return 'Fc5d6xf';
+        // const str = 'Fc5d6j';
+        const str = 'Fc5d6xf';
+        const pieceChar = str[0];
+        const fromIndexCode = str.substr(1, 2);
+        const toIndexCode = str.substr(3, 2);
+        if (str[5] === 'x') {
+            const capturedPieceChar = str[6];
+        } else if (str[5] === 'j') {
+            const isJumping = true;
+        }
+
+        return 'c5d6';
     }
 
     toJson() {
         return {
-            fromIndex: this.fromIndex,
-            toIndex: this.toIndex,
+            fromIndex: this.moveFromIndex,
+            toIndex: this.moveToIndex,
             isJumping: this.isJumping,
-            capturedPiece: this.capturedPiece ? this.capturedPiece.toString() : null,
+            capturedPiece: this.capturedPiece ? this.capturedPiece.pieceCharCode : null,
         };
     }
 }

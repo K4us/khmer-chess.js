@@ -30,6 +30,7 @@ import {
     PIECE_TYPE_SDECH,
 } from '../board/index';
 import { NOT_SET } from './constant';
+import Piece from './Piece';
 
 /**
  * King has attacked, this will effect jumping
@@ -40,13 +41,13 @@ export default class KAttacked {
     constructor(kAttackedStr?: string) {
         if (kAttackedStr) {
             const bh = boardHelper;
-            this.whiteKing = !!~kAttackedStr.indexOf(bh.toWhitePiece(PIECE_TYPE_SDECH));
+            this.whiteKing = !!~kAttackedStr.indexOf(Piece.toWhiteCharCode(PIECE_TYPE_SDECH));
             this.blackKing = !!~kAttackedStr.indexOf(PIECE_TYPE_SDECH);
         }
     }
 
     toString() {
-        let str = `${this.whiteKing ? boardHelper.toWhitePiece(PIECE_TYPE_SDECH) : NOT_SET}`;
+        let str = `${this.whiteKing ? Piece.toWhiteCharCode(PIECE_TYPE_SDECH) : NOT_SET}`;
         str += `${this.blackKing ? PIECE_TYPE_SDECH : NOT_SET}`;
         return str;
     }

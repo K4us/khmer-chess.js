@@ -30,43 +30,70 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var index_1 = require("../board/index");
 var Piece = /** @class */ (function () {
     function Piece(type, color) {
-        if (index_1.jsis.isUndefined(color)) {
-            if (index_1.jsis.isUndefined(type)) {
-                type = index_1.boardHelper.toWhitePiece(index_1.PIECE_TYPE_TREY);
-            }
-            if (index_1.jsis.isUpperCase(type)) {
-                color = index_1.PIECE_COLOR_WHITE;
-            }
-            else {
-                color = index_1.PIECE_COLOR_BLACK;
-            }
-        }
-        type = index_1.boardHelper.toBlackPiece(type);
-        this.type = type;
+        this.type = Piece.toNormalCharCode(type);
         this.color = color;
     }
-    Object.defineProperty(Piece.prototype, "pCode", {
+    Object.defineProperty(Piece.prototype, "pieceCharCode", {
         get: function () {
-            if (this.color === index_1.PIECE_COLOR_WHITE) {
-                return index_1.boardHelper.toWhitePiece(this.type);
+            if (Piece.isWhiteColor(this.color)) {
+                return Piece.toWhiteCharCode(this.type);
             }
             return this.type;
         },
         enumerable: false,
         configurable: true
     });
-    Piece.prototype.toOrigin = function () {
+    Piece.fromCharCode = function (charCode) {
+        var color = Piece.isWhiteCharCode(charCode) ? index_1.PIECE_COLOR_WHITE : index_1.PIECE_COLOR_BLACK;
+        var type = Piece.toNormalCharCode(charCode);
+        return new Piece(type, color);
+    };
+    Piece.prototype.toOriginPiece = function () {
         if (this.type === index_1.PIECE_TYPE_BORK) {
             return new Piece(index_1.PIECE_TYPE_TREY, this.color);
         }
         return this;
     };
-    Piece.prototype.toString = function () {
-        var c = this.type;
-        if (index_1.boardHelper.isWhite(this.color)) {
-            c = index_1.boardHelper.toWhitePiece(c);
-        }
-        return c;
+    Piece.getPieceCharArray = function () {
+        return [
+            index_1.PIECE_TYPE_TOUK,
+            index_1.PIECE_TYPE_SES,
+            index_1.PIECE_TYPE_KOL,
+            index_1.PIECE_TYPE_SDECH,
+            index_1.PIECE_TYPE_NEANG,
+            index_1.PIECE_TYPE_TREY,
+            index_1.PIECE_TYPE_BORK,
+        ];
+    };
+    Piece.getColorArray = function () {
+        return [
+            index_1.PIECE_COLOR_WHITE,
+            index_1.PIECE_COLOR_BLACK,
+        ];
+    };
+    Piece.toWhiteCharCode = function (charCode) {
+        return charCode.toUpperCase();
+    };
+    Piece.isWhiteCharCode = function (charCode) {
+        return index_1.jsis.isUpperCase(charCode);
+    };
+    Piece.toBlackCharCode = function (charCode) {
+        return charCode.toLowerCase();
+    };
+    Piece.toNormalCharCode = function (charCode) {
+        return Piece.toBlackCharCode(charCode);
+    };
+    Piece.isValidPiece = function (piece) {
+        return piece !== index_1.EMPTY_PIECE;
+    };
+    Piece.isWhiteColor = function (c) {
+        return c === index_1.PIECE_COLOR_WHITE;
+    };
+    Piece.isBlackColor = function (c) {
+        return c === index_1.PIECE_COLOR_BLACK;
+    };
+    Piece.oppositeColor = function (color) {
+        return Piece.isWhiteColor(color) ? index_1.PIECE_COLOR_BLACK : index_1.PIECE_COLOR_WHITE;
     };
     return Piece;
 }());

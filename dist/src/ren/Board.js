@@ -31,37 +31,38 @@ Object.defineProperty(exports, "__esModule", { value: true });
  *
  *---------------------------------------------------------------------------- */
 var Piece_1 = __importDefault(require("./Piece"));
-var Pos_1 = __importDefault(require("./Pos"));
+var PieceIndex_1 = __importDefault(require("./PieceIndex"));
 var index_1 = require("../board/index");
 var constant_1 = require("./constant");
+var _1 = require(".");
 /**
  * BHGQKGHB/8/FFFFFFFF/8/8/ffffffff/8/bhgkqghb => bhgqkghb/......../ffffffff/......../......../FFFFFFFF/......../BHGKQGHB
  */
 var Board = /** @class */ (function () {
     function Board(boardStr) {
-        this.poses = Array.from({
-            length: index_1.boardHelper.getSubBoardNumber(),
+        this.pieceIndices = Array.from({
+            length: index_1.CELL_COUNT,
         }, function (_, i) {
-            var codeP = index_1.boardHelper.nerdPosToXY(i);
-            return new Pos_1.default(codeP.x, codeP.y, null);
+            var point = _1.Point.fromIndex(i);
+            return new PieceIndex_1.default(point.x, point.y, null);
         });
         if (index_1.jsis.isUndefined(boardStr)) {
             boardStr = constant_1.DEFAULT_BOARD_STR;
         }
         var newBoardStr = this.extract(boardStr).replace(/\//g, '');
-        if (newBoardStr.length < index_1.boardHelper.getSubBoardNumber() ||
+        if (newBoardStr.length < index_1.CELL_COUNT ||
             !index_1.boardHelper.isValidPiecesString(newBoardStr)) {
             throw new Error("Invalid board string " + boardStr);
         }
-        this.poses = newBoardStr.split('').map(function (type, i) {
-            var xy = index_1.boardHelper.nerdPosToXY(i);
-            return new Pos_1.default(xy.x, xy.y, type === index_1.EMPTY_PIECE ? null : new Piece_1.default(type));
+        this.pieceIndices = newBoardStr.split('').map(function (charCode, i) {
+            var point = _1.Point.fromIndex(i);
+            return new PieceIndex_1.default(point.x, point.y, charCode === index_1.EMPTY_PIECE ? null : Piece_1.default.fromCharCode(charCode));
         });
     }
     Board.prototype.toMultiArray = function () {
         var arr = [[], [], [], [], [], [], [], []];
-        this.poses.forEach(function (pos) {
-            arr[pos.y][pos.x] = pos.piece;
+        this.pieceIndices.forEach(function (pieceIndex) {
+            arr[pieceIndex.point.y][pieceIndex.point.x] = pieceIndex.piece;
         });
         return arr;
     };
@@ -78,9 +79,9 @@ var Board = /** @class */ (function () {
         });
     };
     Board.prototype.toStringFull = function () {
-        var str = this.poses.map(function (pos, i) {
-            var p = pos.toPString();
-            if (i && i % 8 === 0 && i !== index_1.boardHelper.getSubBoardNumber()) {
+        var str = this.pieceIndices.map(function (pos, i) {
+            var p = pos.toCharCode();
+            if (i && i % 8 === 0 && i !== index_1.CELL_COUNT) {
                 return "" + index_1.BOARD_SEPARATOR + p;
             }
             return p;

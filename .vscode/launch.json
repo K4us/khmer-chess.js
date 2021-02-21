@@ -5,22 +5,13 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "type": "pwa-node",
+            "type": "node",
             "request": "launch",
-            "name": "test-ren-helper.js",
-            "skipFiles": [
-                "<node_internals>/**"
+            "name": "ts-code test-index.ts",
+            "program": "${workspaceRoot}/node_modules/.bin/ts-node",
+            "args": [
+                "test-index.ts",
             ],
-            "program": "${workspaceFolder}/test-ren-helper.js"
-        },
-        {
-            "type": "pwa-node",
-            "request": "launch",
-            "name": "test-index.js",
-            "skipFiles": [
-                "<node_internals>/**"
-            ],
-            "program": "${workspaceFolder}/test-index.js"
         }
     ]
 }

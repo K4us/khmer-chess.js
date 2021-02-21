@@ -1,4 +1,7 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 /*
  * Copyright (c) 2021, K4us
@@ -29,6 +32,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  *---------------------------------------------------------------------------- */
 var index_1 = require("../board/index");
 var constant_1 = require("./constant");
+var Piece_1 = __importDefault(require("./Piece"));
 /**
  * King has attacked, this will effect jumping
  */
@@ -38,12 +42,12 @@ var KAttacked = /** @class */ (function () {
         this.blackKing = false;
         if (kAttackedStr) {
             var bh = index_1.boardHelper;
-            this.whiteKing = !!~kAttackedStr.indexOf(bh.toWhitePiece(index_1.PIECE_TYPE_SDECH));
+            this.whiteKing = !!~kAttackedStr.indexOf(Piece_1.default.toWhiteCharCode(index_1.PIECE_TYPE_SDECH));
             this.blackKing = !!~kAttackedStr.indexOf(index_1.PIECE_TYPE_SDECH);
         }
     }
     KAttacked.prototype.toString = function () {
-        var str = "" + (this.whiteKing ? index_1.boardHelper.toWhitePiece(index_1.PIECE_TYPE_SDECH) : constant_1.NOT_SET);
+        var str = "" + (this.whiteKing ? Piece_1.default.toWhiteCharCode(index_1.PIECE_TYPE_SDECH) : constant_1.NOT_SET);
         str += "" + (this.blackKing ? index_1.PIECE_TYPE_SDECH : constant_1.NOT_SET);
         return str;
     };

@@ -1,10 +1,10 @@
 import Piece from './Piece';
-import Pos from './Pos';
+import PieceIndex from './PieceIndex';
 /**
  * BHGQKGHB/8/FFFFFFFF/8/8/ffffffff/8/bhgkqghb => bhgqkghb/......../ffffffff/......../......../FFFFFFFF/......../BHGKQGHB
  */
 export default class Board {
-    poses: Pos[];
+    pieceIndices: PieceIndex[];
     constructor(boardStr: any);
     toMultiArray(): Piece[][];
     compress(str: string): string;

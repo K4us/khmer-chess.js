@@ -57,16 +57,16 @@ var REN = /** @class */ (function () {
         }
     }
     REN.prototype.isInvalidPieceCount = function () {
-        var pieces = this.board.poses.map(function (pos) {
+        var pieces = this.board.pieceIndices.map(function (pos) {
             return pos.piece;
         }).filter(function (p) {
             return !index_1.jsis.isNull(p);
         }).concat(this.graveyard.pieces).map(function (p) {
-            return p.toOrigin();
+            return p.toOriginPiece();
         });
         var piecesCount = pieces.reduce(function (obj, p) {
-            obj[p.toString()] = obj[p.toString()] || 0;
-            obj[p.toString()]++;
+            obj[p.pieceCharCode] = obj[p.pieceCharCode] || 0;
+            obj[p.pieceCharCode]++;
             return obj;
         }, {});
         var str = Object.keys(piecesCount).map(function (k) { return "" + k + piecesCount[k]; }).sort().join('');

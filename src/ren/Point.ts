@@ -25,21 +25,49 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  *---------------------------------------------------------------------------- */
-import { ROW_NUMBER } from './constant';
-import jsis from './jsis';
+import {
+    HORIZONTAL_CODE_LETTERS,
+    ROW_NUMBER,
+    CELL_COUNT,
+} from '../board/index';
 
 export default class Point {
     x: number;
     y: number;
     get index() {
-        return this.y * ROW_NUMBER + this.x;
+        return Point.xyToIndex(this.x, this.y);
     }
-    constructor(x: number, y?: number) {
-        if (jsis.isUndefined(y)) {
-            x = x % ROW_NUMBER;
-            y = Math.floor(x / ROW_NUMBER);
+    get indexCode() {
+        return `${this.h}${this.v}`;
+    }
+    get h() {
+        return HORIZONTAL_CODE_LETTERS[this.x];
+    }
+    get v() {
+        return this.y + 1;
+    }
+    constructor(x: number, y: number) {
+        if (x < 0 || x >= ROW_NUMBER || y < 0 || y >= ROW_NUMBER) {
+            throw new Error('Invalid point x y');
         }
         this.x = x;
         this.y = y;
+    }
+    static fromIndexCode(indexCode: string) {
+        const x = HORIZONTAL_CODE_LETTERS.indexOf(indexCode[0]);
+        const y = Number(indexCode[1]) - 1;
+        return new Point(x, y);
+    }
+
+    static fromIndex(index: number) {
+        const x = index % ROW_NUMBER;
+        const y = Math.floor(index / ROW_NUMBER);
+        return new Point(x, y);
+    }
+    static xyToIndex(x: number, y: number) {
+        return y * ROW_NUMBER + x;
+    }
+    static isIndexInBoard(index: number) {
+        return index >= 0 && index <= CELL_COUNT - 1;
     }
 }

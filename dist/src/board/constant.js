@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.pieceHash = exports.VERTICAL_NOTE_LETTERS_ASCII = exports.HORIZONTAL_NOTE_LETTERS_ASCII = exports.VERTICAL_NOTE_LETTERS = exports.HORIZONTAL_NOTE_LETTERS = exports.HORIZONTAL_CODE_LETTERS = exports.ROW_LAST_INDEX = exports.ROW_FIRST_INDEX = exports.ROW_NUMBER = exports.BOARD_SEPARATOR = exports.EMPTY_PIECE = exports.PIECE_TYPE_BORK = exports.PIECE_TYPE_TREY = exports.PIECE_TYPE_NEANG = exports.PIECE_TYPE_SDECH = exports.PIECE_TYPE_KOL = exports.PIECE_TYPE_SES = exports.PIECE_TYPE_TOUK = exports.PIECE_COLOR_BLACK = exports.PIECE_COLOR_WHITE = void 0;
+exports.pieceHash = exports.VERTICAL_NOTE_LETTERS_ASCII = exports.HORIZONTAL_NOTE_LETTERS_ASCII = exports.VERTICAL_NOTE_LETTERS = exports.HORIZONTAL_NOTE_LETTERS = exports.HORIZONTAL_CODE_LETTERS = exports.CELL_COUNT = exports.ROW_LAST_INDEX = exports.ROW_FIRST_INDEX = exports.ROW_NUMBER = exports.BOARD_SEPARATOR = exports.PIECE_COLOR_EMPTY = exports.EMPTY_PIECE = exports.PIECE_TYPE_BORK = exports.PIECE_TYPE_TREY = exports.PIECE_TYPE_NEANG = exports.PIECE_TYPE_SDECH = exports.PIECE_TYPE_KOL = exports.PIECE_TYPE_SES = exports.PIECE_TYPE_TOUK = exports.PIECE_COLOR_BLACK = exports.PIECE_COLOR_WHITE = void 0;
 /*
  * Copyright (c) 2021, K4us
  * Author: Raksa Eng <eng.raksa@gmail.com>
@@ -38,10 +38,12 @@ exports.PIECE_TYPE_NEANG = 'q'; // Queen
 exports.PIECE_TYPE_TREY = 'f'; // Fish
 exports.PIECE_TYPE_BORK = 't'; // Transform fish
 exports.EMPTY_PIECE = '.';
+exports.PIECE_COLOR_EMPTY = '.';
 exports.BOARD_SEPARATOR = '/';
 exports.ROW_NUMBER = 8;
 exports.ROW_FIRST_INDEX = 0;
 exports.ROW_LAST_INDEX = 7;
+exports.CELL_COUNT = exports.ROW_NUMBER * exports.ROW_NUMBER;
 exports.HORIZONTAL_CODE_LETTERS = 'abcdefgh';
 exports.HORIZONTAL_NOTE_LETTERS = ['ក', 'ខ', 'គ', 'ឃ', 'ង', 'ច', 'ឆ', 'ជ'];
 exports.VERTICAL_NOTE_LETTERS = ['១', '២', '៣', '៤', '៥', '៦', '៧', '៨', '៩', '១០',

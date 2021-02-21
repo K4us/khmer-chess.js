@@ -37,43 +37,27 @@ import {
     PIECE_TYPE_TOUK,
     PIECE_TYPE_KOL,
     PIECE_TYPE_SES,
-    PIECE_TYPE_BORK,
     PIECE_TYPE_SDECH,
     PIECE_TYPE_NEANG,
     ROW_LAST_INDEX,
     BOARD_SEPARATOR,
-    HORIZONTAL_CODE_LETTERS,
+    PIECE_COLOR_EMPTY,
+    CELL_COUNT,
 } from './constant';
-import { PIECE_COLOR_EMPTY } from './todo-board-helper';
 import Rectangle from './Rectangle';
-import Point from './Point';
+import { Piece, Point } from '../ren/index';
 
 const mask = genMask();
 
-let allPiecesString: any = null;
+let allPiecesString: string[] = null;
 class BoardHelper {
-    getPieceCharArray() {
-        return [
-            PIECE_TYPE_TOUK,
-            PIECE_TYPE_SES,
-            PIECE_TYPE_KOL,
-            PIECE_TYPE_SDECH,
-            PIECE_TYPE_NEANG,
-            PIECE_TYPE_TREY,
-            PIECE_TYPE_BORK,
-        ];
-    }
-    getColorArray() {
-        return [
-            PIECE_COLOR_WHITE,
-            PIECE_COLOR_BLACK,
-        ];
-    }
-    isValidPiecesString(str: string, onlyPiece?: any) {
+    isValidPiecesString(str: string, onlyPiece?: boolean) {
         if (jsis.isNull(allPiecesString)) {
             allPiecesString = [
-                ...this.getPieceCharArray(),
-                ...this.getPieceCharArray().map((c: any) => this.toWhitePiece(c)),
+                ...Piece.getPieceCharArray(),
+                ...Piece.getPieceCharArray().map((c: string) => {
+                    return Piece.toWhiteCharCode(c);
+                }),
                 EMPTY_PIECE,
                 BOARD_SEPARATOR,
             ];
@@ -85,152 +69,63 @@ class BoardHelper {
             return !~ruler.indexOf(c);
         });
     }
-
-    toWhitePiece(str: string) {
-        return str.toUpperCase();
-    }
-    toBlackPiece(str: string) {
-        return str.toLowerCase();
-    }
-
-    isValidPosXY(point: Point | number, y?: number) {
-        if (jsis.isUndefined(point)) {
-            return false;
-        }
-        if (!jsis.isUndefined(y)) {
-            point = new Point(point as number, y);
-        }
-        const newPoint = point as Point;
-        return !jsis.isUndefined(newPoint.x) && !jsis.isUndefined(newPoint.y) &&
-            this.rect(0, 0, ROW_LAST_INDEX, ROW_LAST_INDEX).isContainsPoint(newPoint);
-    }
-    isValidPiece(piece: any) {
-        return piece !== EMPTY_PIECE;
-    }
-    isWhite(c: any) {
-        return c === PIECE_COLOR_WHITE;
-    }
-    isBlack(c: any) {
-        return c === PIECE_COLOR_BLACK;
-    }
-    codeP(h: any, v: any) {
-        return ({ h, v });
-    }
-    p(x: any, y: any) {
-        return ({ x, y });
-    }
-    res(width: any, height: any) {
-        return ({ width, height });
-    }
-    rect(x: any, y: any, width: any, height: any) {
-        return new Rectangle(x, y, width, height);
-    }
-    getSubBoardNumber() {
-        return ROW_NUMBER * ROW_NUMBER;
-    }
-    nerdPosToXY(p: any) {
-        if (jsis.isNumber(p.x) && jsis.isNumber(p.y)) {
-            return p;
-        }
-        if (jsis.isNumber(p)) {
-            const x = p % ROW_NUMBER;
-            const y = Math.floor(p / ROW_NUMBER);
-            return new Point(x, y);
-        }
-        return null;
-    }
-    nerdXyToPos(x: any, y?: any) {
-        if (!jsis.isUndefined(y)) {
-            return x + y * ROW_NUMBER;
-        }
-        return x.x + x.y * ROW_NUMBER;
-    }
-    indexCodeToPos(code: string) {
-        const x = HORIZONTAL_CODE_LETTERS.indexOf(code[0]);
-        const y = Number(code[1]) - 1;
-        return this.nerdXyToPos(x, y);
-    }
-    pointToIndexCode(p: { x: number; y: number; }) {
-        return `${HORIZONTAL_CODE_LETTERS[p.x]}${p.y + 1}`;
-    }
-    xyToIndexCode(x: any, y: any) {
-        return this.pointToIndexCode(new Point(x, y));
-    }
-    posToIndexCode(p: any) {
-        if (jsis.isNumber(p.x) && jsis.isNumber(p.y)) {
-            return this.pointToIndexCode(p);
-        }
-        if (jsis.isNumber(p)) {
-            const x = p % ROW_NUMBER;
-            const y = Math.floor(p / ROW_NUMBER);
-            return this.xyToIndexCode(x, y);
-        }
-        return null;
-    }
-    isPosInBoard(posInBoard: number) {
-        return jsis.isNumber(posInBoard) &&
-            posInBoard >= 0 && posInBoard <= this.getSubBoardNumber() - 1;
-    }
-    getCharPieceFromString(piecesString: string, posInBoard: any) {
-        if (this.isPosInBoard(posInBoard) && piecesString.length === this.getSubBoardNumber()) {
-            return piecesString.charAt(posInBoard);
+    getCharPieceFromString(piecesString: string, index: number) {
+        if (Point.isIndexInBoard(index) && piecesString.length === CELL_COUNT) {
+            return piecesString.charAt(index);
         }
         return EMPTY_PIECE;
     }
-    getPieceProperties(code: string | number) {
-        const h = pieceHash[code];
+    getPieceProperties(pieceCode: string) {
+        const h = pieceHash[pieceCode];
         return {
             color: h ? h[0] : PIECE_COLOR_EMPTY,
             type: h ? h[1] : EMPTY_PIECE,
         };
     }
-    getCharPieceInPos(posInBoard: any, piecesString: any) {
-        return this.getCharPieceFromString(piecesString, posInBoard);
+    getCharPieceInPos(index: number, piecesString: string) {
+        return this.getCharPieceFromString(piecesString, index);
     }
-    getPieceInPos(posInBoard: any, y: any, piecesString?: any) {
-        if (jsis.isNumber(y)) {
-            posInBoard = this.nerdXyToPos(posInBoard, y);
-        } else if (jsis.isString(y)) {
-            piecesString = y;
-        }
-        const piece = this.getCharPieceInPos(posInBoard, piecesString);
+    getPieceByIndex(index: number, piecesString: string) {
+        const piece = this.getCharPieceInPos(index, piecesString);
         let color = PIECE_COLOR_WHITE; let type = PIECE_TYPE_TREY;
-        if (this.isValidPiece(piece)) {
+        if (Piece.isValidPiece(piece)) {
             const pr = this.getPieceProperties(piece);
             color = pr.color;
             type = pr.type;
         }
         return {
-            isValidPiece: this.isValidPiece(piece),
+            isValidPiece: Piece.isValidPiece(piece),
             color: color,
             type: type,
         };
     }
-    convertMask(p: { x: number; y: number; }, pos: { x: number; y: number; }, color: any) {
-        const sign = this.isWhite(color) ? 1 : -1;
-        pos = this.nerdPosToXY(pos);
-        p.x = p.x * sign + pos.x;
-        p.y = p.y * sign + pos.y;
-        return this.isValidPosXY(p as Point) ? this.nerdXyToPos(p) : null;
+    convertMask(point: Point, index: number, color: string) {
+        const sign = Piece.isWhiteColor(color) ? 1 : -1;
+        const indexPoint = Point.fromIndex(index);
+        point.x = point.x * sign + indexPoint.x;
+        point.y = point.y * sign + indexPoint.y;
+        const rect = new Rectangle(0, 0, ROW_LAST_INDEX, ROW_LAST_INDEX);
+        return rect.isContainsPoint(point);
     }
-    getPieceCanMovePoses(type: string, pos: any, color: any) {
-        const poses: any[] = [];
+    getPieceCanMovePoses(index: number, type: string, color: string) {
+        const pieceIndices: any[] = [];
         mask[type].forEach((_pos: any[]) => {
-            const p = this.convertMask(new Point(_pos[0], _pos[1]), pos, color);
-            if (!jsis.isNull(p)) {
-                poses.push(p);
+            const newIndex = this.convertMask(new Point(_pos[0], _pos[1]), index, color);
+            if (!jsis.isNull(newIndex)) {
+                pieceIndices.push(newIndex);
             }
         });
-        return poses;
+        return pieceIndices;
     }
-    getPieceCanMovePosesValid(type: any, pos: any, color: any, piecesString: any) {
-        const _poses = this.getPieceCanMovePoses(type, pos, color);
+    getPieceCanMovePosesValid(index: number, type: string, color: string, piecesString: string) {
+        const _poses = this.getPieceCanMovePoses(index, type, color);
         let p, distPiece;
-        const poses = [];
-        const n = _poses.length; const thisPos = this.nerdPosToXY(pos);
+        const pieceIndices = [];
+        const n = _poses.length;
+        const thisPos = Point.fromIndex(index);
         for (let i = 0; i < n; i++) {
-            p = this.nerdPosToXY(_poses[i]);
-            distPiece = this.getPieceInPos(p.x, p.y, piecesString);
+            p = Point.fromIndex(_poses[i]);
+            distPiece = this.getPieceByIndex(p, piecesString);
             if (distPiece.isValidPiece) {
                 if (color === distPiece.color ||
                     (type === PIECE_TYPE_TREY && p.x === thisPos.x)) {
@@ -249,7 +144,7 @@ class BoardHelper {
                     _n = Math.abs(p.y - thisPos.y);
                     _s = thisPos.y < p.y ? 1 : -1;
                     while (--_n > 0) {
-                        if (this.getPieceInPos(_x, _y + _s * _n, piecesString).isValidPiece) {
+                        if (this.getPieceByIndex(Point.xyToIndex(_x, _y + _s * _n), piecesString).isValidPiece) {
                             p = null;
                             break;
                         }
@@ -258,7 +153,7 @@ class BoardHelper {
                     _n = Math.abs(p.x - thisPos.x);
                     _s = thisPos.x < p.x ? 1 : -1;
                     while (--_n > 0) {
-                        if (this.getPieceInPos(_x + _s * _n, _y, piecesString).isValidPiece) {
+                        if (this.getPieceByIndex(Point.xyToIndex(_x + _s * _n, _y), piecesString).isValidPiece) {
                             p = null;
                             break;
                         }
@@ -266,24 +161,24 @@ class BoardHelper {
                 }
             }
             if (!jsis.isNull(p)) {
-                poses.push(_poses[i]);
+                pieceIndices.push(_poses[i]);
             }
         }
-        return poses;
+        return pieceIndices;
     }
-    replacePiecesString(piecesString: string, c: any, p: number) {
-        return piecesString.substring(0, p) + c + piecesString.substring(p + 1);
+    replacePiecesStringAtIndex(piecesString: string, c: string, index: number) {
+        return piecesString.substring(0, index) + c + piecesString.substring(index + 1);
     }
-    injectPiece(piecesString: string, pos1: any, pos2: any) {
-        const c = piecesString.charAt(pos1);
+    injectPiece(piecesString: string, index1: number, index2: number) {
+        const c = piecesString.charAt(index1);
         if (!this.isCharPiecesInBoard(c, piecesString)) {
             return null;
         }
-        piecesString = this.replacePiecesString(piecesString, EMPTY_PIECE, pos1);
-        piecesString = this.replacePiecesString(piecesString, c, pos2);
+        piecesString = this.replacePiecesStringAtIndex(piecesString, EMPTY_PIECE, index1);
+        piecesString = this.replacePiecesStringAtIndex(piecesString, c, index2);
         return piecesString;
     }
-    getPieceCode(color: any, type: any) {
+    getPieceCode(color: string, type: string) {
         const val = color + type;
         for (const k in pieceHash) {
             if (val === pieceHash[k]) {
@@ -292,90 +187,83 @@ class BoardHelper {
         }
         return EMPTY_PIECE;
     }
-    getKingWillInDanger(color: any, piecesString: string | any[]) {
+    getKingWillInDanger(color: string, piecesString: string) {
         const kingPos = piecesString.indexOf(this.getPieceCode(color, PIECE_TYPE_SDECH));
         const n = piecesString.length;
         let _poses, p, j;
         for (let i = 0; i < n; i++) {
-            p = this.getPieceInPos(i, piecesString);
+            p = this.getPieceByIndex(i, piecesString);
             if (p.isValidPiece && p.color !== color && p.type === PIECE_TYPE_TOUK) {
-                _poses = this.getPieceCanMovePoses(p.type, i, p.color);
+                _poses = this.getPieceCanMovePoses(i, p.type, p.color);
                 for (j = 0; j < _poses.length; j++) {
                     if (_poses[j] === kingPos) {
-                        return [this.numToCode(i), this.numToCode(kingPos)];
+                        return [Point.fromIndex(i), Point.fromIndex(kingPos)];
                     }
                 }
             }
         }
         return null;
     }
-    getKingInDanger(color: any, piecesString: string | any[]) {
+    getKingInDanger(color: string, piecesString: string) {
         const kingPos = piecesString.indexOf(this.getPieceCode(color, PIECE_TYPE_SDECH));
         const n = piecesString.length;
         let _poses, p, j;
         for (let i = 0; i < n; i++) {
-            p = this.getPieceInPos(i, piecesString);
+            p = this.getPieceByIndex(i, piecesString);
             if (p.isValidPiece && p.color !== color) {
-                _poses = this.getPieceCanMovePosesValid(p.type, i, p.color, piecesString);
+                _poses = this.getPieceCanMovePosesValid(i, p.type, p.color, piecesString);
                 for (j = 0; j < _poses.length; j++) {
                     if (_poses[j] === kingPos) {
-                        return [this.numToCode(i), this.numToCode(kingPos)];
+                        return [Point.fromIndex(i), Point.fromIndex(kingPos)];
                     }
                 }
             }
         }
         return null;
     }
-    numToCodeP(number: number) {
-        return this.codeP(HORIZONTAL_CODE_LETTERS[number % 8], ((number / 8 | 0) + 1));
-    }
-    numToCode(number: any) {
-        const codeP = this.numToCodeP(number);
-        return `${codeP.h}${codeP.v}`;
-    }
-    generatePosesCanMove(type: any, pos: any, color: any, piecesString: any, isHaveMoved: any) {
+    generatePosesCanMove(type: string, index: number, color: string, piecesString: string, isHaveMoved: boolean) {
         let p;
-        const _poses = this.getPieceCanMovePosesValid(type, pos, color, piecesString);
+        const _poses = this.getPieceCanMovePosesValid(index, type, color, piecesString);
         const isHaveCaptured = this.isHaveCaptured(piecesString);
         if (type === PIECE_TYPE_SDECH) {
             if (!isHaveCaptured && !isHaveMoved) {
-                p = this.convertMask(new Point(2, 1), pos, color);
-                if (p && !this.getPieceInPos(p, piecesString).isValidPiece) {
+                p = this.convertMask(new Point(2, 1), index, color);
+                if (p && !this.getPieceByIndex(p, piecesString).isValidPiece) {
                     _poses.push(p);
                 }
-                p = this.convertMask(new Point(-2, 1), pos, color);
-                if (p && !this.getPieceInPos(p, piecesString).isValidPiece) {
+                p = this.convertMask(new Point(-2, 1), index, color);
+                if (p && !this.getPieceByIndex(p, piecesString).isValidPiece) {
                     _poses.push(p);
                 }
             }
         } else if (type === PIECE_TYPE_NEANG) {
             if (!isHaveCaptured && !isHaveMoved) {
-                p = this.convertMask(new Point(-0, 2), pos, color);
-                if (p && !this.getPieceInPos(p, piecesString).isValidPiece) {
+                p = this.convertMask(new Point(-0, 2), index, color);
+                if (p && !this.getPieceByIndex(p, piecesString).isValidPiece) {
                     _poses.push(p);
                 }
             }
         }
         const n = _poses.length;
-        const poses = [];
+        const pieceIndices = [];
         let str;
         for (let i = 0; i < n; i++) {
-            str = this.injectPiece(piecesString, pos, _poses[i]);
+            str = this.injectPiece(piecesString, index, _poses[i]);
             if (jsis.isNull(this.getKingInDanger(color, str))) {
-                poses.push(this.numToCode(_poses[i]));
+                pieceIndices.push(Point.fromIndex(_poses[i]));
             }
         }
-        return poses;
+        return pieceIndices;
     }
-    isCharPiecesInBoard(c: any, piecesString: string | any[]) {
-        return !!~piecesString.indexOf(c);
+    isCharPiecesInBoard(code: string, piecesString: string) {
+        return !!~piecesString.indexOf(code);
     }
     getPiecesInBoard(piecesString: string) {
-        return piecesString.split('').filter((c: any) => {
-            return this.isValidPiece(c);
+        return piecesString.split('').filter((c: string) => {
+            return Piece.isValidPiece(c);
         });
     }
-    isHaveCaptured(piecesString: any) {
+    isHaveCaptured(piecesString: string) {
         return this.getPiecesInBoard(piecesString).length < ROW_NUMBER * 4;
     }
     filterPieceInBoard(piecesString: string) {
@@ -384,15 +272,15 @@ class BoardHelper {
         let c, prop, piece;
         for (let i = 0; i < piecesString.length; i++) {
             c = piecesString.charAt(i);
-            if (this.isValidPiece(c)) {
+            if (Piece.isValidPiece(c)) {
                 prop = this.getPieceProperties(c);
                 piece = {
                     color: prop.color,
                     type: prop.type,
                     index: i,
-                    code: this.numToCode(i),
+                    code: Point.fromIndex(i),
                 };
-                if (this.isWhite(piece.color)) {
+                if (Piece.isWhiteColor(piece.color)) {
                     whitePieces.push(piece);
                 } else {
                     blackPieces.push(piece);
@@ -404,32 +292,32 @@ class BoardHelper {
             blackPieces: blackPieces,
         };
     }
-    extractPiecesToArray(piecesString: { split: (arg0: string) => any; forEach: (arg0: (e: any) => void) => void; }) {
-        piecesString = piecesString.split('');
-        const pieceAll: { [x: string]: any[];[x: number]: undefined[]; } = {
+    extractPiecesToArray(piecesString: string) {
+        const piecesStringArr = piecesString.split('');
+        const pieceAll: { [x: string]: string[] } = {
             [PIECE_COLOR_BLACK]: [],
             [PIECE_COLOR_WHITE]: [],
         };
-        piecesString.forEach((e: any) => {
-            if (e === EMPTY_PIECE) {
+        piecesStringArr.forEach((c: string) => {
+            if (c === EMPTY_PIECE) {
                 return;
             }
-            const prop = this.getPieceProperties(e);
+            const prop = this.getPieceProperties(c);
             pieceAll[prop.color].push(prop.type);
         });
         return pieceAll;
     }
-    isStateCount(c: string | number, piecesString: any) {
+    isStateCount(c: string, piecesString: string) {
         const allPieces = this.extractPiecesToArray(piecesString);
         return allPieces[c].length === 1;
     }
-    checkCountable(color: string | number, piecesString: any) {
+    checkCountable(color: string, piecesString: string) {
         const pieceAll = this.extractPiecesToArray(piecesString);
         const weaker = pieceAll[color];
-        const stronger = pieceAll[this.oppositeColor(color)];
+        const stronger = pieceAll[Piece.oppositeColor(color)];
         return weaker.length <= 2 && stronger.length >= 2;
     }
-    checkCount(color: string | number, piecesString: any, force: any) {
+    checkCount(color: string, piecesString: string, force: boolean) {
         const countChar = (str: string[], c: string) => {
             return str.join('').split(c).length - 1;
         };
@@ -439,7 +327,7 @@ class BoardHelper {
 
         const pieceAll = this.extractPiecesToArray(piecesString);
         const weaker = pieceAll[color];
-        const stronger = pieceAll[this.oppositeColor(color)];
+        const stronger = pieceAll[Piece.oppositeColor(color)];
         if (weaker.length === 1 && stronger.length > 1) {
             if (!charExist(stronger, PIECE_TYPE_TREY)) {
                 let count = 64;
@@ -461,14 +349,13 @@ class BoardHelper {
         }
         return null;
     }
-
-    getHashKey(val: any) {
+    getHashKey(val: string) {
         const keys = Object.keys(pieceHash).filter((key) => {
             return pieceHash[key] === val;
         });
         return keys.length === 1 ? keys[0] : EMPTY_PIECE;
     }
-    getPieceKeyByProp(prop: { color: any; type: any; }) {
+    getPieceKeyByProp(prop: { color: string; type: string; }) {
         let prop1;
         for (const key in pieceHash) {
             prop1 = this.getPieceProperties(key);
@@ -483,9 +370,6 @@ class BoardHelper {
             color: name[0],
             type: name[1],
         });
-    }
-    oppositeColor(color: any) {
-        return this.isWhite(color) ? PIECE_COLOR_BLACK : PIECE_COLOR_WHITE;
     }
 };
 

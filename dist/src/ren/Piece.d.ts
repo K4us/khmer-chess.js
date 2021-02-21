@@ -1,8 +1,18 @@
 export default class Piece {
     type: string;
     color: string;
-    get pCode(): string;
-    constructor(type: string, color?: string);
-    toOrigin(): Piece;
-    toString(): string;
+    get pieceCharCode(): string;
+    constructor(type: string, color: string);
+    static fromCharCode(charCode: string): Piece;
+    toOriginPiece(): Piece;
+    static getPieceCharArray(): string[];
+    static getColorArray(): string[];
+    static toWhiteCharCode(charCode: string): string;
+    static isWhiteCharCode(charCode: string): boolean;
+    static toBlackCharCode(charCode: string): string;
+    static toNormalCharCode(charCode: string): string;
+    static isValidPiece(piece: string): boolean;
+    static isWhiteColor(c: string): boolean;
+    static isBlackColor(c: string): boolean;
+    static oppositeColor(color: any): "w" | "b";
 }

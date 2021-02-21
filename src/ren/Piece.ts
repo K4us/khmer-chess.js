@@ -30,48 +30,85 @@ import {
     PIECE_COLOR_WHITE,
     PIECE_TYPE_BORK,
     PIECE_TYPE_TREY,
-    boardHelper,
     jsis,
+    PIECE_TYPE_TOUK,
+    PIECE_TYPE_SES,
+    PIECE_TYPE_KOL,
+    PIECE_TYPE_SDECH,
+    PIECE_TYPE_NEANG,
+    EMPTY_PIECE,
 } from '../board/index';
 
 export default class Piece {
     type: string;
     color: string;
-    get pCode() {
-        if (this.color === PIECE_COLOR_WHITE) {
-            return boardHelper.toWhitePiece(this.type);
+    get pieceCharCode() {
+        if (Piece.isWhiteColor(this.color)) {
+            return Piece.toWhiteCharCode(this.type);
         }
         return this.type;
     }
 
-    constructor(type: string, color?: string) {
-        if (jsis.isUndefined(color)) {
-            if (jsis.isUndefined(type)) {
-                type = boardHelper.toWhitePiece(PIECE_TYPE_TREY);
-            }
-            if (jsis.isUpperCase(type)) {
-                color = PIECE_COLOR_WHITE;
-            } else {
-                color = PIECE_COLOR_BLACK;
-            }
-        }
-        type = boardHelper.toBlackPiece(type);
-        this.type = type;
+    constructor(type: string, color: string) {
+        this.type = Piece.toNormalCharCode(type);
         this.color = color;
     }
 
-    toOrigin() {
+    static fromCharCode(charCode: string) {
+        const color = Piece.isWhiteCharCode(charCode) ? PIECE_COLOR_WHITE : PIECE_COLOR_BLACK;
+        const type = Piece.toNormalCharCode(charCode);
+        return new Piece(type, color);
+    }
+
+    toOriginPiece() {
         if (this.type === PIECE_TYPE_BORK) {
             return new Piece(PIECE_TYPE_TREY, this.color);
         }
         return this;
     }
 
-    toString() {
-        let c = this.type;
-        if (boardHelper.isWhite(this.color)) {
-            c = boardHelper.toWhitePiece(c);
-        }
-        return c;
+    static getPieceCharArray() {
+        return [
+            PIECE_TYPE_TOUK,
+            PIECE_TYPE_SES,
+            PIECE_TYPE_KOL,
+            PIECE_TYPE_SDECH,
+            PIECE_TYPE_NEANG,
+            PIECE_TYPE_TREY,
+            PIECE_TYPE_BORK,
+        ];
+    }
+    static getColorArray() {
+        return [
+            PIECE_COLOR_WHITE,
+            PIECE_COLOR_BLACK,
+        ];
+    }
+
+
+    static toWhiteCharCode(charCode: string) {
+        return charCode.toUpperCase();
+    }
+    static isWhiteCharCode(charCode: string) {
+        return jsis.isUpperCase(charCode);
+    }
+    static toBlackCharCode(charCode: string) {
+        return charCode.toLowerCase();
+    }
+    static toNormalCharCode(charCode: string) {
+        return Piece.toBlackCharCode(charCode);
+    }
+
+    static isValidPiece(piece: string) {
+        return piece !== EMPTY_PIECE;
+    }
+    static isWhiteColor(c: string) {
+        return c === PIECE_COLOR_WHITE;
+    }
+    static isBlackColor(c: string) {
+        return c === PIECE_COLOR_BLACK;
+    }
+    static oppositeColor(color: any) {
+        return Piece.isWhiteColor(color) ? PIECE_COLOR_BLACK : PIECE_COLOR_WHITE;
     }
 }
