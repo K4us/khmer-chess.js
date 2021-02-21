@@ -1,4 +1,6 @@
-import { Piece, PieceIndex, Point } from '../ren/index';
+import Point from '../ren/Point';
+import Piece from '../ren/Piece';
+import PieceIndex from '../ren/PieceIndex';
 declare class BoardHelper {
     getCharPieceFromString(piecesString: string, index: number): string;
     getPieceProperties(pieceCode: string): Piece;

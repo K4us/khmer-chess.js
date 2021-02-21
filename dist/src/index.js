@@ -37,7 +37,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * POSSIBILITY OF SUCH DAMAGE.
  *
  *---------------------------------------------------------------------------- */
-__exportStar(require("./board"), exports);
+__exportStar(require("./brain"), exports);
 __exportStar(require("./kpgn"), exports);
 __exportStar(require("./ren"), exports);
 var KhmerChess_1 = require("./KhmerChess");

@@ -27,7 +27,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * POSSIBILITY OF SUCH DAMAGE.
  *
  *---------------------------------------------------------------------------- */
-var index_1 = require("../board/index");
+var index_1 = require("../brain/index");
 var constant_1 = require("./constant");
 // 23.-
 var CountDown = /** @class */ (function () {

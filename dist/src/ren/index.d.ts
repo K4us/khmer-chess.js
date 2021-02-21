@@ -7,5 +7,4 @@ export { default as Piece } from './Piece';
 export { default as PieceIndex } from './PieceIndex';
 export { default as REN } from './REN';
 export { default as Point } from './Point';
-export { default as renHelper } from './renHelper';
 export * from './constant';

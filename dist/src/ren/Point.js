@@ -27,7 +27,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * POSSIBILITY OF SUCH DAMAGE.
  *
  *---------------------------------------------------------------------------- */
-var index_1 = require("../board/index");
+var index_1 = require("../brain/index");
 var Point = /** @class */ (function () {
     function Point(x, y) {
         if (x < 0 || x >= index_1.ROW_NUMBER || y < 0 || y >= index_1.ROW_NUMBER) {

@@ -6,6 +6,9 @@ var __spreadArrays = (this && this.__spreadArrays) || function () {
             r[k] = a[j];
     return r;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 /*
  * Copyright (c) 2021, K4us
@@ -34,7 +37,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * POSSIBILITY OF SUCH DAMAGE.
  *
  *---------------------------------------------------------------------------- */
-var index_1 = require("../board/index");
+var constant_1 = require("../brain/constant");
+var jsis_1 = __importDefault(require("../brain/jsis"));
 var Piece = /** @class */ (function () {
     function Piece(type, color) {
         this.type = Piece.toNormalCharCode(type);
@@ -54,38 +58,38 @@ var Piece = /** @class */ (function () {
         if (!Piece.isValidPiece(charCode)) {
             return null;
         }
-        var color = Piece.isWhiteCharCode(charCode) ? index_1.PIECE_COLOR_WHITE : index_1.PIECE_COLOR_BLACK;
+        var color = Piece.isWhiteCharCode(charCode) ? constant_1.PIECE_COLOR_WHITE : constant_1.PIECE_COLOR_BLACK;
         var type = Piece.toNormalCharCode(charCode);
         return new Piece(type, color);
     };
     Piece.prototype.toOriginPiece = function () {
-        if (this.type === index_1.PIECE_TYPE_BORK) {
-            return new Piece(index_1.PIECE_TYPE_TREY, this.color);
+        if (this.type === constant_1.PIECE_TYPE_BORK) {
+            return new Piece(constant_1.PIECE_TYPE_TREY, this.color);
         }
         return this;
     };
     Piece.getPieceCharArray = function () {
         return [
-            index_1.PIECE_TYPE_TOUK,
-            index_1.PIECE_TYPE_SES,
-            index_1.PIECE_TYPE_KOL,
-            index_1.PIECE_TYPE_SDECH,
-            index_1.PIECE_TYPE_NEANG,
-            index_1.PIECE_TYPE_TREY,
-            index_1.PIECE_TYPE_BORK,
+            constant_1.PIECE_TYPE_TOUK,
+            constant_1.PIECE_TYPE_SES,
+            constant_1.PIECE_TYPE_KOL,
+            constant_1.PIECE_TYPE_SDECH,
+            constant_1.PIECE_TYPE_NEANG,
+            constant_1.PIECE_TYPE_TREY,
+            constant_1.PIECE_TYPE_BORK,
         ];
     };
     Piece.getColorArray = function () {
         return [
-            index_1.PIECE_COLOR_WHITE,
-            index_1.PIECE_COLOR_BLACK,
+            constant_1.PIECE_COLOR_WHITE,
+            constant_1.PIECE_COLOR_BLACK,
         ];
     };
     Piece.toWhiteCharCode = function (charCode) {
         return charCode.toUpperCase();
     };
     Piece.isWhiteCharCode = function (charCode) {
-        return index_1.jsis.isUpperCase(charCode);
+        return jsis_1.default.isUpperCase(charCode);
     };
     Piece.toBlackCharCode = function (charCode) {
         return charCode.toLowerCase();
@@ -94,20 +98,20 @@ var Piece = /** @class */ (function () {
         return Piece.toBlackCharCode(charCode);
     };
     Piece.isValidPiece = function (piece) {
-        return piece !== index_1.EMPTY_PIECE;
+        return piece !== constant_1.EMPTY_PIECE;
     };
     Piece.isWhiteColor = function (c) {
-        return c === index_1.PIECE_COLOR_WHITE;
+        return c === constant_1.PIECE_COLOR_WHITE;
     };
     Piece.isBlackColor = function (c) {
-        return c === index_1.PIECE_COLOR_BLACK;
+        return c === constant_1.PIECE_COLOR_BLACK;
     };
     Piece.oppositeColor = function (color) {
-        return Piece.isWhiteColor(color) ? index_1.PIECE_COLOR_BLACK : index_1.PIECE_COLOR_WHITE;
+        return Piece.isWhiteColor(color) ? constant_1.PIECE_COLOR_BLACK : constant_1.PIECE_COLOR_WHITE;
     };
     Piece.isValidPiecesString = function (str, onlyPiece) {
         var ruler = onlyPiece ? allPiecesString.filter(function (c) {
-            return !~[index_1.EMPTY_PIECE, index_1.BOARD_SEPARATOR].indexOf(c);
+            return !~[constant_1.EMPTY_PIECE, constant_1.BOARD_SEPARATOR].indexOf(c);
         }) : allPiecesString;
         return !str.split('').some(function (c) {
             return !~ruler.indexOf(c);
@@ -116,9 +120,10 @@ var Piece = /** @class */ (function () {
     return Piece;
 }());
 exports.default = Piece;
-var allPiecesString = __spreadArrays(Piece.getPieceCharArray(), Piece.getPieceCharArray().map(function (c) {
+var pieceCharArray = Piece.getPieceCharArray();
+var allPiecesString = __spreadArrays(pieceCharArray, pieceCharArray.map(function (c) {
     return Piece.toWhiteCharCode(c);
 }), [
-    index_1.EMPTY_PIECE,
-    index_1.BOARD_SEPARATOR,
+    constant_1.EMPTY_PIECE,
+    constant_1.BOARD_SEPARATOR,
 ]);

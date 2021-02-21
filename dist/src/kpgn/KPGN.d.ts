@@ -1,4 +1,4 @@
-import { REN } from '../ren/index';
+import REN from '../ren/REN';
 import Move from './Move';
 import Player from './Player';
 import Result from './Result';

@@ -31,7 +31,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  *
  *---------------------------------------------------------------------------- */
 var Piece_1 = __importDefault(require("./Piece"));
-var index_1 = require("../board/index");
+var index_1 = require("../brain/index");
 var Graveyard = /** @class */ (function () {
     function Graveyard(graveyardStr) {
         this.pieces = [];

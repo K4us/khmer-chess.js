@@ -31,7 +31,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  *
  *---------------------------------------------------------------------------- */
 var _1 = require(".");
-var boardHelper_1 = __importDefault(require("./board/boardHelper"));
+var boardHelper_1 = __importDefault(require("./brain/boardHelper"));
 test('KhmerChess should work', function () {
     expect(_1.KhmerChess.title).toBe('khmer-chess');
     expect(boardHelper_1.default).toBe(boardHelper_1.default);

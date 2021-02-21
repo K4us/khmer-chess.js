@@ -32,20 +32,20 @@ Object.defineProperty(exports, "__esModule", { value: true });
  *---------------------------------------------------------------------------- */
 var package_json_1 = __importDefault(require("../package.json"));
 var index_1 = require("./kpgn/index");
-var MoveManager_1 = __importDefault(require("./board/MoveManager"));
+var MoveManager_1 = __importDefault(require("./brain/MoveManager"));
 var table_1 = __importDefault(require("./other/table"));
 var index_2 = require("./ren/index");
 var KhmerChess = /** @class */ (function () {
     function KhmerChess(renStr) {
         this.kpgnInstance = new index_1.KPGN();
         this.moveManager = new MoveManager_1.default();
-        this.renInstance = index_2.renHelper.toRen(renStr);
+        this.renInstance = index_2.REN.fromString(renStr);
     }
     KhmerChess.prototype.load = function (renStr) {
-        this.renInstance = index_2.renHelper.toRen(renStr);
+        this.renInstance = index_2.REN.fromString(renStr);
     };
     KhmerChess.prototype.reset = function () {
-        this.renInstance = index_2.renHelper.toRen();
+        this.renInstance = index_2.REN.fromString();
     };
     KhmerChess.prototype.moves = function () {
         // TODO:
@@ -77,7 +77,7 @@ var KhmerChess = /** @class */ (function () {
     };
     KhmerChess.prototype.validateRen = function (renStr) {
         try {
-            index_2.renHelper.toRen(renStr);
+            index_2.REN.fromString(renStr);
             return { valid: true, error_number: 0, error: 'No errors.' };
         }
         catch (error) {
@@ -119,7 +119,7 @@ var KhmerChess = /** @class */ (function () {
      * -> 4k3/8/8/8/8/8/8/3K4 w ---- -- -.- bhgqghbffffffffFFFFFFFFBHGQGHB
      */
     KhmerChess.prototype.clear = function () {
-        this.renInstance = index_2.renHelper.toRen('4k3/8/8/8/8/8/8/3K4 w ---- -- -.- bhgqghbffffffffFFFFFFFFBHGQGHB');
+        this.renInstance = index_2.REN.fromString('4k3/8/8/8/8/8/8/3K4 w ---- -- -.- bhgqghbffffffffFFFFFFFFBHGQGHB');
     };
     KhmerChess.prototype.put = function (index, piece) {
         // TODO: move piece to square id location

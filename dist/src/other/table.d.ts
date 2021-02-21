@@ -1,2 +1,2 @@
-import { REN } from '../ren/index';
+import REN from '../ren/REN';
 export default function asciiTable(renInstance: REN): string;

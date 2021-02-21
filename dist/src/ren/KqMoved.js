@@ -31,7 +31,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  *
  *---------------------------------------------------------------------------- */
 var constant_1 = require("./constant");
-var index_1 = require("../board/index");
+var index_1 = require("../brain/index");
 var Piece_1 = __importDefault(require("./Piece"));
 /**
  * King or Queen has moved, the will effect jumping

@@ -55,6 +55,4 @@ var REN_1 = require("./REN");
 Object.defineProperty(exports, "REN", { enumerable: true, get: function () { return REN_1.default; } });
 var Point_1 = require("./Point");
 Object.defineProperty(exports, "Point", { enumerable: true, get: function () { return Point_1.default; } });
-var renHelper_1 = require("./renHelper");
-Object.defineProperty(exports, "renHelper", { enumerable: true, get: function () { return renHelper_1.default; } });
 __exportStar(require("./constant"), exports);

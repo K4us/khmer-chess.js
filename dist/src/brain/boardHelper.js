@@ -33,27 +33,29 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var jsis_1 = __importDefault(require("./jsis"));
 var genMask_1 = __importDefault(require("./genMask"));
 var constant_1 = require("./constant");
-var index_1 = require("../ren/index");
+var Point_1 = __importDefault(require("../ren/Point"));
+var Piece_1 = __importDefault(require("../ren/Piece"));
+var PieceIndex_1 = __importDefault(require("../ren/PieceIndex"));
 var mask = genMask_1.default();
 var BoardHelper = /** @class */ (function () {
     function BoardHelper() {
         this.convertMask = function (point1, index, color) {
-            var sign = index_1.Piece.isWhiteColor(color) ? 1 : -1;
-            var point2 = index_1.Point.fromIndex(index);
+            var sign = Piece_1.default.isWhiteColor(color) ? 1 : -1;
+            var point2 = Point_1.default.fromIndex(index);
             point1.x = point1.x * sign + point2.x;
             point1.y = point1.y * sign + point2.y;
             return point1.index;
         };
     }
     BoardHelper.prototype.getCharPieceFromString = function (piecesString, index) {
-        if (index_1.Point.isIndexInBoard(index) && piecesString.length === constant_1.CELL_COUNT) {
+        if (Point_1.default.isIndexInBoard(index) && piecesString.length === constant_1.CELL_COUNT) {
             return piecesString.charAt(index);
         }
         return constant_1.EMPTY_PIECE;
     };
     BoardHelper.prototype.getPieceProperties = function (pieceCode) {
         var h = constant_1.pieceHash[pieceCode];
-        return new index_1.Piece(h ? h[1] : constant_1.EMPTY_PIECE, h ? h[0] : constant_1.PIECE_COLOR_EMPTY);
+        return new Piece_1.default(h ? h[1] : constant_1.EMPTY_PIECE, h ? h[0] : constant_1.PIECE_COLOR_EMPTY);
     };
     BoardHelper.prototype.getCharPieceInPos = function (index, piecesString) {
         return this.getCharPieceFromString(piecesString, index);
@@ -61,15 +63,15 @@ var BoardHelper = /** @class */ (function () {
     BoardHelper.prototype.getPieceByIndex = function (index, piecesString) {
         var piece = this.getCharPieceInPos(index, piecesString);
         return {
-            isValidPiece: index_1.Piece.isValidPiece(piece),
-            piece: index_1.Piece.fromCharCode(piece),
+            isValidPiece: Piece_1.default.isValidPiece(piece),
+            piece: Piece_1.default.fromCharCode(piece),
         };
     };
     BoardHelper.prototype.getPieceCanMovePoses = function (index, piece) {
         var _this = this;
         var pieceIndices = [];
         mask[piece.type].forEach(function (_pos) {
-            var newIndex = _this.convertMask(new index_1.Point(_pos[0], _pos[1]), index, piece.color);
+            var newIndex = _this.convertMask(new Point_1.default(_pos[0], _pos[1]), index, piece.color);
             if (!jsis_1.default.isNull(newIndex)) {
                 pieceIndices.push(newIndex);
             }
@@ -80,9 +82,9 @@ var BoardHelper = /** @class */ (function () {
         var _poses = this.getPieceCanMovePoses(index, piece);
         var pieceIndices = [];
         var n = _poses.length;
-        var thisPos = index_1.Point.fromIndex(index);
+        var thisPos = Point_1.default.fromIndex(index);
         for (var i = 0; i < n; i++) {
-            var p = index_1.Point.fromIndex(_poses[i]);
+            var p = Point_1.default.fromIndex(_poses[i]);
             var distPiece = this.getPieceByIndex(p.index, piecesString);
             if (distPiece.isValidPiece) {
                 if (piece.color === distPiece.piece.color ||
@@ -103,7 +105,7 @@ var BoardHelper = /** @class */ (function () {
                     _n = Math.abs(p.y - thisPos.y);
                     _s = thisPos.y < p.y ? 1 : -1;
                     while (--_n > 0) {
-                        if (this.getPieceByIndex(index_1.Point.xyToIndex(_x, _y + _s * _n), piecesString).isValidPiece) {
+                        if (this.getPieceByIndex(Point_1.default.xyToIndex(_x, _y + _s * _n), piecesString).isValidPiece) {
                             p = null;
                             break;
                         }
@@ -113,7 +115,7 @@ var BoardHelper = /** @class */ (function () {
                     _n = Math.abs(p.x - thisPos.x);
                     _s = thisPos.x < p.x ? 1 : -1;
                     while (--_n > 0) {
-                        if (this.getPieceByIndex(index_1.Point.xyToIndex(_x + _s * _n, _y), piecesString).isValidPiece) {
+                        if (this.getPieceByIndex(Point_1.default.xyToIndex(_x + _s * _n, _y), piecesString).isValidPiece) {
                             p = null;
                             break;
                         }
@@ -148,7 +150,7 @@ var BoardHelper = /** @class */ (function () {
         return constant_1.EMPTY_PIECE;
     };
     BoardHelper.prototype.getKingWillInDanger = function (color, piecesString) {
-        var kingPos = piecesString.indexOf(this.getPieceCode(new index_1.Piece(constant_1.PIECE_TYPE_SDECH, color)));
+        var kingPos = piecesString.indexOf(this.getPieceCode(new Piece_1.default(constant_1.PIECE_TYPE_SDECH, color)));
         var n = piecesString.length;
         var _poses;
         for (var i = 0; i < n; i++) {
@@ -158,7 +160,7 @@ var BoardHelper = /** @class */ (function () {
                 _poses = this.getPieceCanMovePoses(i, p.piece);
                 for (var j = 0; j < _poses.length; j++) {
                     if (_poses[j] === kingPos) {
-                        return [index_1.Point.fromIndex(i), index_1.Point.fromIndex(kingPos)];
+                        return [Point_1.default.fromIndex(i), Point_1.default.fromIndex(kingPos)];
                     }
                 }
             }
@@ -166,7 +168,7 @@ var BoardHelper = /** @class */ (function () {
         return null;
     };
     BoardHelper.prototype.getKingInDanger = function (color, piecesString) {
-        var kingPos = piecesString.indexOf(this.getPieceCode(new index_1.Piece(constant_1.PIECE_TYPE_SDECH, color)));
+        var kingPos = piecesString.indexOf(this.getPieceCode(new Piece_1.default(constant_1.PIECE_TYPE_SDECH, color)));
         var n = piecesString.length;
         var _poses;
         for (var i = 0; i < n; i++) {
@@ -175,7 +177,7 @@ var BoardHelper = /** @class */ (function () {
                 _poses = this.getPieceCanMovePosesValid(i, p.piece, piecesString);
                 for (var j = 0; j < _poses.length; j++) {
                     if (_poses[j] === kingPos) {
-                        return [index_1.Point.fromIndex(i), index_1.Point.fromIndex(kingPos)];
+                        return [Point_1.default.fromIndex(i), Point_1.default.fromIndex(kingPos)];
                     }
                 }
             }
@@ -187,11 +189,11 @@ var BoardHelper = /** @class */ (function () {
         var isHaveCaptured = this.isHaveCaptured(piecesString);
         if (piece.type === constant_1.PIECE_TYPE_SDECH) {
             if (!isHaveCaptured && !isHaveMoved) {
-                var p = this.convertMask(new index_1.Point(2, 1), index, piece.color);
+                var p = this.convertMask(new Point_1.default(2, 1), index, piece.color);
                 if (p && !this.getPieceByIndex(p, piecesString).isValidPiece) {
                     _poses.push(p);
                 }
-                p = this.convertMask(new index_1.Point(-2, 1), index, piece.color);
+                p = this.convertMask(new Point_1.default(-2, 1), index, piece.color);
                 if (p && !this.getPieceByIndex(p, piecesString).isValidPiece) {
                     _poses.push(p);
                 }
@@ -199,7 +201,7 @@ var BoardHelper = /** @class */ (function () {
         }
         else if (piece.type === constant_1.PIECE_TYPE_NEANG) {
             if (!isHaveCaptured && !isHaveMoved) {
-                var p = this.convertMask(new index_1.Point(-0, 2), index, piece.color);
+                var p = this.convertMask(new Point_1.default(-0, 2), index, piece.color);
                 if (p && !this.getPieceByIndex(p, piecesString).isValidPiece) {
                     _poses.push(p);
                 }
@@ -211,7 +213,7 @@ var BoardHelper = /** @class */ (function () {
         for (var i = 0; i < n; i++) {
             str = this.injectPiece(piecesString, index, _poses[i]);
             if (jsis_1.default.isNull(this.getKingInDanger(piece.color, str))) {
-                pieceIndices.push(index_1.Point.fromIndex(_poses[i]));
+                pieceIndices.push(Point_1.default.fromIndex(_poses[i]));
             }
         }
         return pieceIndices;
@@ -221,7 +223,7 @@ var BoardHelper = /** @class */ (function () {
     };
     BoardHelper.prototype.getPiecesInBoard = function (piecesString) {
         return piecesString.split('').filter(function (c) {
-            return index_1.Piece.isValidPiece(c);
+            return Piece_1.default.isValidPiece(c);
         });
     };
     BoardHelper.prototype.isHaveCaptured = function (piecesString) {
@@ -233,11 +235,11 @@ var BoardHelper = /** @class */ (function () {
         var c, prop, piece;
         for (var i = 0; i < piecesString.length; i++) {
             c = piecesString.charAt(i);
-            if (index_1.Piece.isValidPiece(c)) {
+            if (Piece_1.default.isValidPiece(c)) {
                 prop = this.getPieceProperties(c);
-                var point = index_1.Point.fromIndex(i);
-                piece = new index_1.PieceIndex(point.x, point.y, prop);
-                if (index_1.Piece.isWhiteColor(piece.color)) {
+                var point = Point_1.default.fromIndex(i);
+                piece = new PieceIndex_1.default(point.x, point.y, prop);
+                if (Piece_1.default.isWhiteColor(piece.color)) {
                     whitePieces.push(piece);
                 }
                 else {
@@ -274,7 +276,7 @@ var BoardHelper = /** @class */ (function () {
     BoardHelper.prototype.checkCountable = function (color, piecesString) {
         var pieceAll = this.extractPiecesToArray(piecesString);
         var weaker = pieceAll[color];
-        var stronger = pieceAll[index_1.Piece.oppositeColor(color)];
+        var stronger = pieceAll[Piece_1.default.oppositeColor(color)];
         return weaker.length <= 2 && stronger.length >= 2;
     };
     BoardHelper.prototype.checkCount = function (color, piecesString, force) {
@@ -286,7 +288,7 @@ var BoardHelper = /** @class */ (function () {
         };
         var pieceAll = this.extractPiecesToArray(piecesString);
         var weaker = pieceAll[color];
-        var stronger = pieceAll[index_1.Piece.oppositeColor(color)];
+        var stronger = pieceAll[Piece_1.default.oppositeColor(color)];
         if (weaker.length === 1 && stronger.length > 1) {
             if (!charExist(stronger, constant_1.PIECE_TYPE_TREY)) {
                 var count = 64;

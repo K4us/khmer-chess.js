@@ -1,5 +1,4 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 /*
  * Copyright (c) 2021, K4us
  * Author: Raksa Eng <eng.raksa@gmail.com>
@@ -27,7 +26,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * POSSIBILITY OF SUCH DAMAGE.
  *
  *---------------------------------------------------------------------------- */
-var ren_1 = require("../ren");
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var Piece_1 = __importDefault(require("../ren/Piece"));
 var Move = /** @class */ (function () {
     function Move(moveFromIndex, moveToIndex, capturedPiece, isJumping) {
         this.isJumping = false; // King or Queen would jump on first start
@@ -40,7 +43,7 @@ var Move = /** @class */ (function () {
     Move.fromMovedString = function () {
         // const str = 'Fc5d6j';
         var str = 'Fc5d6xf';
-        var piece = ren_1.Piece.fromCharCode(str[0]);
+        var piece = Piece_1.default.fromCharCode(str[0]);
         var fromIndexCode = str.substr(1, 2);
         var toIndexCode = str.substr(3, 2);
         if (str[5] === 'x') {

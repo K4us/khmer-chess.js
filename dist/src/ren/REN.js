@@ -35,16 +35,11 @@ var KqMoved_1 = __importDefault(require("./KqMoved"));
 var KAttacked_1 = __importDefault(require("./KAttacked"));
 var CountDown_1 = __importDefault(require("./CountDown"));
 var Graveyard_1 = __importDefault(require("./Graveyard"));
-var index_1 = require("../board/index");
+var index_1 = require("../brain/index");
 var constant_1 = require("./constant");
-var board_1 = require("../board");
-/**
- * Raksa-Eng Notation
- * fen: <pieces on board> <turn w|b> <king&queen moved ----|SNsn> <king attack --|Kk> <countdown -.-|-.4> <pieces in graveyard>
- */
 var REN = /** @class */ (function () {
-    function REN(boardStr, turnStr, kqMovedStr, kAttackedStr, countdownStr, graveyardStr) {
-        if (turnStr === void 0) { turnStr = board_1.PIECE_COLOR_WHITE; }
+    function REN(_a) {
+        var boardStr = _a.boardStr, turnStr = _a.turnStr, kqMovedStr = _a.kqMovedStr, kAttackedStr = _a.kAttackedStr, countdownStr = _a.countdownStr, graveyardStr = _a.graveyardStr;
         this.board = new Board_1.default(boardStr);
         this.turn = turnStr;
         this.kqMoved = new KqMoved_1.default(kqMovedStr);
@@ -53,7 +48,9 @@ var REN = /** @class */ (function () {
         this.graveyard = new Graveyard_1.default(graveyardStr);
         var invalidPiecesString = this.isInvalidPieceCount();
         if (invalidPiecesString) {
-            throw new Error("Invalid piece string board:" + boardStr + ", graveyard:" + graveyardStr + ", count:" + invalidPiecesString);
+            var msg = "Invalid piece string board:" + boardStr;
+            msg += ", graveyard:" + graveyardStr + ", count:" + invalidPiecesString;
+            throw new Error(msg);
         }
     }
     REN.prototype.isInvalidPieceCount = function () {
@@ -74,6 +71,20 @@ var REN = /** @class */ (function () {
             return false;
         }
         return str;
+    };
+    REN.fromString = function (fen) {
+        if (index_1.jsis.isUndefined(fen)) {
+            fen = constant_1.DEFAULT_BOARD_STR;
+        }
+        var fenArr = fen.split(' ');
+        return new REN({
+            boardStr: fenArr[0],
+            turnStr: fenArr[1],
+            kqMovedStr: fenArr[2],
+            kAttackedStr: fenArr[3],
+            countdownStr: fenArr[4],
+            graveyardStr: fenArr[5],
+        });
     };
     REN.prototype.toString = function () {
         var str = this.board.toString();
