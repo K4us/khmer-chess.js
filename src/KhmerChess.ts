@@ -29,7 +29,7 @@ import config from '../package.json';
 import { KPGN, Move } from './kpgn/index';
 import MoveManager from './board/MoveManager';
 import asciiTable from './other/table';
-import { Piece, REN, renHelper } from './ren/index';
+import { Piece, REN } from './ren/index';
 
 export default class KhmerChess {
     static title = config.name;
@@ -39,15 +39,15 @@ export default class KhmerChess {
     kpgnInstance = new KPGN();
     constructor(renStr?: string) {
         this.moveManager = new MoveManager();
-        this.renInstance = renHelper.toRen(renStr);
+        this.renInstance = REN.fromString(renStr);
     }
 
     load(renStr: string) {
-        this.renInstance = renHelper.toRen(renStr);
+        this.renInstance = REN.fromString(renStr);
     }
 
     reset() {
-        this.renInstance = renHelper.toRen();
+        this.renInstance = REN.fromString();
     }
 
     moves(): Move[] {
@@ -87,7 +87,7 @@ export default class KhmerChess {
 
     validateRen(renStr: string) {
         try {
-            renHelper.toRen(renStr);
+            REN.fromString(renStr);
             return { valid: true, error_number: 0, error: 'No errors.' };
         } catch (error) {
             return { valid: false, error_number: 1, error: error.message };
@@ -138,7 +138,7 @@ export default class KhmerChess {
      * -> 4k3/8/8/8/8/8/8/3K4 w ---- -- -.- bhgqghbffffffffFFFFFFFFBHGQGHB
      */
     clear() {
-        this.renInstance = renHelper.toRen('4k3/8/8/8/8/8/8/3K4 w ---- -- -.- bhgqghbffffffffFFFFFFFFBHGQGHB');
+        this.renInstance = REN.fromString('4k3/8/8/8/8/8/8/3K4 w ---- -- -.- bhgqghbffffffffFFFFFFFFBHGQGHB');
     }
 
     put(index: number, piece: Piece): Piece | null {

@@ -31,13 +31,21 @@ import KAttacked from './KAttacked';
 import CountDown from './CountDown';
 import Graveyard from './Graveyard';
 import { jsis } from '../board/index';
-import { STRING_COUNT } from './constant';
+import { DEFAULT_BOARD_STR, STRING_COUNT } from './constant';
 import { PIECE_COLOR_WHITE } from '../board';
 
 /**
  * Raksa-Eng Notation
  * fen: <pieces on board> <turn w|b> <king&queen moved ----|SNsn> <king attack --|Kk> <countdown -.-|-.4> <pieces in graveyard>
  */
+type RENPropType = {
+    boardStr: string;
+    turnStr: string;
+    kqMovedStr: string;
+    kAttackedStr: string;
+    countdownStr: string;
+    graveyardStr: string;
+}
 export default class REN {
     board: Board;
     turn: string;
@@ -45,8 +53,12 @@ export default class REN {
     kAttacked: KAttacked;
     countdown: CountDown;
     graveyard: Graveyard;
-    constructor(boardStr: any, turnStr = PIECE_COLOR_WHITE,
-        kqMovedStr: any, kAttackedStr: any, countdownStr: any, graveyardStr: any) {
+    constructor({ boardStr,
+        turnStr,
+        kqMovedStr,
+        kAttackedStr,
+        countdownStr,
+        graveyardStr }: RENPropType) {
         this.board = new Board(boardStr);
         this.turn = turnStr;
         this.kqMoved = new KqMoved(kqMovedStr);
@@ -77,6 +89,21 @@ export default class REN {
             return false;
         }
         return str;
+    }
+
+    static fromString(fen?: string) {
+        if (jsis.isUndefined(fen)) {
+            fen = DEFAULT_BOARD_STR;
+        }
+        const fenArr = fen.split(' ');
+        return new REN({
+            boardStr: fenArr[0],
+            turnStr: fenArr[1],
+            kqMovedStr: fenArr[2],
+            kAttackedStr: fenArr[3],
+            countdownStr: fenArr[4],
+            graveyardStr: fenArr[5],
+        });
     }
 
     toString() {
