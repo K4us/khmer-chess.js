@@ -39,29 +39,29 @@ import {
     PIECE_TYPE_SES,
     PIECE_TYPE_SDECH,
     PIECE_TYPE_NEANG,
-    ROW_LAST_INDEX,
     BOARD_SEPARATOR,
     PIECE_COLOR_EMPTY,
     CELL_COUNT,
 } from './constant';
-import Rectangle from './Rectangle';
-import { Piece, PieceIndex, Point } from '../ren/index';
+import {
+    Piece,
+    PieceIndex,
+    Point,
+} from '../ren/index';
 
 const mask = genMask();
 
-let allPiecesString: string[] = null;
+const allPiecesString: string[] = [
+    ...Piece.getPieceCharArray(),
+    ...Piece.getPieceCharArray().map((c: string) => {
+        return Piece.toWhiteCharCode(c);
+    }),
+    EMPTY_PIECE,
+    BOARD_SEPARATOR,
+];
+
 class BoardHelper {
     isValidPiecesString(str: string, onlyPiece?: boolean) {
-        if (jsis.isNull(allPiecesString)) {
-            allPiecesString = [
-                ...Piece.getPieceCharArray(),
-                ...Piece.getPieceCharArray().map((c: string) => {
-                    return Piece.toWhiteCharCode(c);
-                }),
-                EMPTY_PIECE,
-                BOARD_SEPARATOR,
-            ];
-        }
         const ruler = onlyPiece ? allPiecesString.filter((c: any) => {
             return !~[EMPTY_PIECE, BOARD_SEPARATOR].indexOf(c);
         }) : allPiecesString;
