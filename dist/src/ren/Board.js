@@ -51,7 +51,7 @@ var Board = /** @class */ (function () {
         }
         var newBoardStr = this.extract(boardStr).replace(/\//g, '');
         if (newBoardStr.length < index_1.CELL_COUNT ||
-            !index_1.boardHelper.isValidPiecesString(newBoardStr)) {
+            !Piece_1.default.isValidPiecesString(newBoardStr)) {
             throw new Error("Invalid board string " + boardStr);
         }
         this.pieceIndices = newBoardStr.split('').map(function (charCode, i) {

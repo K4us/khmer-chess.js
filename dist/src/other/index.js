@@ -29,7 +29,5 @@ Object.defineProperty(exports, "__esModule", { value: true });
  *---------------------------------------------------------------------------- */
 var EventHandler_1 = require("./EventHandler");
 Object.defineProperty(exports, "EventHandler", { enumerable: true, get: function () { return EventHandler_1.default; } });
-var MoveManager_1 = require("./MoveManager");
-Object.defineProperty(exports, "MoveManager", { enumerable: true, get: function () { return MoveManager_1.default; } });
 var table_1 = require("./table");
 Object.defineProperty(exports, "table", { enumerable: true, get: function () { return table_1.default; } });

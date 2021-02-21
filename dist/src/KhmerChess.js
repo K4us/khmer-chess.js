@@ -32,7 +32,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  *---------------------------------------------------------------------------- */
 var package_json_1 = __importDefault(require("../package.json"));
 var index_1 = require("./kpgn/index");
-var MoveManager_1 = __importDefault(require("./other/MoveManager"));
+var MoveManager_1 = __importDefault(require("./board/MoveManager"));
 var table_1 = __importDefault(require("./other/table"));
 var index_2 = require("./ren/index");
 var KhmerChess = /** @class */ (function () {

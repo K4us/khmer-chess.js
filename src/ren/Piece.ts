@@ -30,14 +30,16 @@ import {
     PIECE_COLOR_WHITE,
     PIECE_TYPE_BORK,
     PIECE_TYPE_TREY,
-    jsis,
     PIECE_TYPE_TOUK,
     PIECE_TYPE_SES,
     PIECE_TYPE_KOL,
     PIECE_TYPE_SDECH,
     PIECE_TYPE_NEANG,
     EMPTY_PIECE,
-} from '../board/index';
+    BOARD_SEPARATOR,
+} from '../board/constant';
+import jsis from '../board/jsis';
+
 
 export default class Piece {
     type: string;
@@ -114,4 +116,23 @@ export default class Piece {
     static oppositeColor(color: any) {
         return Piece.isWhiteColor(color) ? PIECE_COLOR_BLACK : PIECE_COLOR_WHITE;
     }
+
+    static isValidPiecesString(str: string, onlyPiece?: boolean) {
+        const ruler = onlyPiece ? allPiecesString.filter((c: string) => {
+            return !~[EMPTY_PIECE, BOARD_SEPARATOR].indexOf(c);
+        }) : allPiecesString;
+        return !str.split('').some((c: string) => {
+            return !~ruler.indexOf(c);
+        });
+    }
 }
+
+const pieceCharArray = Piece.getPieceCharArray();
+const allPiecesString: string[] = [
+    ...pieceCharArray,
+    ...pieceCharArray.map((c: string) => {
+        return Piece.toWhiteCharCode(c);
+    }),
+    EMPTY_PIECE,
+    BOARD_SEPARATOR,
+];

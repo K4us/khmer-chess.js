@@ -1,5 +1,5 @@
 import { KPGN, Move } from './kpgn/index';
-import MoveManager from './other/MoveManager';
+import MoveManager from './board/MoveManager';
 import { Piece, REN } from './ren/index';
 export default class KhmerChess {
     static title: string;

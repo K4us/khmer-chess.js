@@ -27,8 +27,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * POSSIBILITY OF SUCH DAMAGE.
  *
  *---------------------------------------------------------------------------- */
-var index_1 = require("../board/index");
-var ren_1 = require("../ren");
+var index_1 = require("./index");
+var index_2 = require("../ren/index");
 var MoveManager = /** @class */ (function () {
     function MoveManager() {
     }
@@ -106,10 +106,10 @@ var MoveManager = /** @class */ (function () {
         if (this.winColor) {
             return;
         }
-        if (ren_1.Piece.isWhiteColor(this.currentTurn) && !this.whiteMoves.length) {
+        if (index_2.Piece.isWhiteColor(this.currentTurn) && !this.whiteMoves.length) {
             this.stuckColor = index_1.PIECE_COLOR_WHITE;
         }
-        else if (ren_1.Piece.isBlackColor(this.currentTurn) && !this.blackMoves.length) {
+        else if (index_2.Piece.isBlackColor(this.currentTurn) && !this.blackMoves.length) {
             this.stuckColor = index_1.PIECE_COLOR_BLACK;
         }
     };
@@ -119,11 +119,11 @@ var MoveManager = /** @class */ (function () {
         this.cleanPieceNoMove();
         var moves = [];
         if (this.genCanMove) {
-            moves = ren_1.Piece.isWhiteColor(this.currentTurn) ? this.whiteMoves : this.blackMoves;
+            moves = index_2.Piece.isWhiteColor(this.currentTurn) ? this.whiteMoves : this.blackMoves;
         }
         var anotherMoves = [];
         if (this.genCanMoveForAnother) {
-            anotherMoves = ren_1.Piece.isBlackColor(this.currentTurn) ? this.whiteMoves : this.blackMoves;
+            anotherMoves = index_2.Piece.isBlackColor(this.currentTurn) ? this.whiteMoves : this.blackMoves;
         }
         return {
             moves: moves,

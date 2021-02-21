@@ -49,4 +49,6 @@ var jsis_1 = require("./jsis");
 Object.defineProperty(exports, "jsis", { enumerable: true, get: function () { return jsis_1.default; } });
 var HVPont_1 = require("./HVPont");
 Object.defineProperty(exports, "HVPont", { enumerable: true, get: function () { return HVPont_1.default; } });
+var MoveManager_1 = require("./MoveManager");
+Object.defineProperty(exports, "MoveManager", { enumerable: true, get: function () { return MoveManager_1.default; } });
 __exportStar(require("./constant"), exports);

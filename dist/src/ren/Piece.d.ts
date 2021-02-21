@@ -15,4 +15,5 @@ export default class Piece {
     static isWhiteColor(c: string): boolean;
     static isBlackColor(c: string): boolean;
     static oppositeColor(color: any): "w" | "b";
+    static isValidPiecesString(str: string, onlyPiece?: boolean): boolean;
 }

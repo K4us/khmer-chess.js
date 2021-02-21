@@ -25,7 +25,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  *---------------------------------------------------------------------------- */
-import { KhmerChess, boardHelper as indexBoardHelper } from '.';
+import { KhmerChess } from '.';
 import boardHelper from './board/boardHelper';
 
 

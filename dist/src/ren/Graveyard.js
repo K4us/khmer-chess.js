@@ -37,7 +37,7 @@ var Graveyard = /** @class */ (function () {
         this.pieces = [];
         if (graveyardStr) {
             if (graveyardStr.length > 30 ||
-                !index_1.boardHelper.isValidPiecesString(graveyardStr, true)) {
+                !Piece_1.default.isValidPiecesString(graveyardStr, true)) {
                 throw new Error("Invalid graveyard string " + graveyardStr);
             }
             this.pieces = graveyardStr.split('').map(function (charCode, i) {

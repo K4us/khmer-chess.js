@@ -1,4 +1,11 @@
 "use strict";
+var __spreadArrays = (this && this.__spreadArrays) || function () {
+    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
+    for (var r = Array(s), k = 0, i = 0; i < il; i++)
+        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
+            r[k] = a[j];
+    return r;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 /*
  * Copyright (c) 2021, K4us
@@ -44,6 +51,9 @@ var Piece = /** @class */ (function () {
         configurable: true
     });
     Piece.fromCharCode = function (charCode) {
+        if (!Piece.isValidPiece(charCode)) {
+            return null;
+        }
         var color = Piece.isWhiteCharCode(charCode) ? index_1.PIECE_COLOR_WHITE : index_1.PIECE_COLOR_BLACK;
         var type = Piece.toNormalCharCode(charCode);
         return new Piece(type, color);
@@ -95,6 +105,20 @@ var Piece = /** @class */ (function () {
     Piece.oppositeColor = function (color) {
         return Piece.isWhiteColor(color) ? index_1.PIECE_COLOR_BLACK : index_1.PIECE_COLOR_WHITE;
     };
+    Piece.isValidPiecesString = function (str, onlyPiece) {
+        var ruler = onlyPiece ? allPiecesString.filter(function (c) {
+            return !~[index_1.EMPTY_PIECE, index_1.BOARD_SEPARATOR].indexOf(c);
+        }) : allPiecesString;
+        return !str.split('').some(function (c) {
+            return !~ruler.indexOf(c);
+        });
+    };
     return Piece;
 }());
 exports.default = Piece;
+var allPiecesString = __spreadArrays(Piece.getPieceCharArray(), Piece.getPieceCharArray().map(function (c) {
+    return Piece.toWhiteCharCode(c);
+}), [
+    index_1.EMPTY_PIECE,
+    index_1.BOARD_SEPARATOR,
+]);

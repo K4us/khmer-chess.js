@@ -27,15 +27,10 @@
  *---------------------------------------------------------------------------- */
 import Piece from './Piece';
 import PieceIndex from './PieceIndex';
-import {
-    boardHelper,
-    jsis,
-    BOARD_SEPARATOR,
-    EMPTY_PIECE,
-    CELL_COUNT,
-} from '../board/index';
 import { DEFAULT_BOARD_STR } from './constant';
-import { Point } from '.';
+import { BOARD_SEPARATOR, CELL_COUNT, EMPTY_PIECE } from '../board/constant';
+import jsis from '../board/jsis';
+import Point from './Point';
 
 /**
  * BHGQKGHB/8/FFFFFFFF/8/8/ffffffff/8/bhgkqghb => bhgqkghb/......../ffffffff/......../......../FFFFFFFF/......../BHGKQGHB
@@ -54,7 +49,7 @@ export default class Board {
         }
         const newBoardStr = this.extract(boardStr).replace(/\//g, '');
         if (newBoardStr.length < CELL_COUNT ||
-            !boardHelper.isValidPiecesString(newBoardStr)) {
+            !Piece.isValidPiecesString(newBoardStr)) {
             throw new Error(`Invalid board string ${boardStr}`);
         }
         this.pieceIndices = newBoardStr.split('').map((charCode: string, i: number) => {

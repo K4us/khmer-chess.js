@@ -32,7 +32,11 @@ import {
     PIECE_TYPE_SDECH,
     boardHelper,
 } from './index';
-import { Piece } from '../ren';
+import {
+    Piece,
+    PieceIndex,
+    Point,
+} from '../ren/index';
 
 type OptionsType = {
     piecesString: string;
@@ -42,21 +46,25 @@ type OptionsType = {
     genCanMove: boolean;
     genCanMoveForAnother: boolean;
 };
+type CalCountPropsType = {
+    piecesString: string;
+    force: boolean;
+};
 export default class MoveManager {
     piecesString: string;
     currentTurn: string;
     isNeangMoved: boolean;
     isSdechMoved: boolean;
-    genCanMove: any;
-    genCanMoveForAnother: any;
-    whiteMoves: any[];
-    blackMoves: any[];
-    whiteKingInDanger: any;
-    whiteKingWillInDanger: any;
-    blackKingInDanger: any;
-    blackKingWillInDanger: any;
-    winColor: any;
-    stuckColor: any;
+    genCanMove: boolean;
+    genCanMoveForAnother: boolean;
+    whiteMoves: PieceIndex[];
+    blackMoves: PieceIndex[];
+    whiteKingInDanger: Point[] | null;
+    whiteKingWillInDanger: Point[] | null;
+    blackKingInDanger: Point[] | null;
+    blackKingWillInDanger: Point[] | null;
+    winColor: string | null;
+    stuckColor: string | null;
     init(option: OptionsType) {
         this.piecesString = option.piecesString;
         this.currentTurn = option.currentTurn;
@@ -206,7 +214,7 @@ export default class MoveManager {
         };
     }
 
-    calCount(option: { piecesString: string; force: boolean; }) {
+    calCount(option: CalCountPropsType) {
         return {
             countingBlack: boardHelper.checkCount(
                 PIECE_COLOR_BLACK,

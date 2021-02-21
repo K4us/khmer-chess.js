@@ -39,36 +39,16 @@ import {
     PIECE_TYPE_SES,
     PIECE_TYPE_SDECH,
     PIECE_TYPE_NEANG,
-    BOARD_SEPARATOR,
     PIECE_COLOR_EMPTY,
     CELL_COUNT,
 } from './constant';
-import {
-    Piece,
-    PieceIndex,
-    Point,
-} from '../ren/index';
+import Point from '../ren/Point';
+import Piece from '../ren/Piece';
+import PieceIndex from '../ren/PieceIndex';
 
 const mask = genMask();
 
-const allPiecesString: string[] = [
-    ...Piece.getPieceCharArray(),
-    ...Piece.getPieceCharArray().map((c: string) => {
-        return Piece.toWhiteCharCode(c);
-    }),
-    EMPTY_PIECE,
-    BOARD_SEPARATOR,
-];
-
 class BoardHelper {
-    isValidPiecesString(str: string, onlyPiece?: boolean) {
-        const ruler = onlyPiece ? allPiecesString.filter((c: any) => {
-            return !~[EMPTY_PIECE, BOARD_SEPARATOR].indexOf(c);
-        }) : allPiecesString;
-        return !str.split('').some((c: any) => {
-            return !~ruler.indexOf(c);
-        });
-    }
     getCharPieceFromString(piecesString: string, index: number) {
         if (Point.isIndexInBoard(index) && piecesString.length === CELL_COUNT) {
             return piecesString.charAt(index);
@@ -99,8 +79,8 @@ class BoardHelper {
         return point1.index;
     };
     getPieceCanMovePoses(index: number, piece: Piece) {
-        const pieceIndices: any[] = [];
-        mask[piece.type].forEach((_pos: any[]) => {
+        const pieceIndices: number[] = [];
+        mask[piece.type].forEach((_pos: number[]) => {
             const newIndex = this.convertMask(new Point(_pos[0], _pos[1]), index, piece.color);
             if (!jsis.isNull(newIndex)) {
                 pieceIndices.push(newIndex);
@@ -195,7 +175,7 @@ class BoardHelper {
         }
         return null;
     }
-    getKingInDanger(color: string, piecesString: string) {
+    getKingInDanger(color: string, piecesString: string): Point[] | null {
         const kingPos = piecesString.indexOf(this.getPieceCode(new Piece(PIECE_TYPE_SDECH, color)));
         const n = piecesString.length;
         let _poses;
@@ -334,25 +314,6 @@ class BoardHelper {
             return [0, 64];
         }
         return null;
-    }
-    getHashKey(val: string) {
-        const keys = Object.keys(pieceHash).filter((key) => {
-            return pieceHash[key] === val;
-        });
-        return keys.length === 1 ? keys[0] : EMPTY_PIECE;
-    }
-    getPieceKeyByProp(prop: Piece) {
-        let prop1;
-        for (const key in pieceHash) {
-            prop1 = this.getPieceProperties(key);
-            if (prop.color === prop1.color && prop.type === prop1.type) {
-                return key;
-            }
-        }
-        return EMPTY_PIECE;
-    }
-    getPieceKeyByName(name: any[]) {
-        return this.getPieceKeyByProp(new Piece(name[1], name[0]));
     }
 };
 

@@ -33,7 +33,7 @@ export default class Graveyard {
     constructor(graveyardStr?: string) {
         if (graveyardStr) {
             if (graveyardStr.length > 30 ||
-                !boardHelper.isValidPiecesString(graveyardStr, true)) {
+                !Piece.isValidPiecesString(graveyardStr, true)) {
                 throw new Error(`Invalid graveyard string ${graveyardStr}`);
             }
             this.pieces = graveyardStr.split('').map((charCode, i) => {

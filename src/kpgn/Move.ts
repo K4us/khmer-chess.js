@@ -25,7 +25,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  *---------------------------------------------------------------------------- */
-import { Piece } from '../ren';
+
+import Piece from '../ren/Piece';
 
 export default class Move {
     moveFromIndex: number;

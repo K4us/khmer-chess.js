@@ -1,32 +1,27 @@
-import { Piece, Point } from '../ren/index';
+import { Piece, PieceIndex, Point } from '../ren/index';
 declare class BoardHelper {
-    isValidPiecesString(str: string, onlyPiece?: boolean): boolean;
     getCharPieceFromString(piecesString: string, index: number): string;
-    getPieceProperties(pieceCode: string): {
-        color: string;
-        type: string;
-    };
+    getPieceProperties(pieceCode: string): Piece;
     getCharPieceInPos(index: number, piecesString: string): string;
     getPieceByIndex(index: number, piecesString: string): {
         isValidPiece: boolean;
-        color: string;
-        type: string;
+        piece: Piece | null;
     };
-    convertMask(point: Point, index: number, color: string): boolean;
-    getPieceCanMovePoses(index: number, piece: Piece): any[];
+    convertMask: (point1: Point, index: number, color: string) => number;
+    getPieceCanMovePoses(index: number, piece: Piece): number[];
     getPieceCanMovePosesValid(index: number, piece: Piece, piecesString: string): any[];
     replacePiecesStringAtIndex(piecesString: string, c: string, index: number): string;
     injectPiece(piecesString: string, index1: number, index2: number): string;
     getPieceCode(piece: Piece): string;
     getKingWillInDanger(color: string, piecesString: string): Point[];
-    getKingInDanger(color: string, piecesString: string): Point[];
+    getKingInDanger(color: string, piecesString: string): Point[] | null;
     generatePosesCanMove(index: number, piece: Piece, piecesString: string, isHaveMoved: boolean): any[];
     isCharPiecesInBoard(code: string, piecesString: string): boolean;
     getPiecesInBoard(piecesString: string): string[];
     isHaveCaptured(piecesString: string): boolean;
     filterPieceInBoard(piecesString: string): {
-        whitePieces: any[];
-        blackPieces: any[];
+        whitePieces: PieceIndex[];
+        blackPieces: PieceIndex[];
     };
     extractPiecesToArray(piecesString: string): {
         [x: string]: string[];
@@ -34,9 +29,6 @@ declare class BoardHelper {
     isStateCount(c: string, piecesString: string): boolean;
     checkCountable(color: string, piecesString: string): boolean;
     checkCount(color: string, piecesString: string, force: boolean): number[];
-    getHashKey(val: string): string;
-    getPieceKeyByProp(prop: Piece): string;
-    getPieceKeyByName(name: any[]): string;
 }
 declare const _default: BoardHelper;
 export default _default;
