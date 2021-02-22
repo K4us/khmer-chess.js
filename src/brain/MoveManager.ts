@@ -174,11 +174,11 @@ export default class MoveManager {
         this.init(option);
         this.generateCanMoves();
         this.cleanPieceNoMove();
-        let moves = [];
+        let moves: PieceIndex[] = [];
         if (this.genCanMove) {
             moves = Piece.isWhiteColor(this.currentTurn) ? this.whiteMoves : this.blackMoves;
         }
-        let anotherMoves = [];
+        let anotherMoves: PieceIndex[] = [];
         if (this.genCanMoveForAnother) {
             anotherMoves = Piece.isBlackColor(this.currentTurn) ? this.whiteMoves : this.blackMoves;
         }

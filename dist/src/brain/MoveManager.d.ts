@@ -33,8 +33,8 @@ export default class MoveManager {
     genWinLost(): void;
     getStuck(): void;
     calcCanMove(option: OptionsType): {
-        moves: any[];
-        anotherMoves: any[];
+        moves: PieceIndex[];
+        anotherMoves: PieceIndex[];
     };
     calcState(option: OptionsType): {
         blackKingInDanger: Point[];

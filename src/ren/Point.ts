@@ -47,25 +47,37 @@ export default class Point {
         return this.y + 1;
     }
     constructor(x: number, y: number) {
-        if (x < 0 || x >= ROW_NUMBER || y < 0 || y >= ROW_NUMBER) {
+        // in graveyard x can be greater than ROW_NUMBER
+        if (x < 0 || y < 0 || y >= ROW_NUMBER) {
             throw new Error('Invalid point x y');
         }
         this.x = x;
         this.y = y;
     }
-    static fromIndexCode(indexCode: string) {
-        const x = HORIZONTAL_CODE_LETTERS.indexOf(indexCode[0]);
-        const y = Number(indexCode[1]) - 1;
-        return new Point(x, y);
-    }
-
-    static fromIndex(index: number) {
-        const x = index % ROW_NUMBER;
-        const y = Math.floor(index / ROW_NUMBER);
-        return new Point(x, y);
-    }
     static xyToIndex(x: number, y: number) {
         return y * ROW_NUMBER + x;
+    }
+    static indexCodeToXY(indexCode: string) {
+        const x = HORIZONTAL_CODE_LETTERS.indexOf(indexCode[0]);
+        const y = Number(indexCode[1]) - 1;
+        return { x, y };
+    }
+    static indexCodeToIndex(indexCode: string) {
+        const { x, y } = Point.indexCodeToXY(indexCode);
+        return Point.xyToIndex(x, y);
+    }
+    static fromIndexCode(indexCode: string) {
+        const { x, y } = Point.indexCodeToXY(indexCode);
+        return new Point(x, y);
+    }
+    static indexToXY(index: number) {
+        const x = index % ROW_NUMBER;
+        const y = Math.floor(index / ROW_NUMBER);
+        return { x, y };
+    }
+    static fromIndex(index: number) {
+        const { x, y } = Point.indexToXY(index);
+        return new Point(x, y);
     }
     static isIndexInBoard(index: number) {
         return index >= 0 && index <= CELL_COUNT - 1;

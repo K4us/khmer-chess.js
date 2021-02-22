@@ -109,10 +109,9 @@ class BoardHelper {
             if (!jsis.isNull(p) && piece.type === PIECE_TYPE_TOUK) {
                 const _x = thisPos.x;
                 const _y = thisPos.y;
-                let _n, _s;
                 if (p.x === thisPos.x) {
-                    _n = Math.abs(p.y - thisPos.y);
-                    _s = thisPos.y < p.y ? 1 : -1;
+                    let _n = Math.abs(p.y - thisPos.y);
+                    const _s = thisPos.y < p.y ? 1 : -1;
                     while (--_n > 0) {
                         if (this.getPieceByIndex(Point.xyToIndex(_x, _y + _s * _n), piecesString).isValidPiece) {
                             p = null;
@@ -120,8 +119,8 @@ class BoardHelper {
                         }
                     }
                 } else if (p.y === thisPos.y) {
-                    _n = Math.abs(p.x - thisPos.x);
-                    _s = thisPos.x < p.x ? 1 : -1;
+                    let _n = Math.abs(p.x - thisPos.x);
+                    const _s = thisPos.x < p.x ? 1 : -1;
                     while (--_n > 0) {
                         if (this.getPieceByIndex(Point.xyToIndex(_x + _s * _n, _y), piecesString).isValidPiece) {
                             p = null;
@@ -160,12 +159,11 @@ class BoardHelper {
     getKingWillInDanger(color: string, piecesString: string) {
         const kingPos = piecesString.indexOf(this.getPieceCode(new Piece(PIECE_TYPE_SDECH, color)));
         const n = piecesString.length;
-        let _poses;
         for (let i = 0; i < n; i++) {
             const p = this.getPieceByIndex(i, piecesString);
             if (p.isValidPiece && p.piece.color !== color &&
                 p.piece.type === PIECE_TYPE_TOUK) {
-                _poses = this.getPieceCanMovePoses(i, p.piece);
+                const _poses = this.getPieceCanMovePoses(i, p.piece);
                 for (let j = 0; j < _poses.length; j++) {
                     if (_poses[j] === kingPos) {
                         return [Point.fromIndex(i), Point.fromIndex(kingPos)];
@@ -178,11 +176,10 @@ class BoardHelper {
     getKingInDanger(color: string, piecesString: string): Point[] | null {
         const kingPos = piecesString.indexOf(this.getPieceCode(new Piece(PIECE_TYPE_SDECH, color)));
         const n = piecesString.length;
-        let _poses;
         for (let i = 0; i < n; i++) {
             const p = this.getPieceByIndex(i, piecesString);
             if (p.isValidPiece && p.piece.color !== color) {
-                _poses = this.getPieceCanMovePosesValid(i, p.piece, piecesString);
+                const _poses = this.getPieceCanMovePosesValid(i, p.piece, piecesString);
                 for (let j = 0; j < _poses.length; j++) {
                     if (_poses[j] === kingPos) {
                         return [Point.fromIndex(i), Point.fromIndex(kingPos)];
@@ -216,9 +213,8 @@ class BoardHelper {
         }
         const n = _poses.length;
         const pieceIndices = [];
-        let str;
         for (let i = 0; i < n; i++) {
-            str = this.injectPiece(piecesString, index, _poses[i]);
+            const str = this.injectPiece(piecesString, index, _poses[i]);
             if (jsis.isNull(this.getKingInDanger(piece.color, str))) {
                 pieceIndices.push(Point.fromIndex(_poses[i]));
             }
@@ -239,17 +235,16 @@ class BoardHelper {
     filterPieceInBoard(piecesString: string) {
         const whitePieces: PieceIndex[] = [];
         const blackPieces: PieceIndex[] = [];
-        let c, prop, piece;
         for (let i = 0; i < piecesString.length; i++) {
-            c = piecesString.charAt(i);
+            const c = piecesString.charAt(i);
             if (Piece.isValidPiece(c)) {
-                prop = this.getPieceProperties(c);
+                const piece = this.getPieceProperties(c);
                 const point = Point.fromIndex(i);
-                piece = new PieceIndex(point.x, point.y, prop);
+                const pieceIndex = new PieceIndex(point.x, point.y, piece);
                 if (Piece.isWhiteColor(piece.color)) {
-                    whitePieces.push(piece);
+                    whitePieces.push(pieceIndex);
                 } else {
-                    blackPieces.push(piece);
+                    blackPieces.push(pieceIndex);
                 }
             }
         }

@@ -28,7 +28,7 @@
 import Piece from './Piece';
 import PieceIndex from './PieceIndex';
 import { DEFAULT_BOARD_STR } from './constant';
-import { BOARD_SEPARATOR, CELL_COUNT, EMPTY_PIECE } from '../brain/constant';
+import { BOARD_SEPARATOR, CELL_COUNT, EMPTY_PIECE, ROW_NUMBER } from '../brain/constant';
 import jsis from '../brain/jsis';
 import Point from './Point';
 
@@ -83,7 +83,7 @@ export default class Board {
     toStringFull() {
         const str = this.pieceIndices.map((pos, i) => {
             const p = pos.toCharCode();
-            if (i && i % 8 === 0 && i !== CELL_COUNT) {
+            if (i && i % ROW_NUMBER === 0 && i !== CELL_COUNT) {
                 return `${BOARD_SEPARATOR}${p}`;
             }
             return p;

@@ -30,7 +30,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var index_1 = require("../brain/index");
 var Point = /** @class */ (function () {
     function Point(x, y) {
-        if (x < 0 || x >= index_1.ROW_NUMBER || y < 0 || y >= index_1.ROW_NUMBER) {
+        // in graveyard x can be greater than ROW_NUMBER
+        if (x < 0 || y < 0 || y >= index_1.ROW_NUMBER) {
             throw new Error('Invalid point x y');
         }
         this.x = x;
@@ -64,18 +65,30 @@ var Point = /** @class */ (function () {
         enumerable: false,
         configurable: true
     });
-    Point.fromIndexCode = function (indexCode) {
-        var x = index_1.HORIZONTAL_CODE_LETTERS.indexOf(indexCode[0]);
-        var y = Number(indexCode[1]) - 1;
-        return new Point(x, y);
-    };
-    Point.fromIndex = function (index) {
-        var x = index % index_1.ROW_NUMBER;
-        var y = Math.floor(index / index_1.ROW_NUMBER);
-        return new Point(x, y);
-    };
     Point.xyToIndex = function (x, y) {
         return y * index_1.ROW_NUMBER + x;
+    };
+    Point.indexCodeToXY = function (indexCode) {
+        var x = index_1.HORIZONTAL_CODE_LETTERS.indexOf(indexCode[0]);
+        var y = Number(indexCode[1]) - 1;
+        return { x: x, y: y };
+    };
+    Point.indexCodeToIndex = function (indexCode) {
+        var _a = Point.indexCodeToXY(indexCode), x = _a.x, y = _a.y;
+        return Point.xyToIndex(x, y);
+    };
+    Point.fromIndexCode = function (indexCode) {
+        var _a = Point.indexCodeToXY(indexCode), x = _a.x, y = _a.y;
+        return new Point(x, y);
+    };
+    Point.indexToXY = function (index) {
+        var x = index % index_1.ROW_NUMBER;
+        var y = Math.floor(index / index_1.ROW_NUMBER);
+        return { x: x, y: y };
+    };
+    Point.fromIndex = function (index) {
+        var _a = Point.indexToXY(index), x = _a.x, y = _a.y;
+        return new Point(x, y);
     };
     Point.isIndexInBoard = function (index) {
         return index >= 0 && index <= index_1.CELL_COUNT - 1;

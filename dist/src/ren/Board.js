@@ -82,7 +82,7 @@ var Board = /** @class */ (function () {
     Board.prototype.toStringFull = function () {
         var str = this.pieceIndices.map(function (pos, i) {
             var p = pos.toCharCode();
-            if (i && i % 8 === 0 && i !== constant_2.CELL_COUNT) {
+            if (i && i % constant_2.ROW_NUMBER === 0 && i !== constant_2.CELL_COUNT) {
                 return "" + constant_2.BOARD_SEPARATOR + p;
             }
             return p;
