@@ -50,7 +50,7 @@ type CalCountPropsType = {
     piecesString: string;
     force: boolean;
 };
-export default class MoveManager {
+class MoveHelper {
     piecesString: string;
     currentTurn: string;
     isNeangMoved: boolean;
@@ -227,3 +227,5 @@ export default class MoveManager {
         };
     }
 }
+
+export default new MoveHelper();

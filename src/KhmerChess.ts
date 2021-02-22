@@ -27,18 +27,15 @@
  *---------------------------------------------------------------------------- */
 import config from '../package.json';
 import { KPGN, Move } from './kpgn/index';
-import MoveManager from './brain/MoveManager';
 import asciiTable from './other/table';
 import { Piece, REN } from './ren/index';
 
 export default class KhmerChess {
     static title = config.name;
     static version = config.version;
-    moveManager: MoveManager;
     renInstance: REN;
     kpgnInstance = new KPGN();
     constructor(renStr?: string) {
-        this.moveManager = new MoveManager();
         this.renInstance = REN.fromString(renStr);
     }
 
