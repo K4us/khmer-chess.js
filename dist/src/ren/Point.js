@@ -44,6 +44,13 @@ var Point = /** @class */ (function () {
         enumerable: false,
         configurable: true
     });
+    Object.defineProperty(Point.prototype, "graveyardIndex", {
+        get: function () {
+            return this.x;
+        },
+        enumerable: false,
+        configurable: true
+    });
     Object.defineProperty(Point.prototype, "indexCode", {
         get: function () {
             return "" + this.h + this.v;
@@ -89,6 +96,9 @@ var Point = /** @class */ (function () {
     Point.fromIndex = function (index) {
         var _a = Point.indexToXY(index), x = _a.x, y = _a.y;
         return new Point(x, y);
+    };
+    Point.fromIndexGraveyardIndex = function (index) {
+        return new Point(index, 0);
     };
     Point.isIndexInBoard = function (index) {
         return index >= 0 && index <= index_1.CELL_COUNT - 1;

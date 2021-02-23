@@ -32,13 +32,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
  *---------------------------------------------------------------------------- */
 var package_json_1 = __importDefault(require("../package.json"));
 var index_1 = require("./kpgn/index");
-var MoveManager_1 = __importDefault(require("./brain/MoveManager"));
 var table_1 = __importDefault(require("./other/table"));
 var index_2 = require("./ren/index");
 var KhmerChess = /** @class */ (function () {
     function KhmerChess(renStr) {
         this.kpgnInstance = new index_1.KPGN();
-        this.moveManager = new MoveManager_1.default();
         this.renInstance = index_2.REN.fromString(renStr);
     }
     KhmerChess.prototype.load = function (renStr) {
@@ -106,9 +104,8 @@ var KhmerChess = /** @class */ (function () {
     KhmerChess.prototype.turn = function () {
         return this.renInstance.turn;
     };
-    KhmerChess.prototype.move = function (from, to) {
-        // TODO:
-        return null;
+    KhmerChess.prototype.move = function (moveFromIndex, moveToIndex) {
+        return this.renInstance.move(moveFromIndex, moveToIndex);
     };
     KhmerChess.prototype.undo = function () {
         // TODO:

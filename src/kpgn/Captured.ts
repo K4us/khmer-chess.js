@@ -25,11 +25,22 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  *---------------------------------------------------------------------------- */
-export { default as KPGN } from './KPGN';
-export { default as Move } from './Move';
-export { MovePropType } from './Move';
-export { default as Captured } from './Captured';
-export { CapturedPropType } from './Captured';
-export { default as Player } from './Player';
-export { default as Result } from './Result';
-export { default as Timer } from './Timer';
+
+import Piece from '../ren/Piece';
+import Point from '../ren/Point';
+
+export type CapturedPropType = {
+    piece: Piece;
+    fromBoardPoint: Point;
+    toGraveyardPoint: Point;
+};
+export default class Captured implements CapturedPropType {
+    piece: Piece;
+    fromBoardPoint: Point;
+    toGraveyardPoint: Point;
+    constructor({ piece, fromBoardPoint: fromBoardPoint, toGraveyardPoint: toGraveyardPoint }: CapturedPropType) {
+        this.piece = piece;
+        this.fromBoardPoint = fromBoardPoint;
+        this.toGraveyardPoint = toGraveyardPoint;
+    }
+}

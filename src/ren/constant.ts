@@ -30,3 +30,6 @@ export const STRING_COUNT = 'B2F8G2H2K1Q1b2f8g2h2k1q1';
 // BHGQKGHB/8/FFFFFFFF/8/8/ffffffff/8/bhgkqghb w ---- -- -.-
 export const DEFAULT_BOARD_STR = 'BHGQKGHB/8/FFFFFFFF/8/8/ffffffff/8/bhgkqghb';
 export const NOT_SET = '-';
+export const PIECE_FLAG_KILL = 'x';
+export const PIECE_FLAG_JUMP = 'j';
+export const PIECE_FLAG_UPGRADE = 'u';

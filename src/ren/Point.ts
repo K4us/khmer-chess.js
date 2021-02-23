@@ -37,6 +37,9 @@ export default class Point {
     get index() {
         return Point.xyToIndex(this.x, this.y);
     }
+    get graveyardIndex() {
+        return this.x;
+    }
     get indexCode() {
         return `${this.h}${this.v}`;
     }
@@ -78,6 +81,9 @@ export default class Point {
     static fromIndex(index: number) {
         const { x, y } = Point.indexToXY(index);
         return new Point(x, y);
+    }
+    static fromIndexGraveyardIndex(index: number) {
+        return new Point(index, 0);
     }
     static isIndexInBoard(index: number) {
         return index >= 0 && index <= CELL_COUNT - 1;

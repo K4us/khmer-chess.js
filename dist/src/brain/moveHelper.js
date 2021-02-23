@@ -29,10 +29,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
  *---------------------------------------------------------------------------- */
 var index_1 = require("./index");
 var index_2 = require("../ren/index");
-var MoveManager = /** @class */ (function () {
-    function MoveManager() {
+var MoveHelper = /** @class */ (function () {
+    function MoveHelper() {
     }
-    MoveManager.prototype.init = function (option) {
+    MoveHelper.prototype.init = function (option) {
         this.piecesString = option.piecesString;
         this.currentTurn = option.currentTurn;
         this.isNeangMoved = option.isNeangMoved;
@@ -48,7 +48,7 @@ var MoveManager = /** @class */ (function () {
         this.winColor = null;
         this.stuckColor = null;
     };
-    MoveManager.prototype.generateCanMoves = function () {
+    MoveHelper.prototype.generateCanMoves = function () {
         var _this = this;
         var filter = index_1.boardHelper.filterPieceInBoard(this.piecesString);
         this.whiteMoves = filter.whitePieces;
@@ -70,7 +70,7 @@ var MoveManager = /** @class */ (function () {
         genMoves(this.whiteMoves);
         genMoves(this.blackMoves);
     };
-    MoveManager.prototype.cleanPieceNoMove = function () {
+    MoveHelper.prototype.cleanPieceNoMove = function () {
         var cleanMoves = function (pieces) {
             var isTrue = true;
             while (isTrue) {
@@ -88,13 +88,13 @@ var MoveManager = /** @class */ (function () {
         cleanMoves(this.whiteMoves);
         cleanMoves(this.blackMoves);
     };
-    MoveManager.prototype.checkIfKingInDanger = function () {
+    MoveHelper.prototype.checkIfKingInDanger = function () {
         this.whiteKingInDanger = index_1.boardHelper.getKingInDanger(index_1.PIECE_COLOR_WHITE, this.piecesString);
         this.whiteKingWillInDanger = index_1.boardHelper.getKingWillInDanger(index_1.PIECE_COLOR_WHITE, this.piecesString);
         this.blackKingInDanger = index_1.boardHelper.getKingInDanger(index_1.PIECE_COLOR_BLACK, this.piecesString);
         this.blackKingWillInDanger = index_1.boardHelper.getKingWillInDanger(index_1.PIECE_COLOR_BLACK, this.piecesString);
     };
-    MoveManager.prototype.genWinLost = function () {
+    MoveHelper.prototype.genWinLost = function () {
         if (this.whiteKingInDanger && !this.whiteMoves.length) {
             this.winColor = index_1.PIECE_COLOR_BLACK;
         }
@@ -102,7 +102,7 @@ var MoveManager = /** @class */ (function () {
             this.winColor = index_1.PIECE_COLOR_WHITE;
         }
     };
-    MoveManager.prototype.getStuck = function () {
+    MoveHelper.prototype.getStuck = function () {
         if (this.winColor) {
             return;
         }
@@ -113,7 +113,7 @@ var MoveManager = /** @class */ (function () {
             this.stuckColor = index_1.PIECE_COLOR_BLACK;
         }
     };
-    MoveManager.prototype.calcCanMove = function (option) {
+    MoveHelper.prototype.calcCanMove = function (option) {
         this.init(option);
         this.generateCanMoves();
         this.cleanPieceNoMove();
@@ -130,7 +130,7 @@ var MoveManager = /** @class */ (function () {
             anotherMoves: anotherMoves,
         };
     };
-    MoveManager.prototype.calcState = function (option) {
+    MoveHelper.prototype.calcState = function (option) {
         this.init(option);
         this.generateCanMoves();
         this.cleanPieceNoMove();
@@ -148,12 +148,12 @@ var MoveManager = /** @class */ (function () {
             whiteCountable: index_1.boardHelper.checkCountable(index_1.PIECE_COLOR_WHITE, this.piecesString),
         };
     };
-    MoveManager.prototype.calCount = function (option) {
+    MoveHelper.prototype.calCount = function (option) {
         return {
             countingBlack: index_1.boardHelper.checkCount(index_1.PIECE_COLOR_BLACK, option.piecesString, option.force),
             countingWhite: index_1.boardHelper.checkCount(index_1.PIECE_COLOR_WHITE, option.piecesString, option.force),
         };
     };
-    return MoveManager;
+    return MoveHelper;
 }());
-exports.default = MoveManager;
+exports.default = new MoveHelper();

@@ -81,7 +81,7 @@ var Board = /** @class */ (function () {
     };
     Board.prototype.toStringFull = function () {
         var str = this.pieceIndices.map(function (pos, i) {
-            var p = pos.toCharCode();
+            var p = pos.toPieceCharCode();
             if (i && i % constant_2.ROW_NUMBER === 0 && i !== constant_2.CELL_COUNT) {
                 return "" + constant_2.BOARD_SEPARATOR + p;
             }
@@ -93,6 +93,9 @@ var Board = /** @class */ (function () {
         var str = this.toStringFull();
         str = this.compress(str);
         return str;
+    };
+    Board.prototype.getPieceAtIndex = function (index) {
+        return this.pieceIndices[index].piece;
     };
     return Board;
 }());

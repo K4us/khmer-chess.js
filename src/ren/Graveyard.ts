@@ -26,10 +26,13 @@
  *
  *---------------------------------------------------------------------------- */
 import Piece from './Piece';
-import { boardHelper, PIECE_TYPE_SDECH } from '../brain/index';
+import { PIECE_TYPE_SDECH } from '../brain/index';
 
 export default class Graveyard {
     pieces: Piece[] = [];
+    get lastIndex() {
+        return this.pieces.length - 1;
+    }
     constructor(graveyardStr?: string) {
         if (graveyardStr) {
             if (graveyardStr.length > 30 ||

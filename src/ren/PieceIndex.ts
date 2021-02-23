@@ -34,17 +34,17 @@ import Point from './Point';
 
 export default class PieceIndex {
     point: Point;
-    piece: Piece;
+    piece: Piece | null;
     constructor(x: number, y: number, piece: Piece | null) {
         this.point = new Point(x, y);
         this.piece = piece;
     }
 
     toCode() {
-        return `${this.piece.pieceCharCode}${this.point.indexCode}`;
+        return jsis.isNull(this.piece) ? `${this.piece.pieceCharCode}${this.point.indexCode}` : null;
     }
 
-    toCharCode() {
+    toPieceCharCode() {
         return jsis.isNull(this.piece) ? EMPTY_PIECE : this.piece.pieceCharCode;
     }
 }

@@ -11,9 +11,9 @@ var PieceIndex = /** @class */ (function () {
         this.piece = piece;
     }
     PieceIndex.prototype.toCode = function () {
-        return "" + this.piece.pieceCharCode + this.point.indexCode;
+        return index_1.jsis.isNull(this.piece) ? "" + this.piece.pieceCharCode + this.point.indexCode : null;
     };
-    PieceIndex.prototype.toCharCode = function () {
+    PieceIndex.prototype.toPieceCharCode = function () {
         return index_1.jsis.isNull(this.piece) ? index_1.EMPTY_PIECE : this.piece.pieceCharCode;
     };
     return PieceIndex;

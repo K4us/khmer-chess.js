@@ -35,6 +35,7 @@ import Point from './Point';
 /**
  * BHGQKGHB/8/FFFFFFFF/8/8/ffffffff/8/bhgkqghb => bhgqkghb/......../ffffffff/......../......../FFFFFFFF/......../BHGKQGHB
  */
+
 export default class Board {
     pieceIndices = Array.from({
         length: CELL_COUNT,
@@ -82,7 +83,7 @@ export default class Board {
 
     toStringFull() {
         const str = this.pieceIndices.map((pos, i) => {
-            const p = pos.toCharCode();
+            const p = pos.toPieceCharCode();
             if (i && i % ROW_NUMBER === 0 && i !== CELL_COUNT) {
                 return `${BOARD_SEPARATOR}${p}`;
             }
@@ -95,5 +96,9 @@ export default class Board {
         let str = this.toStringFull();
         str = this.compress(str);
         return str;
+    }
+
+    getPieceAtIndex(index: number): Piece | null {
+        return this.pieceIndices[index].piece;
     }
 }

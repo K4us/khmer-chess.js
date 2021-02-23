@@ -11,7 +11,7 @@ declare type CalCountPropsType = {
     piecesString: string;
     force: boolean;
 };
-export default class MoveManager {
+declare class MoveHelper {
     piecesString: string;
     currentTurn: string;
     isNeangMoved: boolean;
@@ -51,4 +51,5 @@ export default class MoveManager {
         countingWhite: number[];
     };
 }
-export {};
+declare const _default: MoveHelper;
+export default _default;

@@ -120,9 +120,8 @@ export default class KhmerChess {
         return this.renInstance.turn;
     }
 
-    move(from: number, to: number): Move | null {
-        // TODO:
-        return null;
+    move(moveFromIndex: number, moveToIndex: number): Move | null {
+        return this.renInstance.move(moveFromIndex, moveToIndex);
     }
 
     undo() {

@@ -2,6 +2,7 @@ export default class Point {
     x: number;
     y: number;
     get index(): number;
+    get graveyardIndex(): number;
     get indexCode(): string;
     get h(): string;
     get v(): number;
@@ -18,5 +19,6 @@ export default class Point {
         y: number;
     };
     static fromIndex(index: number): Point;
+    static fromIndexGraveyardIndex(index: number): Point;
     static isIndexInBoard(index: number): boolean;
 }

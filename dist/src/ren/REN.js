@@ -37,6 +37,9 @@ var CountDown_1 = __importDefault(require("./CountDown"));
 var Graveyard_1 = __importDefault(require("./Graveyard"));
 var index_1 = require("../brain/index");
 var constant_1 = require("./constant");
+var Move_1 = __importDefault(require("../kpgn/Move"));
+var Point_1 = __importDefault(require("./Point"));
+var kpgn_1 = require("../kpgn");
 var REN = /** @class */ (function () {
     function REN(_a) {
         var boardStr = _a.boardStr, turnStr = _a.turnStr, kqMovedStr = _a.kqMovedStr, kAttackedStr = _a.kAttackedStr, countdownStr = _a.countdownStr, graveyardStr = _a.graveyardStr;
@@ -85,6 +88,29 @@ var REN = /** @class */ (function () {
             countdownStr: fenArr[4],
             graveyardStr: fenArr[5],
         });
+    };
+    REN.prototype.move = function (moveFromIndex, moveToIndex) {
+        var piece = this.board.getPieceAtIndex(moveFromIndex);
+        if (index_1.jsis.isNull(piece)) {
+            return null;
+        }
+        this.board.pieceIndices[moveFromIndex].piece = null;
+        var move = new Move_1.default({
+            moveFrom: Point_1.default.fromIndex(moveFromIndex),
+            moveTo: Point_1.default.fromIndex(moveToIndex),
+            piece: piece,
+        });
+        var targetPiece = this.board.getPieceAtIndex(moveToIndex);
+        if (targetPiece) {
+            this.graveyard.pieces.push(targetPiece);
+            move.captured = new kpgn_1.Captured({
+                fromBoardPoint: Point_1.default.fromIndex(moveToIndex),
+                toGraveyardPoint: Point_1.default.fromIndex(this.graveyard.lastIndex),
+                piece: targetPiece,
+            });
+        }
+        this.board.pieceIndices[moveToIndex].piece = piece;
+        return move;
     };
     REN.prototype.toString = function () {
         var str = this.board.toString();

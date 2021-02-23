@@ -49,6 +49,13 @@ var Graveyard = /** @class */ (function () {
             });
         }
     }
+    Object.defineProperty(Graveyard.prototype, "lastIndex", {
+        get: function () {
+            return this.pieces.length - 1;
+        },
+        enumerable: false,
+        configurable: true
+    });
     Graveyard.prototype.toString = function () {
         return this.pieces.map(function (p) {
             return p.pieceCharCode;

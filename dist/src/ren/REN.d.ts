@@ -3,6 +3,7 @@ import KqMoved from './KqMoved';
 import KAttacked from './KAttacked';
 import CountDown from './CountDown';
 import Graveyard from './Graveyard';
+import Move from '../kpgn/Move';
 /**
  * Raksa-Eng Notation
  * fen: <pieces on board> <turn w|b> <king&queen moved ----|SNsn> <king attack --|Kk> <countdown -.-|-.4> <pieces in graveyard>
@@ -25,6 +26,7 @@ export default class REN {
     constructor({ boardStr, turnStr, kqMovedStr, kAttackedStr, countdownStr, graveyardStr }: RENPropType);
     isInvalidPieceCount(): string | false;
     static fromString(fen?: string): REN;
+    move(moveFromIndex: number, moveToIndex: number): Move | null;
     toString(): string;
 }
 export {};

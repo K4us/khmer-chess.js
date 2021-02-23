@@ -31,6 +31,8 @@ var KPGN_1 = require("./KPGN");
 Object.defineProperty(exports, "KPGN", { enumerable: true, get: function () { return KPGN_1.default; } });
 var Move_1 = require("./Move");
 Object.defineProperty(exports, "Move", { enumerable: true, get: function () { return Move_1.default; } });
+var Captured_1 = require("./Captured");
+Object.defineProperty(exports, "Captured", { enumerable: true, get: function () { return Captured_1.default; } });
 var Player_1 = require("./Player");
 Object.defineProperty(exports, "Player", { enumerable: true, get: function () { return Player_1.default; } });
 var Result_1 = require("./Result");

@@ -1,10 +1,8 @@
 import { KPGN, Move } from './kpgn/index';
-import MoveManager from './brain/MoveManager';
 import { Piece, REN } from './ren/index';
 export default class KhmerChess {
     static title: string;
     static version: string;
-    moveManager: MoveManager;
     renInstance: REN;
     kpgnInstance: KPGN;
     constructor(renStr?: string);
@@ -66,7 +64,7 @@ export default class KhmerChess {
     loadKpgn(kpgnJosn: any, options: any): void;
     ascii(): string;
     turn(): string;
-    move(from: number, to: number): Move | null;
+    move(moveFromIndex: number, moveToIndex: number): Move | null;
     undo(): boolean;
     /**
      * Move all pieces to graveyard except kings

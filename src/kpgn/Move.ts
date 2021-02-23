@@ -26,60 +26,88 @@
  *
  *---------------------------------------------------------------------------- */
 
+import {
+    PIECE_FLAG_JUMP,
+    PIECE_FLAG_KILL,
+    PIECE_FLAG_UPGRADE,
+} from '../ren/constant';
 import Piece from '../ren/Piece';
+import Point from '../ren/Point';
+import Captured from './Captured';
 
-export default class Move {
-    moveFromIndex: number;
-    moveToIndex: number;
-    isJumping = false; // King or Queen would jump on first start
-    capturedPiece: Piece | null;
-    constructor(moveFromIndex: number, moveToIndex: number,
-        capturedPiece: Piece | null,
-        isJumping?: boolean) {
-        this.moveFromIndex = moveFromIndex;
-        this.moveToIndex = moveToIndex;
-        this.capturedPiece = capturedPiece;
+export type MovePropType = {
+    piece: Piece;
+    moveFrom: Point;
+    moveTo: Point;
+    isJumping?: boolean; // King or Queen would jump on first start
+    isUpgrading?: boolean;
+    captured?: Captured;
+};
+export default class Move implements MovePropType {
+    piece: Piece;
+    moveFrom: Point;
+    moveTo: Point;
+    isJumping?: boolean;
+    isUpgrading?: boolean;
+    captured?: Captured;
+    constructor({ piece, moveFrom, moveTo, isJumping,
+        isUpgrading, captured,
+    }: MovePropType) {
+        this.piece = piece;
+        this.moveFrom = moveFrom;
+        this.moveTo = moveTo;
         this.isJumping = !!isJumping;
+        this.isUpgrading = !!isUpgrading;
+        this.captured = captured || null;
     }
 
     // Spec: Fc5d6xf => White fish (F) moved from c5 to d6 killed black fish (f)
-    static fromMovedString() {
+    static fromMovedString(graveyardLastIndex: number) {
         // const str = 'Fc5d6j';
         const str = 'Fc5d6xf';
         const piece = Piece.fromCharCode(str[0]);
-        const fromIndexCode = str.substr(1, 2);
-        const toIndexCode = str.substr(3, 2);
-        if (str[5] === 'x') {
+        const moveFrom = Point.fromIndexCode(str.substr(1, 2));
+        const moveTo = Point.fromIndexCode(str.substr(3, 2));
+        const move = new Move({
+            piece,
+            moveFrom,
+            moveTo,
+        });
+        if (str[5] === PIECE_FLAG_KILL) {
             const capturedPieceChar = str[6];
-        } else if (str[5] === 'j') {
-            const isJumping = true;
+            move.captured = new Captured({
+                fromBoardPoint: moveTo,
+                toGraveyardPoint: Point.fromIndexGraveyardIndex(graveyardLastIndex),
+                piece: Piece.fromCharCode(capturedPieceChar),
+            });
+        } else if (str[5] === PIECE_FLAG_JUMP) {
+            move.isJumping = true;
+        } else if (~str.indexOf(PIECE_FLAG_UPGRADE)) {
+            move.isUpgrading = true;
         }
-
-        return 'c5d6';
+        return move;
     }
-
+    // Fc5d6j: jump, Fc5d6x: kill, Fc5d6xt: kill&upgrade
     toString() {
-        // TODO: implement this
-        // const str = 'Fc5d6j';
-        const str = 'Fc5d6xf';
-        const pieceChar = str[0];
-        const fromIndexCode = str.substr(1, 2);
-        const toIndexCode = str.substr(3, 2);
-        if (str[5] === 'x') {
-            const capturedPieceChar = str[6];
-        } else if (str[5] === 'j') {
-            const isJumping = true;
+        const pCode = this.piece.pieceCharCode;
+        const fIndexCode = this.moveFrom.indexCode;
+        const tIndexCode = this.moveTo.indexCode;
+        let flags = this.captured ? PIECE_FLAG_KILL : '';
+        if (this.isJumping) {
+            flags += PIECE_FLAG_JUMP;
         }
-
-        return 'c5d6';
+        if (this.isUpgrading) {
+            flags += PIECE_FLAG_UPGRADE;
+        }
+        return `${pCode}${fIndexCode}${tIndexCode}${flags}`;
     }
 
     toJson() {
         return {
-            fromIndex: this.moveFromIndex,
-            toIndex: this.moveToIndex,
+            fromIndex: this.moveFrom.index,
+            toIndex: this.moveTo.index,
             isJumping: this.isJumping,
-            capturedPiece: this.capturedPiece ? this.capturedPiece.pieceCharCode : null,
+            capturedPiece: this.captured ? this.captured.piece.pieceCharCode : null,
         };
     }
 }

@@ -31,8 +31,13 @@ import KAttacked from './KAttacked';
 import CountDown from './CountDown';
 import Graveyard from './Graveyard';
 import { jsis } from '../brain/index';
-import { DEFAULT_BOARD_STR, STRING_COUNT } from './constant';
-import { PIECE_COLOR_WHITE } from '../brain';
+import {
+    DEFAULT_BOARD_STR,
+    STRING_COUNT,
+} from './constant';
+import Move from '../kpgn/Move';
+import Point from './Point';
+import { Captured } from '../kpgn';
 
 /**
  * Raksa-Eng Notation
@@ -106,6 +111,30 @@ export default class REN {
             countdownStr: fenArr[4],
             graveyardStr: fenArr[5],
         });
+    }
+
+    move(moveFromIndex: number, moveToIndex: number): Move | null {
+        const piece = this.board.getPieceAtIndex(moveFromIndex);
+        if (jsis.isNull(piece)) {
+            return null;
+        }
+        this.board.pieceIndices[moveFromIndex].piece = null;
+        const move = new Move({
+            moveFrom: Point.fromIndex(moveFromIndex),
+            moveTo: Point.fromIndex(moveToIndex),
+            piece,
+        });
+        const targetPiece = this.board.getPieceAtIndex(moveToIndex);
+        if (targetPiece) {
+            this.graveyard.pieces.push(targetPiece);
+            move.captured = new Captured({
+                fromBoardPoint: Point.fromIndex(moveToIndex),
+                toGraveyardPoint: Point.fromIndex(this.graveyard.lastIndex),
+                piece: targetPiece,
+            });
+        }
+        this.board.pieceIndices[moveToIndex].piece = piece;
+        return move;
     }
 
     toString() {

@@ -30,51 +30,68 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var constant_1 = require("../ren/constant");
 var Piece_1 = __importDefault(require("../ren/Piece"));
+var Point_1 = __importDefault(require("../ren/Point"));
+var Captured_1 = __importDefault(require("./Captured"));
 var Move = /** @class */ (function () {
-    function Move(moveFromIndex, moveToIndex, capturedPiece, isJumping) {
-        this.isJumping = false; // King or Queen would jump on first start
-        this.moveFromIndex = moveFromIndex;
-        this.moveToIndex = moveToIndex;
-        this.capturedPiece = capturedPiece;
+    function Move(_a) {
+        var piece = _a.piece, moveFrom = _a.moveFrom, moveTo = _a.moveTo, isJumping = _a.isJumping, isUpgrading = _a.isUpgrading, captured = _a.captured;
+        this.piece = piece;
+        this.moveFrom = moveFrom;
+        this.moveTo = moveTo;
         this.isJumping = !!isJumping;
+        this.isUpgrading = !!isUpgrading;
+        this.captured = captured || null;
     }
     // Spec: Fc5d6xf => White fish (F) moved from c5 to d6 killed black fish (f)
-    Move.fromMovedString = function () {
+    Move.fromMovedString = function (graveyardLastIndex) {
         // const str = 'Fc5d6j';
         var str = 'Fc5d6xf';
         var piece = Piece_1.default.fromCharCode(str[0]);
-        var fromIndexCode = str.substr(1, 2);
-        var toIndexCode = str.substr(3, 2);
-        if (str[5] === 'x') {
+        var moveFrom = Point_1.default.fromIndexCode(str.substr(1, 2));
+        var moveTo = Point_1.default.fromIndexCode(str.substr(3, 2));
+        var move = new Move({
+            piece: piece,
+            moveFrom: moveFrom,
+            moveTo: moveTo,
+        });
+        if (str[5] === constant_1.PIECE_FLAG_KILL) {
             var capturedPieceChar = str[6];
+            move.captured = new Captured_1.default({
+                fromBoardPoint: moveTo,
+                toGraveyardPoint: Point_1.default.fromIndexGraveyardIndex(graveyardLastIndex),
+                piece: Piece_1.default.fromCharCode(capturedPieceChar),
+            });
         }
-        else if (str[5] === 'j') {
-            var isJumping = true;
+        else if (str[5] === constant_1.PIECE_FLAG_JUMP) {
+            move.isJumping = true;
         }
-        return 'c5d6';
+        else if (~str.indexOf(constant_1.PIECE_FLAG_UPGRADE)) {
+            move.isUpgrading = true;
+        }
+        return move;
     };
+    // Fc5d6j: jump, Fc5d6x: kill, Fc5d6xt: kill&upgrade
     Move.prototype.toString = function () {
-        // TODO: implement this
-        // const str = 'Fc5d6j';
-        var str = 'Fc5d6xf';
-        var pieceChar = str[0];
-        var fromIndexCode = str.substr(1, 2);
-        var toIndexCode = str.substr(3, 2);
-        if (str[5] === 'x') {
-            var capturedPieceChar = str[6];
+        var pCode = this.piece.pieceCharCode;
+        var fIndexCode = this.moveFrom.indexCode;
+        var tIndexCode = this.moveTo.indexCode;
+        var flags = this.captured ? constant_1.PIECE_FLAG_KILL : '';
+        if (this.isJumping) {
+            flags += constant_1.PIECE_FLAG_JUMP;
         }
-        else if (str[5] === 'j') {
-            var isJumping = true;
+        if (this.isUpgrading) {
+            flags += constant_1.PIECE_FLAG_UPGRADE;
         }
-        return 'c5d6';
+        return "" + pCode + fIndexCode + tIndexCode + flags;
     };
     Move.prototype.toJson = function () {
         return {
-            fromIndex: this.moveFromIndex,
-            toIndex: this.moveToIndex,
+            fromIndex: this.moveFrom.index,
+            toIndex: this.moveTo.index,
             isJumping: this.isJumping,
-            capturedPiece: this.capturedPiece ? this.capturedPiece.pieceCharCode : null,
+            capturedPiece: this.captured ? this.captured.piece.pieceCharCode : null,
         };
     };
     return Move;

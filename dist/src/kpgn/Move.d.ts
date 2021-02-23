@@ -1,11 +1,23 @@
 import Piece from '../ren/Piece';
-export default class Move {
-    moveFromIndex: number;
-    moveToIndex: number;
-    isJumping: boolean;
-    capturedPiece: Piece | null;
-    constructor(moveFromIndex: number, moveToIndex: number, capturedPiece: Piece | null, isJumping?: boolean);
-    static fromMovedString(): string;
+import Point from '../ren/Point';
+import Captured from './Captured';
+export declare type MovePropType = {
+    piece: Piece;
+    moveFrom: Point;
+    moveTo: Point;
+    isJumping?: boolean;
+    isUpgrading?: boolean;
+    captured?: Captured;
+};
+export default class Move implements MovePropType {
+    piece: Piece;
+    moveFrom: Point;
+    moveTo: Point;
+    isJumping?: boolean;
+    isUpgrading?: boolean;
+    captured?: Captured;
+    constructor({ piece, moveFrom, moveTo, isJumping, isUpgrading, captured, }: MovePropType);
+    static fromMovedString(graveyardLastIndex: number): Move;
     toString(): string;
     toJson(): {
         fromIndex: number;
