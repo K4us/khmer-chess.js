@@ -60,13 +60,26 @@ var Board = /** @class */ (function () {
             return new PieceIndex_1.default(point.x, point.y, charCode === constant_2.EMPTY_PIECE ? null : Piece_1.default.fromCharCode(charCode));
         });
     }
-    Board.prototype.toMultiArray = function () {
-        var arr = [[], [], [], [], [], [], [], []];
-        this.pieceIndices.forEach(function (pieceIndex) {
-            arr[pieceIndex.point.y][pieceIndex.point.x] = pieceIndex.piece;
-        });
-        return arr;
-    };
+    Object.defineProperty(Board.prototype, "piecesMultiArray", {
+        get: function () {
+            var arr = [[], [], [], [], [], [], [], []];
+            this.pieceIndices.forEach(function (pieceIndex) {
+                arr[pieceIndex.point.y][pieceIndex.point.x] = pieceIndex.piece;
+            });
+            return arr;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(Board.prototype, "pieces", {
+        get: function () {
+            return this.pieceIndices.map(function (pieceIndex) {
+                return pieceIndex.piece;
+            });
+        },
+        enumerable: false,
+        configurable: true
+    });
     Board.prototype.compress = function (str) {
         var reg = new RegExp("(\\" + constant_2.EMPTY_PIECE + "+)", 'g');
         return str.replace(reg, function ($1) { return $1.length; });

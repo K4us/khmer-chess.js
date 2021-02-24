@@ -85,12 +85,27 @@ var KhmerChess = /** @class */ (function () {
     KhmerChess.prototype.ren = function () {
         return this.renInstance.toString();
     };
-    KhmerChess.prototype.board = function () {
-        return this.renInstance.board.toMultiArray();
-    };
-    KhmerChess.prototype.graveyard = function () {
-        return this.renInstance.graveyard.pieces;
-    };
+    Object.defineProperty(KhmerChess.prototype, "piecesInBoardMultiArray", {
+        get: function () {
+            return this.renInstance.board.piecesMultiArray;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(KhmerChess.prototype, "piecesInBoard", {
+        get: function () {
+            return this.renInstance.board.pieces;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(KhmerChess.prototype, "piecesInGraveyard", {
+        get: function () {
+            return this.renInstance.graveyard.pieces;
+        },
+        enumerable: false,
+        configurable: true
+    });
     // Khmer Portable Game Notation <file-name>.kpgn.json
     KhmerChess.prototype.kpgn = function () {
         return this.kpgnInstance.toJson();

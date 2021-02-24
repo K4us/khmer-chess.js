@@ -21,8 +21,9 @@ export default class KhmerChess {
         error: any;
     };
     ren(): string;
-    board(): Piece[][];
-    graveyard(): Piece[];
+    get piecesInBoardMultiArray(): Piece[][];
+    get piecesInBoard(): Piece[];
+    get piecesInGraveyard(): Piece[];
     kpgn(): {
         event: string;
         date: string;

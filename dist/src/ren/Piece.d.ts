@@ -5,8 +5,8 @@ export default class Piece {
     constructor(type: string, color: string);
     static fromCharCode(charCode: string): Piece;
     toOriginPiece(): Piece;
-    static getPieceCharArray(): string[];
-    static getColorArray(): string[];
+    static get pieceChars(): string[];
+    static get colorChars(): string[];
     static toWhiteCharCode(charCode: string): string;
     static isWhiteCharCode(charCode: string): boolean;
     static toBlackCharCode(charCode: string): string;

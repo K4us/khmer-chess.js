@@ -51,7 +51,7 @@
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 function asciiTable(renInstance) {
-    var arr = renInstance.board.toMultiArray();
+    var arr = renInstance.board.piecesMultiArray;
     var str = '  ┏━━━┳━━━┳━━━┳━━━┳━━━┳━━━┳━━━┳━━━┓';
     var result = arr.reverse().reduce(function (s, subArr, i) {
         var rs = subArr.map(function (p) { return " " + (p ? p.pieceCharCode : ' ') + " "; }).join('┃');

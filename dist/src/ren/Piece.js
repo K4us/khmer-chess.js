@@ -68,23 +68,31 @@ var Piece = /** @class */ (function () {
         }
         return this;
     };
-    Piece.getPieceCharArray = function () {
-        return [
-            constant_1.PIECE_TYPE_TOUK,
-            constant_1.PIECE_TYPE_SES,
-            constant_1.PIECE_TYPE_KOL,
-            constant_1.PIECE_TYPE_SDECH,
-            constant_1.PIECE_TYPE_NEANG,
-            constant_1.PIECE_TYPE_TREY,
-            constant_1.PIECE_TYPE_BORK,
-        ];
-    };
-    Piece.getColorArray = function () {
-        return [
-            constant_1.PIECE_COLOR_WHITE,
-            constant_1.PIECE_COLOR_BLACK,
-        ];
-    };
+    Object.defineProperty(Piece, "pieceChars", {
+        get: function () {
+            return [
+                constant_1.PIECE_TYPE_TOUK,
+                constant_1.PIECE_TYPE_SES,
+                constant_1.PIECE_TYPE_KOL,
+                constant_1.PIECE_TYPE_SDECH,
+                constant_1.PIECE_TYPE_NEANG,
+                constant_1.PIECE_TYPE_TREY,
+                constant_1.PIECE_TYPE_BORK,
+            ];
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(Piece, "colorChars", {
+        get: function () {
+            return [
+                constant_1.PIECE_COLOR_WHITE,
+                constant_1.PIECE_COLOR_BLACK,
+            ];
+        },
+        enumerable: false,
+        configurable: true
+    });
     Piece.toWhiteCharCode = function (charCode) {
         return charCode.toUpperCase();
     };
@@ -120,8 +128,7 @@ var Piece = /** @class */ (function () {
     return Piece;
 }());
 exports.default = Piece;
-var pieceCharArray = Piece.getPieceCharArray();
-var allPiecesString = __spreadArrays(pieceCharArray, pieceCharArray.map(function (c) {
+var allPiecesString = __spreadArrays(Piece.pieceChars, Piece.pieceChars.map(function (c) {
     return Piece.toWhiteCharCode(c);
 }), [
     constant_1.EMPTY_PIECE,
