@@ -28,7 +28,7 @@
 import config from '../package.json';
 import { KPGN, Move } from './kpgn/index';
 import asciiTable from './other/table';
-import { Piece, REN } from './ren/index';
+import { Piece, Point, REN } from './ren/index';
 
 export default class KhmerChess {
     static title = config.name;
@@ -47,9 +47,13 @@ export default class KhmerChess {
         this.renInstance = REN.fromString();
     }
 
-    moves(): Move[] {
+    getCanMoves(): Move[] {
         // TODO:
         return [];
+    }
+    getCanMovePointsByPoint(point: Point): Point[] {
+        const canMovePoints = this.renInstance.getCanMovePointsByPoint(point);
+        return canMovePoints;
     }
 
     inCheck(): string | null {

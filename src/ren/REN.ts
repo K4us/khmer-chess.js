@@ -30,7 +30,11 @@ import KqMoved from './KqMoved';
 import KAttacked from './KAttacked';
 import CountDown from './CountDown';
 import Graveyard from './Graveyard';
-import { jsis } from '../brain/index';
+import {
+    jsis,
+    MoveHelper,
+    PIECE_COLOR_WHITE,
+} from '../brain/index';
 import {
     DEFAULT_BOARD_STR,
     STRING_COUNT,
@@ -43,7 +47,7 @@ import { Captured } from '../kpgn';
  * Raksa-Eng Notation
  * fen: <pieces on board> <turn w|b> <king&queen moved ----|SNsn> <king attack --|Kk> <countdown -.-|-.4> <pieces in graveyard>
  */
-type RENPropType = {
+export type RENPropType = {
     boardStr: string;
     turnStr: string;
     kqMovedStr: string;
@@ -58,6 +62,7 @@ export default class REN {
     kAttacked: KAttacked;
     countdown: CountDown;
     graveyard: Graveyard;
+    moveHelper: MoveHelper;
     constructor({ boardStr,
         turnStr,
         kqMovedStr,
@@ -76,6 +81,7 @@ export default class REN {
             msg += `, graveyard:${graveyardStr}, count:${invalidPiecesString}`;
             throw new Error(msg);
         }
+        this.moveHelper = new MoveHelper();
     }
 
     isInvalidPieceCount() {
@@ -145,5 +151,18 @@ export default class REN {
         str += ` ${this.countdown.toString()}`;
         str += ` ${this.graveyard.toString()}`;
         return str;
+    }
+
+    getCanMovePointsByPoint(pont: Point): Point[] {
+        const canMoves = this.moveHelper.calcCanMove({
+            piecesString: 'string',
+            currentTurn: PIECE_COLOR_WHITE,
+            isNeangMoved: true,
+            isSdechMoved: true,
+            genCanMove: true,
+            genCanMoveForAnother: false,
+        });
+        console.log(canMoves);
+        return [];
     }
 }

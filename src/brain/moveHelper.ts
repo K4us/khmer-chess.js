@@ -38,7 +38,7 @@ import {
     Point,
 } from '../ren/index';
 
-type OptionsType = {
+export type OptionsType = {
     piecesString: string;
     currentTurn: string;
     isNeangMoved: boolean;
@@ -46,17 +46,18 @@ type OptionsType = {
     genCanMove: boolean;
     genCanMoveForAnother: boolean;
 };
-type CalCountPropsType = {
+export type CalCountPropsType = {
     piecesString: string;
     force: boolean;
 };
-class MoveHelper {
+export default class MoveHelper implements OptionsType {
     piecesString: string;
     currentTurn: string;
     isNeangMoved: boolean;
     isSdechMoved: boolean;
     genCanMove: boolean;
     genCanMoveForAnother: boolean;
+
     whiteMoves: PieceIndex[];
     blackMoves: PieceIndex[];
     whiteKingInDanger: Point[] | null;
@@ -163,9 +164,10 @@ class MoveHelper {
         if (this.winColor) {
             return;
         }
-        if (Piece.isWhiteColor(this.currentTurn) && !this.whiteMoves.length) {
+        const isWhite = Piece.isWhiteColor(this.currentTurn);
+        if (isWhite && !this.whiteMoves.length) {
             this.stuckColor = PIECE_COLOR_WHITE;
-        } else if (Piece.isBlackColor(this.currentTurn) && !this.blackMoves.length) {
+        } else if (!isWhite && !this.blackMoves.length) {
             this.stuckColor = PIECE_COLOR_BLACK;
         }
     }
@@ -175,12 +177,13 @@ class MoveHelper {
         this.generateCanMoves();
         this.cleanPieceNoMove();
         let moves: PieceIndex[] = [];
+        const isWhite = Piece.isWhiteColor(this.currentTurn);
         if (this.genCanMove) {
-            moves = Piece.isWhiteColor(this.currentTurn) ? this.whiteMoves : this.blackMoves;
+            moves = isWhite ? this.whiteMoves : this.blackMoves;
         }
         let anotherMoves: PieceIndex[] = [];
         if (this.genCanMoveForAnother) {
-            anotherMoves = Piece.isBlackColor(this.currentTurn) ? this.whiteMoves : this.blackMoves;
+            anotherMoves = !isWhite ? this.whiteMoves : this.blackMoves;
         }
         return {
             moves,
@@ -226,6 +229,8 @@ class MoveHelper {
             ),
         };
     }
-}
 
-export default new MoveHelper();
+    renToBrainStr(str: string) {
+        return '';
+    }
+}
