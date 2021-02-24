@@ -1,5 +1,4 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 /*
  * Copyright (c) 2021, K4us
  * Author: Raksa Eng <eng.raksa@gmail.com>
@@ -27,6 +26,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * POSSIBILITY OF SUCH DAMAGE.
  *
  *---------------------------------------------------------------------------- */
+Object.defineProperty(exports, "__esModule", { value: true });
 var EventHandler = /** @class */ (function () {
     function EventHandler(options) {
         this._onEventListeners = {};

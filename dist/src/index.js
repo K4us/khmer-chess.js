@@ -40,5 +40,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./brain"), exports);
 __exportStar(require("./kpgn"), exports);
 __exportStar(require("./ren"), exports);
+__exportStar(require("./other"), exports);
 var KhmerChess_1 = require("./KhmerChess");
 Object.defineProperty(exports, "KhmerChess", { enumerable: true, get: function () { return KhmerChess_1.default; } });

@@ -1,8 +1,4 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
 /*
  * Copyright (c) 2021, K4us
  * Author: Raksa Eng <eng.raksa@gmail.com>
@@ -30,9 +26,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * POSSIBILITY OF SUCH DAMAGE.
  *
  *---------------------------------------------------------------------------- */
-var _1 = require(".");
-var boardHelper_1 = __importDefault(require("./brain/boardHelper"));
+Object.defineProperty(exports, "__esModule", { value: true });
+//  index
+var index_1 = require("./index");
 test('KhmerChess should work', function () {
-    expect(_1.KhmerChess.title).toBe('khmer-chess');
-    expect(boardHelper_1.default).toBe(boardHelper_1.default);
+    expect(index_1.KhmerChess.title).toBe('khmer-chess');
 });

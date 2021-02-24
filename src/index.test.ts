@@ -25,11 +25,81 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  *---------------------------------------------------------------------------- */
-import { KhmerChess } from '.';
-import boardHelper from './brain/boardHelper';
+
+//  Expect import success
+// brain
+import {
+    HVPont,
+    Rectangle,
+    boardEventController,
+    boardHelper,
+    genMask,
+    jsis,
+    moveHelper,
+    PIECE_COLOR_WHITE,
+    PIECE_COLOR_BLACK,
+    PIECE_TYPE_TOUK,
+    PIECE_TYPE_SES,
+    PIECE_TYPE_KOL,
+    PIECE_TYPE_SDECH,
+    PIECE_TYPE_NEANG,
+    PIECE_TYPE_TREY,
+    PIECE_TYPE_BORK,
+    EMPTY_PIECE,
+    PIECE_COLOR_EMPTY,
+    BOARD_SEPARATOR,
+    ROW_NUMBER,
+    ROW_FIRST_INDEX,
+    ROW_LAST_INDEX,
+    CELL_COUNT,
+    HORIZONTAL_CODE_LETTERS,
+    HORIZONTAL_NOTE_LETTERS,
+    VERTICAL_NOTE_LETTERS,
+    HORIZONTAL_NOTE_LETTERS_ASCII,
+    VERTICAL_NOTE_LETTERS_ASCII,
+    pieceHash,
+} from './brain';
+// kpgn
+import {
+    Captured,
+    CapturedPropType,
+    KPGN,
+    Move,
+    MovePropType,
+    Player,
+    Result,
+    Timer,
+} from './index';
+// other
+import {
+    EventHandler,
+    ListenerType,
+    table,
+} from './index';
+// ren
+import {
+    Board,
+    CountDown,
+    Graveyard,
+    KAttacked,
+    KqMoved,
+    Piece,
+    PieceIndex,
+    Point,
+    REN,
+    STRING_COUNT,
+    DEFAULT_BOARD_STR,
+    NOT_SET,
+    PIECE_FLAG_KILL,
+    PIECE_FLAG_JUMP,
+    PIECE_FLAG_UPGRADE,
+} from './index';
+//  index
+import {
+    KhmerChess,
+} from './index';
 
 
 test('KhmerChess should work', () => {
     expect(KhmerChess.title).toBe('khmer-chess');
-    expect(boardHelper).toBe(boardHelper);
 });

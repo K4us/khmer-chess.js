@@ -25,6 +25,9 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  *---------------------------------------------------------------------------- */
+
+export type ListenerType<T> = (data?: T) => any;
+
 export default class EventHandler {
     _onEventListeners: { [key: string]: any } = {};
     _propEvent: any = [];
@@ -46,7 +49,7 @@ export default class EventHandler {
         }
     }
 
-    _addPropEvent(event: string, data: any) {
+    _addPropEvent(event: string, data?: any) {
         this._propEvent.push({
             name: event,
             data,
@@ -60,21 +63,21 @@ export default class EventHandler {
         }
     }
 
-    _checkOnEvent(eventName: string, data: any) {
+    _checkOnEvent(eventName: string, data?: any) {
         this._guardEventName(eventName);
         this._onEventListeners[eventName] = this._onEventListeners[eventName] || [];
-        this._onEventListeners[eventName].forEach((listener: any) => {
+        this._onEventListeners[eventName].forEach((listener: ListenerType<any>) => {
             listener(data);
         });
     }
 
-    _addOnEventListener(eventName: string, listener: any) {
+    _addOnEventListener(eventName: string, listener: ListenerType<any>) {
         this._guardEventName(eventName);
         this._onEventListeners[eventName] = this._onEventListeners[eventName] || [];
         this._onEventListeners[eventName].push(listener);
     }
 
-    _removeOnEventListener(eventName: string, listener: any) {
+    _removeOnEventListener(eventName: string, listener: ListenerType<any>) {
         this._guardEventName(eventName);
         this._onEventListeners[eventName] = this._onEventListeners[eventName] || [];
         const index = this._onEventListeners[eventName].indexOf(listener);
