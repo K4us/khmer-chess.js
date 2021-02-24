@@ -35,8 +35,9 @@ import Point from './Point';
 export default class PieceIndex {
     point: Point;
     piece: Piece | null;
-    constructor(x: number, y: number, piece: Piece | null) {
-        this.point = new Point(x, y);
+    canMovePoints: Point[] = [];
+    constructor(point: Point, piece: Piece | null) {
+        this.point = point;
         this.piece = piece;
     }
 

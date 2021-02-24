@@ -50,10 +50,6 @@ export default class Point {
         return this.y + 1;
     }
     constructor(x: number, y: number) {
-        // in graveyard x can be greater than ROW_NUMBER
-        if (x < 0 || y < 0 || y >= ROW_NUMBER) {
-            throw new Error('Invalid point x y');
-        }
         this.x = x;
         this.y = y;
     }

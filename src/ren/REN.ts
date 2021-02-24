@@ -33,15 +33,16 @@ import Graveyard from './Graveyard';
 import {
     jsis,
     MoveHelper,
-    PIECE_COLOR_WHITE,
 } from '../brain/index';
 import {
     DEFAULT_BOARD_STR,
     STRING_COUNT,
 } from './constant';
+import { Captured } from '../kpgn';
 import Move from '../kpgn/Move';
 import Point from './Point';
-import { Captured } from '../kpgn';
+import Piece from './Piece';
+import { PieceIndex } from '.';
 
 /**
  * Raksa-Eng Notation
@@ -97,7 +98,9 @@ export default class REN {
             obj[p.pieceCharCode]++;
             return obj;
         }, {});
-        const str = Object.keys(piecesCount).map((k) => `${k}${piecesCount[k]}`).sort().join('');
+        const str = Object.keys(piecesCount).map((k) => {
+            return `${k}${piecesCount[k]}`;
+        }).sort().join('');
         if (str === STRING_COUNT) {
             return false;
         }
@@ -153,16 +156,22 @@ export default class REN {
         return str;
     }
 
-    getCanMovePointsByPoint(pont: Point): Point[] {
+    genAllCanMoves(): PieceIndex[] {
         const canMoves = this.moveHelper.calcCanMove({
-            piecesString: 'string',
-            currentTurn: PIECE_COLOR_WHITE,
+            piecesString: this.board.toStringFullNoSeparate(),
+            currentTurn: this.turn,
             isNeangMoved: true,
             isSdechMoved: true,
             genCanMove: true,
             genCanMoveForAnother: false,
         });
-        console.log(canMoves);
-        return [];
+        return canMoves.moves;
+    }
+    getCanMovePointsByPoint(point: Point): Point[] {
+        const moves = this.genAllCanMoves();
+        const found = moves.filter((pieceIndex) => {
+            return pieceIndex.point.index === point.index;
+        });
+        return found.length ? found[0].canMovePoints : [];
     }
 }

@@ -37,7 +37,7 @@ import {
     PieceIndex,
     Point,
 } from '../ren/index';
-
+// abcdecbaooooooooffffffffoooooooooooooooommmmmmmmoooooooohijlkjih
 export type OptionsType = {
     piecesString: string;
     currentTurn: string;
@@ -91,23 +91,23 @@ export default class MoveHelper implements OptionsType {
         const filter = boardHelper.filterPieceInBoard(this.piecesString);
         this.whiteMoves = filter.whitePieces;
         this.blackMoves = filter.blackPieces;
-        const genMoves = (pieces: string | any[]) => {
+        const genMoves = (pieces: PieceIndex[]) => {
             for (let i = 0; i < pieces.length; i++) {
-                const piece = pieces[i];
-                const type = piece.type;
+                const pieceIndex = pieces[i];
+                const type = pieceIndex.piece.type;
                 const isSdech = type === PIECE_TYPE_SDECH;
                 const isNeang = type === PIECE_TYPE_NEANG;
                 let isHaveMoved = this.isSdechMoved;
                 if (!isSdech) {
                     isHaveMoved = isNeang ? this.isNeangMoved : false;
                 }
-                const canMoveIndexes = boardHelper.generatePosesCanMove(
-                    piece.index,
-                    piece,
+                const canMovePoints = boardHelper.generatePosesCanMove(
+                    i,
+                    pieceIndex.piece,
                     this.piecesString,
                     isHaveMoved
                 );
-                piece.canMoveIndexes = canMoveIndexes;
+                pieceIndex.canMovePoints = canMovePoints;
             }
         };
         genMoves(this.whiteMoves);
@@ -121,7 +121,7 @@ export default class MoveHelper implements OptionsType {
                 isTrue = false;
                 for (let i = 0; i < pieces.length; i++) {
                     const piece = pieces[i];
-                    if (!piece.canMoveIndexes || !piece.canMoveIndexes.length) {
+                    if (!piece.canMovePoints.length) {
                         pieces.splice(i, 1);
                         isTrue = true;
                         break;
@@ -228,9 +228,5 @@ export default class MoveHelper implements OptionsType {
                 option.piecesString, option.force
             ),
         };
-    }
-
-    renToBrainStr(str: string) {
-        return '';
     }
 }

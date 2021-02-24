@@ -1,3 +1,6 @@
+import { Point } from "../ren";
+import { ROW_LAST_INDEX } from "./constant";
+
 /*
  * Copyright (c) 2021, K4us
  * Author: Raksa Eng <eng.raksa@gmail.com>
@@ -37,12 +40,16 @@ export default class Rectangle {
         this.height = height;
     }
 
-    isContainsPoint(point: { x: any; y: any; }) {
+    isContainsPoint(point: Point) {
         const { x, y } = point;
         const isContainsPoint = this.x <= x &&
             (this.x + this.width) >= x &&
             this.y <= y &&
             (this.y + this.height) >= y;
         return isContainsPoint;
+    }
+
+    static isValidPoint(point: Point) {
+        return new Rectangle(0, 0, ROW_LAST_INDEX, ROW_LAST_INDEX).isContainsPoint(point);
     }
 }

@@ -59,7 +59,6 @@ import {
     VERTICAL_NOTE_LETTERS,
     HORIZONTAL_NOTE_LETTERS_ASCII,
     VERTICAL_NOTE_LETTERS_ASCII,
-    pieceHash,
 } from './brain';
 // kpgn
 import {

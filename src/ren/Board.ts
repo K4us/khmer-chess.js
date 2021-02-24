@@ -41,7 +41,7 @@ export default class Board {
         length: CELL_COUNT,
     }, (_, i) => {
         const point = Point.fromIndex(i);
-        return new PieceIndex(point.x, point.y, null);
+        return new PieceIndex(point, null);
     });
 
     constructor(boardStr: any) {
@@ -55,7 +55,7 @@ export default class Board {
         }
         this.pieceIndices = newBoardStr.split('').map((charCode: string, i: number) => {
             const point = Point.fromIndex(i);
-            return new PieceIndex(point.x, point.y, charCode === EMPTY_PIECE ? null : Piece.fromCharCode(charCode));
+            return new PieceIndex(point, charCode === EMPTY_PIECE ? null : Piece.fromCharCode(charCode));
         });
     }
 
@@ -95,6 +95,11 @@ export default class Board {
             }
             return p;
         }).join('');
+        return str;
+    }
+    toStringFullNoSeparate() {
+        let str = this.toStringFull();
+        str = str.replace(/\//g, '');
         return str;
     }
 

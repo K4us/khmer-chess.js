@@ -39,6 +39,7 @@ import {
     BOARD_SEPARATOR,
 } from '../brain/constant';
 import jsis from '../brain/jsis';
+import Point from './Point';
 
 
 export default class Piece {
@@ -104,8 +105,8 @@ export default class Piece {
         return Piece.toBlackCharCode(charCode);
     }
 
-    static isValidPiece(piece: string) {
-        return piece !== EMPTY_PIECE;
+    static isValidPiece(charCode: string) {
+        return charCode !== EMPTY_PIECE;
     }
     static isWhiteColor(c: string) {
         return c === PIECE_COLOR_WHITE;

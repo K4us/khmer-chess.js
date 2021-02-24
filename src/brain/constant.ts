@@ -51,20 +51,3 @@ export const VERTICAL_NOTE_LETTERS = ['១', '២', '៣', '៤', '៥', '៦', 
     '២១', '២២', '២៣', '២៤', '២៥', '២៦', '២៧', '២៨', '២៩', '៣០'];
 export const HORIZONTAL_NOTE_LETTERS_ASCII = 'abcdefgh';
 export const VERTICAL_NOTE_LETTERS_ASCII = Array.from({ length: 30 }, (_, i) => `${i + 1}`);
-
-export const pieceHash: { [key: string]: string } = {
-    a: PIECE_COLOR_WHITE + PIECE_TYPE_TOUK,
-    b: PIECE_COLOR_WHITE + PIECE_TYPE_SES,
-    c: PIECE_COLOR_WHITE + PIECE_TYPE_KOL,
-    d: PIECE_COLOR_WHITE + PIECE_TYPE_SDECH,
-    e: PIECE_COLOR_WHITE + PIECE_TYPE_NEANG,
-    f: PIECE_COLOR_WHITE + PIECE_TYPE_TREY,
-    g: PIECE_COLOR_WHITE + PIECE_TYPE_BORK,
-    h: PIECE_COLOR_BLACK + PIECE_TYPE_TOUK,
-    i: PIECE_COLOR_BLACK + PIECE_TYPE_SES,
-    j: PIECE_COLOR_BLACK + PIECE_TYPE_KOL,
-    k: PIECE_COLOR_BLACK + PIECE_TYPE_SDECH,
-    l: PIECE_COLOR_BLACK + PIECE_TYPE_NEANG,
-    m: PIECE_COLOR_BLACK + PIECE_TYPE_TREY,
-    n: PIECE_COLOR_BLACK + PIECE_TYPE_BORK,
-};
