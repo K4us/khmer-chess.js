@@ -95,11 +95,15 @@ export default class KhmerChess {
         return this.renInstance.toString();
     }
 
-    board() {
-        return this.renInstance.board.toMultiArray();
+    get piecesInBoardMultiArray() {
+        return this.renInstance.board.piecesMultiArray;
     }
 
-    graveyard() {
+    get piecesInBoard() {
+        return this.renInstance.board.pieces;
+    }
+
+    get piecesInGraveyard() {
         return this.renInstance.graveyard.pieces;
     }
 

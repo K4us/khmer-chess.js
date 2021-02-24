@@ -59,12 +59,18 @@ export default class Board {
         });
     }
 
-    toMultiArray() {
+    get piecesMultiArray() {
         const arr: Piece[][] = [[], [], [], [], [], [], [], []];
         this.pieceIndices.forEach((pieceIndex) => {
             arr[pieceIndex.point.y][pieceIndex.point.x] = pieceIndex.piece;
         });
         return arr;
+    }
+
+    get pieces() {
+        return this.pieceIndices.map((pieceIndex) => {
+            return pieceIndex.piece;
+        });
     }
 
     compress(str: string) {

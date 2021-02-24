@@ -52,7 +52,7 @@
 import REN from '../ren/REN';
 
 export default function asciiTable(renInstance: REN) {
-  const arr = renInstance.board.toMultiArray();
+  const arr = renInstance.board.piecesMultiArray;
   const str = '  ┏━━━┳━━━┳━━━┳━━━┳━━━┳━━━┳━━━┳━━━┓';
   const result = arr.reverse().reduce((s, subArr, i) => {
     const rs = subArr.map((p) => ` ${p ? p.pieceCharCode : ' '} `).join('┃');

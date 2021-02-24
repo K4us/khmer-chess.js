@@ -72,7 +72,7 @@ export default class Piece {
         return this;
     }
 
-    static getPieceCharArray() {
+    static get pieceChars() {
         return [
             PIECE_TYPE_TOUK,
             PIECE_TYPE_SES,
@@ -83,7 +83,7 @@ export default class Piece {
             PIECE_TYPE_BORK,
         ];
     }
-    static getColorArray() {
+    static get colorChars() {
         return [
             PIECE_COLOR_WHITE,
             PIECE_COLOR_BLACK,
@@ -127,10 +127,9 @@ export default class Piece {
     }
 }
 
-const pieceCharArray = Piece.getPieceCharArray();
 const allPiecesString: string[] = [
-    ...pieceCharArray,
-    ...pieceCharArray.map((c: string) => {
+    ...Piece.pieceChars,
+    ...Piece.pieceChars.map((c: string) => {
         return Piece.toWhiteCharCode(c);
     }),
     EMPTY_PIECE,
