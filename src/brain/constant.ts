@@ -40,7 +40,7 @@ export const PIECE_TYPE_NEANG = 'q'; // Queen
 export const PIECE_TYPE_TREY = 'f'; // Fish
 export const PIECE_TYPE_BORK = 't'; // Transform fish
 export const PIECE_NAMES: { [key: string]: string } = {
-    [PIECE_TYPE_TOUK]: 'board',
+    [PIECE_TYPE_TOUK]: 'boat',
     [PIECE_TYPE_SES]: 'horse',
     [PIECE_TYPE_KOL]: 'general',
     [PIECE_TYPE_SDECH]: 'king',

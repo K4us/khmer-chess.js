@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PIECE_FLAG_UPGRADE = exports.PIECE_FLAG_JUMP = exports.PIECE_FLAG_KILL = exports.NOT_SET = exports.DEFAULT_BOARD_STR = exports.STRING_COUNT = void 0;
+exports.EVENT_FLAG_DRAW = exports.EVENT_FLAG_WINN = exports.EVENT_FLAG_ATTACK = exports.PIECE_FLAG_UPGRADE = exports.PIECE_FLAG_JUMP = exports.PIECE_FLAG_KILL = exports.NOT_SET = exports.DEFAULT_BOARD_STR = exports.STRING_COUNT = void 0;
 /*
  * Copyright (c) 2021, K4us
  * Author: Raksa Eng <eng.raksa@gmail.com>
@@ -36,3 +36,6 @@ exports.NOT_SET = '-';
 exports.PIECE_FLAG_KILL = 'x';
 exports.PIECE_FLAG_JUMP = 'j';
 exports.PIECE_FLAG_UPGRADE = 'u';
+exports.EVENT_FLAG_ATTACK = 'attack';
+exports.EVENT_FLAG_WINN = 'win';
+exports.EVENT_FLAG_DRAW = 'draw';

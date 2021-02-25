@@ -31,7 +31,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
  *
  *---------------------------------------------------------------------------- */
 var Piece_1 = __importDefault(require("./Piece"));
-var index_1 = require("../brain/index");
 var Graveyard = /** @class */ (function () {
     function Graveyard(graveyardStr) {
         this.pieces = [];
@@ -42,7 +41,7 @@ var Graveyard = /** @class */ (function () {
             }
             this.pieces = graveyardStr.split('').map(function (charCode, i) {
                 var p = Piece_1.default.fromCharCode(charCode);
-                if (p.type === index_1.PIECE_TYPE_SDECH) {
+                if (p.isTypeKing) {
                     throw new Error("King cannot die graveyard:" + graveyardStr);
                 }
                 return p;

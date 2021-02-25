@@ -40,6 +40,8 @@ var constant_1 = require("./constant");
 var kpgn_1 = require("../kpgn");
 var Move_1 = __importDefault(require("../kpgn/Move"));
 var Point_1 = __importDefault(require("./Point"));
+var Piece_1 = __importDefault(require("./Piece"));
+var _1 = require(".");
 var REN = /** @class */ (function () {
     function REN(_a) {
         var boardStr = _a.boardStr, turnStr = _a.turnStr, kqMovedStr = _a.kqMovedStr, kAttackedStr = _a.kAttackedStr, countdownStr = _a.countdownStr, graveyardStr = _a.graveyardStr;
@@ -63,7 +65,7 @@ var REN = /** @class */ (function () {
         }).filter(function (p) {
             return !index_1.jsis.isNull(p);
         }).concat(this.graveyard.pieces).map(function (p) {
-            return p.toOriginPiece();
+            return p.originPiece;
         });
         var piecesCount = pieces.reduce(function (obj, p) {
             obj[p.pieceCharCode] = obj[p.pieceCharCode] || 0;
@@ -124,23 +126,82 @@ var REN = /** @class */ (function () {
         str += " " + this.graveyard.toString();
         return str;
     };
+    Object.defineProperty(REN.prototype, "isQueenMoved", {
+        get: function () {
+            var isQueenMoved = Piece_1.default.isWhiteColor(this.turn) && this.kqMoved.whiteQueen ||
+                Piece_1.default.isBlackColor(this.turn) && this.kqMoved.blackQueen;
+            return isQueenMoved;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(REN.prototype, "isKingMoved", {
+        get: function () {
+            var isKingMoved = Piece_1.default.isWhiteColor(this.turn) && this.kqMoved.whiteKing ||
+                Piece_1.default.isBlackColor(this.turn) && this.kqMoved.blackKing;
+            return isKingMoved;
+        },
+        enumerable: false,
+        configurable: true
+    });
     REN.prototype.genAllCanMoves = function () {
         var canMoves = this.moveHelper.calcCanMove({
             piecesString: this.board.toStringFullNoSeparate(),
             currentTurn: this.turn,
-            isNeangMoved: true,
-            isSdechMoved: true,
+            isQueenMoved: this.isQueenMoved,
+            isKingMoved: this.isKingMoved,
             genCanMove: true,
             genCanMoveForAnother: false,
         });
         return canMoves.moves;
     };
+    REN.prototype.isHasMoved = function (piece) {
+        var isHasMoved = false;
+        if ((this.kqMoved.blackKing && piece.isColorBlack && piece.isTypeKing) ||
+            (this.kqMoved.whiteKing && piece.isColorWhite && piece.isTypeKing) ||
+            (this.kqMoved.blackQueen && piece.isColorBlack && piece.isTypeQueen) ||
+            (this.kqMoved.whiteQueen && piece.isColorWhite && piece.isTypeQueen)) {
+            isHasMoved = true;
+        }
+        return isHasMoved;
+    };
     REN.prototype.getCanMovePointsByPoint = function (point) {
-        var moves = this.genAllCanMoves();
-        var found = moves.filter(function (pieceIndex) {
-            return pieceIndex.point.index === point.index;
+        var piece = this.board.getPieceAtIndex(point.index);
+        if (index_1.jsis.isNull(piece)) {
+            return [];
+        }
+        return this.moveHelper.genCanMovePointsByPiecePoint(point, piece, this.board.toStringFullNoSeparate(), this.isHasMoved(piece));
+    };
+    REN.prototype.getAttacker = function () {
+        var _this = this;
+        var state = this.moveHelper.calcState({
+            piecesString: this.board.toStringFullNoSeparate(),
+            currentTurn: this.turn,
+            isQueenMoved: this.isQueenMoved,
+            isKingMoved: this.isKingMoved,
+            genCanMove: false,
+            genCanMoveForAnother: false,
         });
-        return found.length ? found[0].canMovePoints : [];
+        if (state.blackKingInDanger) {
+            var pieceIndex = state.blackKingInDanger.map(function (point) {
+                return new _1.PieceIndex(point, _this.board.getPieceAtIndex(point.index));
+            }).filter(function (pieceIndex) {
+                return !pieceIndex.piece.isTypeKing;
+            })[0];
+            return pieceIndex;
+        }
+        return null;
+    };
+    REN.prototype.getWinColor = function () {
+        var state = this.moveHelper.calcState({
+            piecesString: this.board.toStringFullNoSeparate(),
+            currentTurn: this.turn,
+            isQueenMoved: this.isQueenMoved,
+            isKingMoved: this.isKingMoved,
+            genCanMove: false,
+            genCanMoveForAnother: false,
+        });
+        return state.winColor;
     };
     return REN;
 }());

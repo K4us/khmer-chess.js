@@ -32,11 +32,18 @@ var index_2 = require("../ren/index");
 var MoveHelper = /** @class */ (function () {
     function MoveHelper() {
     }
+    Object.defineProperty(MoveHelper.prototype, "isWhiteTurn", {
+        get: function () {
+            return index_2.Piece.isWhiteColor(this.currentTurn);
+        },
+        enumerable: false,
+        configurable: true
+    });
     MoveHelper.prototype.init = function (option) {
         this.piecesString = option.piecesString;
         this.currentTurn = option.currentTurn;
-        this.isNeangMoved = option.isNeangMoved;
-        this.isSdechMoved = option.isSdechMoved;
+        this.isQueenMoved = option.isQueenMoved;
+        this.isKingMoved = option.isKingMoved;
         this.genCanMove = option.genCanMove;
         this.genCanMoveForAnother = option.genCanMoveForAnother;
         this.whiteMoves = [];
@@ -55,19 +62,26 @@ var MoveHelper = /** @class */ (function () {
         this.blackMoves = filter.blackPieces;
         var genMoves = function (pieceIndices) {
             pieceIndices.forEach(function (pieceIndex) {
-                var type = pieceIndex.piece.type;
-                var isSdech = type === index_1.PIECE_TYPE_SDECH;
-                var isNeang = type === index_1.PIECE_TYPE_NEANG;
-                var isHaveMoved = _this.isSdechMoved;
-                if (!isSdech) {
-                    isHaveMoved = isNeang ? _this.isNeangMoved : false;
+                var isHaveMoved = _this.isKingMoved;
+                if (!pieceIndex.piece.isTypeKing) {
+                    isHaveMoved = pieceIndex.piece.isTypeQueen ? _this.isQueenMoved : false;
                 }
-                var canMovePoints = index_1.boardHelper.generatePosesCanMove(pieceIndex.point.index, pieceIndex.piece, _this.piecesString, isHaveMoved);
+                var canMovePoints = _this.genCanMovePointsByPiecePoint(pieceIndex.point, pieceIndex.piece, _this.piecesString, isHaveMoved);
                 pieceIndex.canMovePoints = canMovePoints;
             });
         };
-        genMoves(this.whiteMoves);
-        genMoves(this.blackMoves);
+        if (this.isWhiteTurn) {
+            genMoves(this.whiteMoves);
+            if (this.genCanMoveForAnother) {
+                genMoves(this.blackMoves);
+            }
+        }
+        else {
+            genMoves(this.blackMoves);
+            if (this.genCanMoveForAnother) {
+                genMoves(this.whiteMoves);
+            }
+        }
     };
     MoveHelper.prototype.cleanPieceNoMove = function () {
         var cleanMoves = function (pieces) {
@@ -105,11 +119,10 @@ var MoveHelper = /** @class */ (function () {
         if (this.winColor) {
             return;
         }
-        var isWhite = index_2.Piece.isWhiteColor(this.currentTurn);
-        if (isWhite && !this.whiteMoves.length) {
+        if (this.isWhiteTurn && !this.whiteMoves.length) {
             this.stuckColor = index_1.PIECE_COLOR_WHITE;
         }
-        else if (!isWhite && !this.blackMoves.length) {
+        else if (!this.isWhiteTurn && !this.blackMoves.length) {
             this.stuckColor = index_1.PIECE_COLOR_BLACK;
         }
     };
@@ -118,13 +131,12 @@ var MoveHelper = /** @class */ (function () {
         this.generateCanMoves();
         this.cleanPieceNoMove();
         var moves = [];
-        var isWhite = index_2.Piece.isWhiteColor(this.currentTurn);
         if (this.genCanMove) {
-            moves = isWhite ? this.whiteMoves : this.blackMoves;
+            moves = this.isWhiteTurn ? this.whiteMoves : this.blackMoves;
         }
         var anotherMoves = [];
         if (this.genCanMoveForAnother) {
-            anotherMoves = !isWhite ? this.whiteMoves : this.blackMoves;
+            anotherMoves = !this.isWhiteTurn ? this.whiteMoves : this.blackMoves;
         }
         return {
             moves: moves,
@@ -154,6 +166,9 @@ var MoveHelper = /** @class */ (function () {
             countingBlack: index_1.boardHelper.checkCount(index_1.PIECE_COLOR_BLACK, option.piecesString, option.force),
             countingWhite: index_1.boardHelper.checkCount(index_1.PIECE_COLOR_WHITE, option.piecesString, option.force),
         };
+    };
+    MoveHelper.prototype.genCanMovePointsByPiecePoint = function (point, piece, piecesString, isHasMoved) {
+        return index_1.boardHelper.genCanMovePointsByPiecePoint(point.index, piece, piecesString, isHasMoved);
     };
     return MoveHelper;
 }());

@@ -41,7 +41,6 @@ var KAttacked = /** @class */ (function () {
         this.whiteKing = false;
         this.blackKing = false;
         if (kAttackedStr) {
-            var bh = index_1.boardHelper;
             this.whiteKing = !!~kAttackedStr.indexOf(Piece_1.default.toWhiteCharCode(index_1.PIECE_TYPE_SDECH));
             this.blackKing = !!~kAttackedStr.indexOf(index_1.PIECE_TYPE_SDECH);
         }

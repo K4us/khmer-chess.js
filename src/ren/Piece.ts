@@ -45,6 +45,9 @@ import jsis from '../brain/jsis';
 export default class Piece {
     type: string;
     color: string;
+    get colorOpponent() {
+        return Piece.oppositeColor(this.color);
+    }
     get pieceCharCode() {
         if (this.isColorWhite) {
             return this.pieceCharCodeWhite;

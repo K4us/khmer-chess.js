@@ -43,7 +43,7 @@ exports.PIECE_TYPE_NEANG = 'q'; // Queen
 exports.PIECE_TYPE_TREY = 'f'; // Fish
 exports.PIECE_TYPE_BORK = 't'; // Transform fish
 exports.PIECE_NAMES = (_b = {},
-    _b[exports.PIECE_TYPE_TOUK] = 'board',
+    _b[exports.PIECE_TYPE_TOUK] = 'boat',
     _b[exports.PIECE_TYPE_SES] = 'horse',
     _b[exports.PIECE_TYPE_KOL] = 'general',
     _b[exports.PIECE_TYPE_SDECH] = 'king',

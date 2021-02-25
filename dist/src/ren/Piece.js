@@ -44,12 +44,26 @@ var Piece = /** @class */ (function () {
         this.type = Piece.toNormalCharCode(type);
         this.color = color;
     }
+    Object.defineProperty(Piece.prototype, "colorOpponent", {
+        get: function () {
+            return Piece.oppositeColor(this.color);
+        },
+        enumerable: false,
+        configurable: true
+    });
     Object.defineProperty(Piece.prototype, "pieceCharCode", {
         get: function () {
-            if (Piece.isWhiteColor(this.color)) {
-                return Piece.toWhiteCharCode(this.type);
+            if (this.isColorWhite) {
+                return this.pieceCharCodeWhite;
             }
             return this.type;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(Piece.prototype, "pieceCharCodeWhite", {
+        get: function () {
+            return Piece.toWhiteCharCode(this.type);
         },
         enumerable: false,
         configurable: true
@@ -57,6 +71,72 @@ var Piece = /** @class */ (function () {
     Object.defineProperty(Piece.prototype, "title", {
         get: function () {
             return constant_1.COLOR_NAMES[this.color] + " " + constant_1.PIECE_NAMES[this.type];
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Piece.prototype._isTypeEqual = function (type) {
+        return this.type === type;
+    };
+    Object.defineProperty(Piece.prototype, "isTypeKing", {
+        get: function () {
+            return this._isTypeEqual(constant_1.PIECE_TYPE_SDECH);
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(Piece.prototype, "isTypeQueen", {
+        get: function () {
+            return this._isTypeEqual(constant_1.PIECE_TYPE_NEANG);
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(Piece.prototype, "isTypeBoat", {
+        get: function () {
+            return this._isTypeEqual(constant_1.PIECE_TYPE_TOUK);
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(Piece.prototype, "isTypeHorse", {
+        get: function () {
+            return this._isTypeEqual(constant_1.PIECE_TYPE_SES);
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(Piece.prototype, "isTypeGeneral", {
+        get: function () {
+            return this._isTypeEqual(constant_1.PIECE_TYPE_KOL);
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(Piece.prototype, "isTypeFish", {
+        get: function () {
+            return this._isTypeEqual(constant_1.PIECE_TYPE_TREY);
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(Piece.prototype, "isTypeTransformedFish", {
+        get: function () {
+            return this._isTypeEqual(constant_1.PIECE_TYPE_BORK);
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(Piece.prototype, "isColorBlack", {
+        get: function () {
+            return Piece.isBlackColor(this.color);
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(Piece.prototype, "isColorWhite", {
+        get: function () {
+            return Piece.isWhiteColor(this.color);
         },
         enumerable: false,
         configurable: true
@@ -69,12 +149,16 @@ var Piece = /** @class */ (function () {
         var type = Piece.toNormalCharCode(charCode);
         return new Piece(type, color);
     };
-    Piece.prototype.toOriginPiece = function () {
-        if (this.type === constant_1.PIECE_TYPE_BORK) {
-            return new Piece(constant_1.PIECE_TYPE_TREY, this.color);
-        }
-        return this;
-    };
+    Object.defineProperty(Piece.prototype, "originPiece", {
+        get: function () {
+            if (this.isTypeTransformedFish) {
+                return new Piece(constant_1.PIECE_TYPE_TREY, this.color);
+            }
+            return this;
+        },
+        enumerable: false,
+        configurable: true
+    });
     Object.defineProperty(Piece, "pieceChars", {
         get: function () {
             return [
@@ -115,11 +199,11 @@ var Piece = /** @class */ (function () {
     Piece.isValidPiece = function (charCode) {
         return charCode !== constant_1.EMPTY_PIECE;
     };
-    Piece.isWhiteColor = function (c) {
-        return c === constant_1.PIECE_COLOR_WHITE;
+    Piece.isWhiteColor = function (color) {
+        return color === constant_1.PIECE_COLOR_WHITE;
     };
-    Piece.isBlackColor = function (c) {
-        return c === constant_1.PIECE_COLOR_BLACK;
+    Piece.isBlackColor = function (color) {
+        return color === constant_1.PIECE_COLOR_BLACK;
     };
     Piece.oppositeColor = function (color) {
         return Piece.isWhiteColor(color) ? constant_1.PIECE_COLOR_BLACK : constant_1.PIECE_COLOR_WHITE;
@@ -135,8 +219,8 @@ var Piece = /** @class */ (function () {
     return Piece;
 }());
 exports.default = Piece;
-var allPiecesString = __spreadArrays(Piece.pieceChars, Piece.pieceChars.map(function (c) {
-    return Piece.toWhiteCharCode(c);
+var allPiecesString = __spreadArrays(Piece.pieceChars, Piece.pieceChars.map(function (pieceChar) {
+    return Piece.toWhiteCharCode(pieceChar);
 }), [
     constant_1.EMPTY_PIECE,
     constant_1.BOARD_SEPARATOR,

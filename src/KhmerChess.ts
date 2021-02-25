@@ -26,17 +26,26 @@
  *
  *---------------------------------------------------------------------------- */
 import config from '../package.json';
-import { KPGN, Move } from './kpgn/index';
+import { jsis } from './brain';
+import KPGN from './kpgn/KPGN';
+import Move from './kpgn/Move';
+import BoardEventController, { BoardEvent } from './other/BoardEventController';
+import { ListenerType } from './other/EventHandler';
 import asciiTable from './other/table';
-import { Piece, Point, REN } from './ren/index';
+import { PieceIndex } from './ren';
+import { EVENT_FLAG_ATTACK, EVENT_FLAG_WINN as EVENT_FLAG_WIN } from './ren/constant';
+import Point from './ren/Point';
+import REN from './ren/REN';
 
 export default class KhmerChess {
     static title = config.name;
     static version = config.version;
     renInstance: REN;
     kpgnInstance = new KPGN();
+    boardEventController: BoardEventController;
     constructor(renStr?: string) {
         this.renInstance = REN.fromString(renStr);
+        this.boardEventController = new BoardEventController();
     }
 
     load(renStr: string) {
@@ -56,34 +65,30 @@ export default class KhmerChess {
         return canMovePoints;
     }
 
-    inCheck(): string | null {
+    getAttacker(): PieceIndex | null {
+        return this.renInstance.getAttacker();
+    }
+
+    getWinColor(): string | null {
+        return this.renInstance.getWinColor();
+    }
+
+    getStuckColor(): string | null {
         // TODO:
         return null;
     }
 
-    inCheckmate(): string | null {
-        // TODO:
-        return null;
+    isDraw() {
+        return this.getStuckColor() || this.getDrawCountColor();
     }
 
-    inStalemate(): string | null {
-        // TODO:
-        return null;
-    }
-
-    inDraw() {
-        // TODO:
-        return false;
-    }
-
-    inDrawCount(): string | null {
+    getDrawCountColor(): string | null {
         // TODO:
         return null;
     }
 
     gameOver() {
-        // TODO:
-        return false;
+        return this.getWinColor() || this.isDraw();
     }
 
     validateRen(renStr: string) {
@@ -145,30 +150,32 @@ export default class KhmerChess {
         this.renInstance = REN.fromString('4k3/8/8/8/8/8/8/3K4 w ---- -- -.- bhgqghbffffffffFFFFFFFFBHGQGHB');
     }
 
-    put(index: number, piece: Piece): Piece | null {
-        // TODO: move piece to square id location
-        return null;
-    }
-
-    get(index: number): Piece | null {
-        // TODO: get piece at square id location
-        return null;
-    }
-
-    movePieceToGraveyard(index: number): Piece | null {
-        // TODO: move piece to graveyard
-        return null;
-    }
-
     history() {
         return this.kpgnInstance.moves;
     }
 
-    addMoveEventListener(listener: (move: Move) => {}) {
-        // TODO:
+    checkBoardEvent() {
+        const pieceIndex = this.getAttacker();
+        if (!jsis.isNull(pieceIndex)) {
+            const boardEvent = new BoardEvent({
+                flag: EVENT_FLAG_ATTACK,
+                actorPieceIndex: pieceIndex,
+            });
+            this.boardEventController.fireEvent(boardEvent);
+        }
+        const winColor = this.getWinColor();
+        if (!jsis.isNull(winColor)) {
+            const boardEvent = new BoardEvent({
+                flag: EVENT_FLAG_WIN,
+                actorPieceIndex: pieceIndex,
+            });
+            this.boardEventController.fireEvent(boardEvent);
+        }
     }
-
-    removeMoveEventListener(listener: (move: Move) => {}) {
-        // TODO:
+    addBoardEventListener(listener: ListenerType<BoardEvent>) {
+        this.boardEventController.addBoardEventListener(listener);
+    }
+    removeBoardEventListener(listener: ListenerType<BoardEvent>) {
+        this.boardEventController.removeBoardEventListener(listener);
     }
 }

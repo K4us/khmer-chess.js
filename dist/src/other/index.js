@@ -29,5 +29,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
  *---------------------------------------------------------------------------- */
 var EventHandler_1 = require("./EventHandler");
 Object.defineProperty(exports, "EventHandler", { enumerable: true, get: function () { return EventHandler_1.default; } });
+var BoardEventController_1 = require("./BoardEventController");
+Object.defineProperty(exports, "BoardEventController", { enumerable: true, get: function () { return BoardEventController_1.default; } });
+var BoardEventController_2 = require("./BoardEventController");
+Object.defineProperty(exports, "BoardEvent", { enumerable: true, get: function () { return BoardEventController_2.BoardEvent; } });
 var table_1 = require("./table");
 Object.defineProperty(exports, "table", { enumerable: true, get: function () { return table_1.default; } });

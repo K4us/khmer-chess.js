@@ -30,6 +30,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var brain_1 = require("../brain");
 var constant_1 = require("../ren/constant");
 var Piece_1 = __importDefault(require("../ren/Piece"));
 var Point_1 = __importDefault(require("../ren/Point"));
@@ -43,6 +44,10 @@ var Move = /** @class */ (function () {
         this.isJumping = !!isJumping;
         this.isUpgrading = !!isUpgrading;
         this.captured = captured || null;
+        if (brain_1.boardHelper.isUpgradable(piece, moveTo)) {
+            this.isUpgrading = true;
+            piece.type = brain_1.PIECE_TYPE_BORK;
+        }
     }
     // Spec: Fc5d6xf => White fish (F) moved from c5 to d6 killed black fish (f)
     Move.fromMovedString = function (graveyardLastIndex) {
@@ -66,9 +71,6 @@ var Move = /** @class */ (function () {
         }
         else if (str[5] === constant_1.PIECE_FLAG_JUMP) {
             move.isJumping = true;
-        }
-        else if (~str.indexOf(constant_1.PIECE_FLAG_UPGRADE)) {
-            move.isUpgrading = true;
         }
         return move;
     };

@@ -1,9 +1,9 @@
-import { PieceIndex, Point } from '../ren/index';
+import { Piece, PieceIndex, Point } from '../ren/index';
 export declare type OptionsType = {
     piecesString: string;
     currentTurn: string;
-    isNeangMoved: boolean;
-    isSdechMoved: boolean;
+    isQueenMoved: boolean;
+    isKingMoved: boolean;
     genCanMove: boolean;
     genCanMoveForAnother: boolean;
 };
@@ -14,8 +14,8 @@ export declare type CalCountPropsType = {
 export default class MoveHelper implements OptionsType {
     piecesString: string;
     currentTurn: string;
-    isNeangMoved: boolean;
-    isSdechMoved: boolean;
+    isQueenMoved: boolean;
+    isKingMoved: boolean;
     genCanMove: boolean;
     genCanMoveForAnother: boolean;
     whiteMoves: PieceIndex[];
@@ -26,6 +26,7 @@ export default class MoveHelper implements OptionsType {
     blackKingWillInDanger: Point[] | null;
     winColor: string | null;
     stuckColor: string | null;
+    get isWhiteTurn(): boolean;
     init(option: OptionsType): void;
     generateCanMoves(): void;
     cleanPieceNoMove(): void;
@@ -50,4 +51,5 @@ export default class MoveHelper implements OptionsType {
         countingBlack: number[];
         countingWhite: number[];
     };
+    genCanMovePointsByPiecePoint(point: Point, piece: Piece, piecesString: string, isHasMoved?: boolean): Point[];
 }

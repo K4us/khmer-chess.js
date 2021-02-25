@@ -6,6 +6,7 @@ import Graveyard from './Graveyard';
 import { MoveHelper } from '../brain/index';
 import Move from '../kpgn/Move';
 import Point from './Point';
+import Piece from './Piece';
 import { PieceIndex } from '.';
 /**
  * Raksa-Eng Notation
@@ -32,6 +33,11 @@ export default class REN {
     static fromString(fen?: string): REN;
     move(moveFromIndex: number, moveToIndex: number): Move | null;
     toString(): string;
+    get isQueenMoved(): boolean;
+    get isKingMoved(): boolean;
     genAllCanMoves(): PieceIndex[];
+    isHasMoved(piece: Piece): boolean;
     getCanMovePointsByPoint(point: Point): Point[];
+    getAttacker(): PieceIndex | null;
+    getWinColor(): string | null;
 }

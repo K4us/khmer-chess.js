@@ -1,30 +1,36 @@
-import { KPGN, Move } from './kpgn/index';
-import { Piece, Point, REN } from './ren/index';
+import KPGN from './kpgn/KPGN';
+import Move from './kpgn/Move';
+import BoardEventController, { BoardEvent } from './other/BoardEventController';
+import { ListenerType } from './other/EventHandler';
+import { PieceIndex } from './ren';
+import Point from './ren/Point';
+import REN from './ren/REN';
 export default class KhmerChess {
     static title: string;
     static version: string;
     renInstance: REN;
     kpgnInstance: KPGN;
+    boardEventController: BoardEventController;
     constructor(renStr?: string);
     load(renStr: string): void;
     reset(): void;
     getCanMoves(): Move[];
     getCanMovePointsByPoint(point: Point): Point[];
-    inCheck(): string | null;
-    inCheckmate(): string | null;
-    inStalemate(): string | null;
-    inDraw(): boolean;
-    inDrawCount(): string | null;
-    gameOver(): boolean;
+    getAttacker(): PieceIndex | null;
+    getWinColor(): string | null;
+    getStuckColor(): string | null;
+    isDraw(): string;
+    getDrawCountColor(): string | null;
+    gameOver(): string;
     validateRen(renStr: string): {
         valid: boolean;
         error_number: number;
         error: any;
     };
     ren(): string;
-    get piecesInBoardMultiArray(): Piece[][];
-    get piecesInBoard(): Piece[];
-    get piecesInGraveyard(): Piece[];
+    get piecesInBoardMultiArray(): import("./ren").Piece[][];
+    get piecesInBoard(): import("./ren").Piece[];
+    get piecesInGraveyard(): import("./ren").Piece[];
     kpgn(): {
         event: string;
         date: string;
@@ -73,10 +79,8 @@ export default class KhmerChess {
      * -> 4k3/8/8/8/8/8/8/3K4 w ---- -- -.- bhgqghbffffffffFFFFFFFFBHGQGHB
      */
     clear(): void;
-    put(index: number, piece: Piece): Piece | null;
-    get(index: number): Piece | null;
-    movePieceToGraveyard(index: number): Piece | null;
     history(): Move[];
-    addMoveEventListener(listener: (move: Move) => {}): void;
-    removeMoveEventListener(listener: (move: Move) => {}): void;
+    checkBoardEvent(): void;
+    addBoardEventListener(listener: ListenerType<BoardEvent>): void;
+    removeBoardEventListener(listener: ListenerType<BoardEvent>): void;
 }

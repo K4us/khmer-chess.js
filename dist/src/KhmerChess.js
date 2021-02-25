@@ -1,4 +1,23 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -31,19 +50,23 @@ Object.defineProperty(exports, "__esModule", { value: true });
  *
  *---------------------------------------------------------------------------- */
 var package_json_1 = __importDefault(require("../package.json"));
-var index_1 = require("./kpgn/index");
+var brain_1 = require("./brain");
+var KPGN_1 = __importDefault(require("./kpgn/KPGN"));
+var BoardEventController_1 = __importStar(require("./other/BoardEventController"));
 var table_1 = __importDefault(require("./other/table"));
-var index_2 = require("./ren/index");
+var constant_1 = require("./ren/constant");
+var REN_1 = __importDefault(require("./ren/REN"));
 var KhmerChess = /** @class */ (function () {
     function KhmerChess(renStr) {
-        this.kpgnInstance = new index_1.KPGN();
-        this.renInstance = index_2.REN.fromString(renStr);
+        this.kpgnInstance = new KPGN_1.default();
+        this.renInstance = REN_1.default.fromString(renStr);
+        this.boardEventController = new BoardEventController_1.default();
     }
     KhmerChess.prototype.load = function (renStr) {
-        this.renInstance = index_2.REN.fromString(renStr);
+        this.renInstance = REN_1.default.fromString(renStr);
     };
     KhmerChess.prototype.reset = function () {
-        this.renInstance = index_2.REN.fromString();
+        this.renInstance = REN_1.default.fromString();
     };
     KhmerChess.prototype.getCanMoves = function () {
         // TODO:
@@ -53,33 +76,29 @@ var KhmerChess = /** @class */ (function () {
         var canMovePoints = this.renInstance.getCanMovePointsByPoint(point);
         return canMovePoints;
     };
-    KhmerChess.prototype.inCheck = function () {
+    KhmerChess.prototype.getAttacker = function () {
+        return this.renInstance.getAttacker();
+    };
+    KhmerChess.prototype.getWinColor = function () {
+        return this.renInstance.getWinColor();
+    };
+    KhmerChess.prototype.getStuckColor = function () {
         // TODO:
         return null;
     };
-    KhmerChess.prototype.inCheckmate = function () {
-        // TODO:
-        return null;
+    KhmerChess.prototype.isDraw = function () {
+        return this.getStuckColor() || this.getDrawCountColor();
     };
-    KhmerChess.prototype.inStalemate = function () {
-        // TODO:
-        return null;
-    };
-    KhmerChess.prototype.inDraw = function () {
-        // TODO:
-        return false;
-    };
-    KhmerChess.prototype.inDrawCount = function () {
+    KhmerChess.prototype.getDrawCountColor = function () {
         // TODO:
         return null;
     };
     KhmerChess.prototype.gameOver = function () {
-        // TODO:
-        return false;
+        return this.getWinColor() || this.isDraw();
     };
     KhmerChess.prototype.validateRen = function (renStr) {
         try {
-            index_2.REN.fromString(renStr);
+            REN_1.default.fromString(renStr);
             return { valid: true, error_number: 0, error: 'No errors.' };
         }
         catch (error) {
@@ -115,7 +134,7 @@ var KhmerChess = /** @class */ (function () {
         return this.kpgnInstance.toJson();
     };
     KhmerChess.prototype.loadKpgn = function (kpgnJosn, options) {
-        this.kpgnInstance = new index_1.KPGN();
+        this.kpgnInstance = new KPGN_1.default();
     };
     KhmerChess.prototype.ascii = function () {
         return table_1.default(this.renInstance);
@@ -135,28 +154,34 @@ var KhmerChess = /** @class */ (function () {
      * -> 4k3/8/8/8/8/8/8/3K4 w ---- -- -.- bhgqghbffffffffFFFFFFFFBHGQGHB
      */
     KhmerChess.prototype.clear = function () {
-        this.renInstance = index_2.REN.fromString('4k3/8/8/8/8/8/8/3K4 w ---- -- -.- bhgqghbffffffffFFFFFFFFBHGQGHB');
-    };
-    KhmerChess.prototype.put = function (index, piece) {
-        // TODO: move piece to square id location
-        return null;
-    };
-    KhmerChess.prototype.get = function (index) {
-        // TODO: get piece at square id location
-        return null;
-    };
-    KhmerChess.prototype.movePieceToGraveyard = function (index) {
-        // TODO: move piece to graveyard
-        return null;
+        this.renInstance = REN_1.default.fromString('4k3/8/8/8/8/8/8/3K4 w ---- -- -.- bhgqghbffffffffFFFFFFFFBHGQGHB');
     };
     KhmerChess.prototype.history = function () {
         return this.kpgnInstance.moves;
     };
-    KhmerChess.prototype.addMoveEventListener = function (listener) {
-        // TODO:
+    KhmerChess.prototype.checkBoardEvent = function () {
+        var pieceIndex = this.getAttacker();
+        if (!brain_1.jsis.isNull(pieceIndex)) {
+            var boardEvent = new BoardEventController_1.BoardEvent({
+                flag: constant_1.EVENT_FLAG_ATTACK,
+                actorPieceIndex: pieceIndex,
+            });
+            this.boardEventController.fireEvent(boardEvent);
+        }
+        var winColor = this.getWinColor();
+        if (!brain_1.jsis.isNull(winColor)) {
+            var boardEvent = new BoardEventController_1.BoardEvent({
+                flag: constant_1.EVENT_FLAG_WINN,
+                actorPieceIndex: pieceIndex,
+            });
+            this.boardEventController.fireEvent(boardEvent);
+        }
     };
-    KhmerChess.prototype.removeMoveEventListener = function (listener) {
-        // TODO:
+    KhmerChess.prototype.addBoardEventListener = function (listener) {
+        this.boardEventController.addBoardEventListener(listener);
+    };
+    KhmerChess.prototype.removeBoardEventListener = function (listener) {
+        this.boardEventController.removeBoardEventListener(listener);
     };
     KhmerChess.title = package_json_1.default.name;
     KhmerChess.version = package_json_1.default.version;

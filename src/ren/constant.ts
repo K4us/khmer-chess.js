@@ -33,3 +33,6 @@ export const NOT_SET = '-';
 export const PIECE_FLAG_KILL = 'x';
 export const PIECE_FLAG_JUMP = 'j';
 export const PIECE_FLAG_UPGRADE = 'u';
+export const EVENT_FLAG_ATTACK = 'attack';
+export const EVENT_FLAG_WINN = 'win';
+export const EVENT_FLAG_DRAW = 'draw';

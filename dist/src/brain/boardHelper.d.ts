@@ -15,7 +15,7 @@ declare class BoardHelper {
     injectPiece(piecesString: string, index1: number, index2: number): string;
     getKingWillInDanger(color: string, piecesString: string): Point[];
     getKingInDanger(color: string, piecesString: string): Point[] | null;
-    generatePosesCanMove(index: number, piece: Piece, piecesString: string, isHaveMoved: boolean): Point[];
+    genCanMovePointsByPiecePoint(index: number, piece: Piece, piecesString: string, isHasMoved?: boolean): Point[];
     isCharPiecesInBoard(code: string, piecesString: string): boolean;
     getPiecesInBoard(piecesString: string): string[];
     isHaveCaptured(piecesString: string): boolean;
@@ -29,6 +29,7 @@ declare class BoardHelper {
     isStateCount(c: string, piecesString: string): boolean;
     checkCountable(color: string, piecesString: string): boolean;
     checkCount(color: string, piecesString: string, force: boolean): number[];
+    isUpgradable(piece: Piece, point: Point): boolean;
 }
 declare const _default: BoardHelper;
 export default _default;

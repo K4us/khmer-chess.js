@@ -43,7 +43,6 @@ var KqMoved = /** @class */ (function () {
         this.blackKing = false;
         this.blackQueen = false;
         if (kqMovedStr) {
-            var bh = index_1.boardHelper;
             this.whiteKing = !!~kqMovedStr.indexOf(Piece_1.default.toWhiteCharCode(index_1.PIECE_TYPE_SDECH));
             this.whiteQueen = !!~kqMovedStr.indexOf(Piece_1.default.toWhiteCharCode(index_1.PIECE_TYPE_NEANG));
             this.blackKing = !!~kqMovedStr.indexOf(index_1.PIECE_TYPE_SDECH);

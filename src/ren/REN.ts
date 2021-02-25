@@ -156,16 +156,22 @@ export default class REN {
         return str;
     }
 
-    genAllCanMoves(): PieceIndex[] {
+    get isQueenMoved() {
         const isQueenMoved = Piece.isWhiteColor(this.turn) && this.kqMoved.whiteQueen ||
             Piece.isBlackColor(this.turn) && this.kqMoved.blackQueen;
+        return isQueenMoved;
+    }
+    get isKingMoved() {
         const isKingMoved = Piece.isWhiteColor(this.turn) && this.kqMoved.whiteKing ||
             Piece.isBlackColor(this.turn) && this.kqMoved.blackKing;
+        return isKingMoved;
+    }
+    genAllCanMoves(): PieceIndex[] {
         const canMoves = this.moveHelper.calcCanMove({
             piecesString: this.board.toStringFullNoSeparate(),
             currentTurn: this.turn,
-            isQueenMoved,
-            isKingMoved,
+            isQueenMoved: this.isQueenMoved,
+            isKingMoved: this.isKingMoved,
             genCanMove: true,
             genCanMoveForAnother: false,
         });
@@ -188,5 +194,36 @@ export default class REN {
         }
         return this.moveHelper.genCanMovePointsByPiecePoint(point, piece,
             this.board.toStringFullNoSeparate(), this.isHasMoved(piece));
+    }
+
+    getAttacker(): PieceIndex | null {
+        const state = this.moveHelper.calcState({
+            piecesString: this.board.toStringFullNoSeparate(),
+            currentTurn: this.turn,
+            isQueenMoved: this.isQueenMoved,
+            isKingMoved: this.isKingMoved,
+            genCanMove: false,
+            genCanMoveForAnother: false,
+        });
+        if (state.blackKingInDanger) {
+            const pieceIndex = state.blackKingInDanger.map((point) => {
+                return new PieceIndex(point, this.board.getPieceAtIndex(point.index));
+            }).filter((pieceIndex) => {
+                return !pieceIndex.piece.isTypeKing;
+            })[0];
+            return pieceIndex;
+        }
+        return null;
+    }
+    getWinColor(): string | null {
+        const state = this.moveHelper.calcState({
+            piecesString: this.board.toStringFullNoSeparate(),
+            currentTurn: this.turn,
+            isQueenMoved: this.isQueenMoved,
+            isKingMoved: this.isKingMoved,
+            genCanMove: false,
+            genCanMoveForAnother: false,
+        });
+        return state.winColor;
     }
 }

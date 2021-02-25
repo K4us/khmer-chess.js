@@ -296,10 +296,10 @@ class BoardHelper {
     }
     isUpgradable(piece: Piece, point: Point) {
         if (piece.isTypeFish) {
-            if (piece.isColorBlack && point.y === 2) {
+            if (piece.isColorBlack && point.y <= 2) {
                 return true;
             }
-            if (piece.isColorWhite && point.y === 5) {
+            if (piece.isColorWhite && point.y >= 5) {
                 return true;
             }
         }

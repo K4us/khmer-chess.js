@@ -75,6 +75,8 @@ import {
 import {
     EventHandler,
     ListenerType,
+    BoardEventController,
+    BoardEvent,
     table,
 } from './index';
 // ren
