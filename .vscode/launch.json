@@ -12,6 +12,7 @@
             "args": [
                 "test-index.ts",
             ],
+            "sourceMaps": false
         },
         {
             "type": "node",
@@ -21,6 +22,7 @@
             "args": [
                 "test-ren-gen-moves.ts",
             ],
+            "sourceMaps": false
         }
     ]
 }
