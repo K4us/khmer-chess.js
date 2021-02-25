@@ -46,10 +46,13 @@ export default class Piece {
     type: string;
     color: string;
     get pieceCharCode() {
-        if (Piece.isWhiteColor(this.color)) {
-            return Piece.toWhiteCharCode(this.type);
+        if (this.isColorWhite) {
+            return this.pieceCharCodeWhite;
         }
         return this.type;
+    }
+    get pieceCharCodeWhite() {
+        return Piece.toWhiteCharCode(this.type);
     }
 
     get title() {
@@ -79,11 +82,11 @@ export default class Piece {
     get isTypeTransformedFish() {
         return this._isTypeEqual(PIECE_TYPE_BORK);
     }
-    get isColorWhite() {
-        return this.color === PIECE_COLOR_WHITE;
-    }
     get isColorBlack() {
-        return this.color === PIECE_COLOR_BLACK;
+        return Piece.isBlackColor(this.color);
+    }
+    get isColorWhite() {
+        return Piece.isWhiteColor(this.color);
     }
 
 
@@ -143,11 +146,11 @@ export default class Piece {
     static isValidPiece(charCode: string) {
         return charCode !== EMPTY_PIECE;
     }
-    static isWhiteColor(c: string) {
-        return c === PIECE_COLOR_WHITE;
+    static isWhiteColor(color: string) {
+        return color === PIECE_COLOR_WHITE;
     }
-    static isBlackColor(c: string) {
-        return c === PIECE_COLOR_BLACK;
+    static isBlackColor(color: string) {
+        return color === PIECE_COLOR_BLACK;
     }
     static oppositeColor(color: any) {
         return Piece.isWhiteColor(color) ? PIECE_COLOR_BLACK : PIECE_COLOR_WHITE;
@@ -165,8 +168,8 @@ export default class Piece {
 
 const allPiecesString: string[] = [
     ...Piece.pieceChars,
-    ...Piece.pieceChars.map((c: string) => {
-        return Piece.toWhiteCharCode(c);
+    ...Piece.pieceChars.map((pieceChar: string) => {
+        return Piece.toWhiteCharCode(pieceChar);
     }),
     EMPTY_PIECE,
     BOARD_SEPARATOR,

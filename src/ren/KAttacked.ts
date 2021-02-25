@@ -26,7 +26,6 @@
  *
  *---------------------------------------------------------------------------- */
 import {
-    boardHelper,
     PIECE_TYPE_SDECH,
 } from '../brain/index';
 import { NOT_SET } from './constant';
@@ -40,7 +39,6 @@ export default class KAttacked {
     blackKing = false;
     constructor(kAttackedStr?: string) {
         if (kAttackedStr) {
-            const bh = boardHelper;
             this.whiteKing = !!~kAttackedStr.indexOf(Piece.toWhiteCharCode(PIECE_TYPE_SDECH));
             this.blackKing = !!~kAttackedStr.indexOf(PIECE_TYPE_SDECH);
         }

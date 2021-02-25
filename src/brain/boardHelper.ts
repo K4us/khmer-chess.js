@@ -177,11 +177,11 @@ class BoardHelper {
         return null;
     }
     genCanMovePointsByPiecePoint(index: number, piece: Piece,
-        piecesString: string, isHaveMoved?: boolean) {
+        piecesString: string, isHasMoved?: boolean) {
         const _poses = this.getPieceCanMovePosesValid(index, piece, piecesString);
         const isHaveCaptured = this.isHaveCaptured(piecesString);
         if (piece.isTypeKing) {
-            if (!isHaveCaptured && !isHaveMoved) {
+            if (!isHaveCaptured && !isHasMoved) {
                 let p = this.convertMask(new Point(2, 1), index, piece.color);
                 if (p && !this.getPieceByIndex(p, piecesString).isValidPiece) {
                     _poses.push(p);
@@ -192,7 +192,7 @@ class BoardHelper {
                 }
             }
         } else if (piece.isTypeQueen) {
-            if (!isHaveCaptured && !isHaveMoved) {
+            if (!isHaveCaptured && !isHasMoved) {
                 const p = this.convertMask(new Point(-0, 2), index, piece.color);
                 if (p && !this.getPieceByIndex(p, piecesString).isValidPiece) {
                     _poses.push(p);
@@ -227,7 +227,7 @@ class BoardHelper {
             const charCode = piecesString[i];
             if (Piece.isValidPiece(charCode)) {
                 const pieceIndex = new PieceIndex(Point.fromIndex(i), Piece.fromCharCode(charCode));
-                if (Piece.isWhiteColor(pieceIndex.piece.color)) {
+                if (pieceIndex.piece.isColorWhite) {
                     whitePieces.push(pieceIndex);
                 } else {
                     blackPieces.push(pieceIndex);

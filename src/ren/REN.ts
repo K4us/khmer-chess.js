@@ -168,17 +168,22 @@ export default class REN {
         });
         return canMoves.moves;
     }
+    isHasMoved(piece: Piece) {
+        let isHasMoved = false;
+        if ((this.kqMoved.blackKing && piece.isColorBlack && piece.isTypeKing) ||
+            (this.kqMoved.whiteKing && piece.isColorWhite && piece.isTypeKing) ||
+            (this.kqMoved.blackQueen && piece.isColorBlack && piece.isTypeQueen) ||
+            (this.kqMoved.whiteQueen && piece.isColorWhite && piece.isTypeQueen)) {
+            isHasMoved = true;
+        }
+        return isHasMoved;
+    }
     getCanMovePointsByPoint(point: Point): Point[] {
         const piece = this.board.getPieceAtIndex(point.index);
         if (jsis.isNull(piece)) {
             return [];
         }
-        // TODO: if piece is king or queen, check isHaveMoved, for jumping purpose
-        const isHaveMoved = false;
-        if (this.kqMoved.blackKing && piece.type === PIECE_TYPE_SDECH && piece.is) {
-            p
-        }
-        return this.moveHelper.genCanMovePointsByPiecePoint(point, piece,
-            this.board.toStringFullNoSeparate(), isHaveMoved);
+        return this.moveHelper.ewgenCanMovePointsByPiecePoint(point, piece,
+            this.board.toStringFullNoSeparate(), this.isHasMoved(piece));
     }
 }

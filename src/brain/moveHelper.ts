@@ -237,12 +237,12 @@ export default class MoveHelper implements OptionsType {
     }
 
     genCanMovePointsByPiecePoint(point: Point, piece: Piece,
-        piecesString: string, isHaveMoved?: boolean) {
+        piecesString: string, isHasMoved?: boolean) {
         return boardHelper.genCanMovePointsByPiecePoint(
             point.index,
             piece,
             piecesString,
-            isHaveMoved
+            isHasMoved
         );
     }
 }

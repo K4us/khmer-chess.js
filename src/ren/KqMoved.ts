@@ -43,7 +43,6 @@ export default class KqMoved {
     blackQueen = false;
     constructor(kqMovedStr?: string) {
         if (kqMovedStr) {
-            const bh = boardHelper;
             this.whiteKing = !!~kqMovedStr.indexOf(Piece.toWhiteCharCode(PIECE_TYPE_SDECH));
             this.whiteQueen = !!~kqMovedStr.indexOf(Piece.toWhiteCharCode(PIECE_TYPE_NEANG));
             this.blackKing = !!~kqMovedStr.indexOf(PIECE_TYPE_SDECH);
