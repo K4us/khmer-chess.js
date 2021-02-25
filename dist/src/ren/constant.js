@@ -31,7 +31,7 @@ exports.EVENT_FLAG_DRAW = exports.EVENT_FLAG_WINN = exports.EVENT_FLAG_ATTACK = 
 // BHGQKGHB/8/FFFFFFFF/8/8/ffffffff/8/bhgkqghb w ---- -- -.-
 exports.STRING_COUNT = 'B2F8G2H2K1Q1b2f8g2h2k1q1';
 // BHGQKGHB/8/FFFFFFFF/8/8/ffffffff/8/bhgkqghb w ---- -- -.-
-exports.DEFAULT_BOARD_STR = 'BHGQKGHB/8/FFFFFFFF/8/8/ffffffff/8/bhgkqghb';
+exports.DEFAULT_BOARD_STR = 'BHGKQGHB/8/FFFFFFFF/8/8/ffffffff/8/bhgqkghb';
 exports.NOT_SET = '-';
 exports.PIECE_FLAG_KILL = 'x';
 exports.PIECE_FLAG_JUMP = 'j';
