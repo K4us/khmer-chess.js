@@ -94,7 +94,6 @@ import {
     NOT_SET,
     PIECE_FLAG_KILL,
     PIECE_FLAG_JUMP,
-    PIECE_FLAG_UPGRADE,
 } from './index';
 //  index
 import {

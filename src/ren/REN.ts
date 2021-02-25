@@ -91,7 +91,7 @@ export default class REN {
         }).filter((p) => {
             return !jsis.isNull(p);
         }).concat(this.graveyard.pieces).map((p) => {
-            return p.toOriginPiece();
+            return p.originPiece;
         });
         const piecesCount = pieces.reduce((obj: any, p) => {
             obj[p.pieceCharCode] = obj[p.pieceCharCode] || 0;

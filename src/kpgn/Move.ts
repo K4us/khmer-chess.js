@@ -26,10 +26,10 @@
  *
  *---------------------------------------------------------------------------- */
 
+import { boardHelper, PIECE_TYPE_BORK } from '../brain';
 import {
     PIECE_FLAG_JUMP,
     PIECE_FLAG_KILL,
-    PIECE_FLAG_UPGRADE,
 } from '../ren/constant';
 import Piece from '../ren/Piece';
 import Point from '../ren/Point';
@@ -59,6 +59,10 @@ export default class Move implements MovePropType {
         this.isJumping = !!isJumping;
         this.isUpgrading = !!isUpgrading;
         this.captured = captured || null;
+        if (boardHelper.isUpgradable(piece, moveTo)) {
+            this.isUpgrading = true;
+            piece.type = PIECE_TYPE_BORK;
+        }
     }
 
     // Spec: Fc5d6xf => White fish (F) moved from c5 to d6 killed black fish (f)
@@ -82,22 +86,18 @@ export default class Move implements MovePropType {
             });
         } else if (str[5] === PIECE_FLAG_JUMP) {
             move.isJumping = true;
-        } else if (~str.indexOf(PIECE_FLAG_UPGRADE)) {
-            move.isUpgrading = true;
         }
         return move;
     }
     // Fc5d6j: jump, Fc5d6x: kill, Fc5d6xt: kill&upgrade
     toString() {
-        const pCode = this.piece.pieceCharCode;
+        const pCode = this.isUpgrading ? this.piece.originPiece.pieceCharCode :
+            this.piece.pieceCharCode;
         const fIndexCode = this.moveFrom.indexCode;
         const tIndexCode = this.moveTo.indexCode;
         let flags = this.captured ? PIECE_FLAG_KILL : '';
         if (this.isJumping) {
             flags += PIECE_FLAG_JUMP;
-        }
-        if (this.isUpgrading) {
-            flags += PIECE_FLAG_UPGRADE;
         }
         return `${pCode}${fIndexCode}${tIndexCode}${flags}`;
     }

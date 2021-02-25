@@ -104,7 +104,7 @@ export default class Piece {
         return new Piece(type, color);
     }
 
-    toOriginPiece() {
+    get originPiece() {
         if (this.isTypeTransformedFish) {
             return new Piece(PIECE_TYPE_TREY, this.color);
         }
