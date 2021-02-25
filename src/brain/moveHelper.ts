@@ -39,8 +39,8 @@ import {
 export type OptionsType = {
     piecesString: string;
     currentTurn: string;
-    isNeangMoved: boolean;
-    isSdechMoved: boolean;
+    isQueenMoved: boolean;
+    isKingMoved: boolean;
     genCanMove: boolean;
     genCanMoveForAnother: boolean;
 };
@@ -51,8 +51,8 @@ export type CalCountPropsType = {
 export default class MoveHelper implements OptionsType {
     piecesString: string;
     currentTurn: string;
-    isNeangMoved: boolean;
-    isSdechMoved: boolean;
+    isQueenMoved: boolean;
+    isKingMoved: boolean;
     genCanMove: boolean;
     genCanMoveForAnother: boolean;
 
@@ -71,8 +71,8 @@ export default class MoveHelper implements OptionsType {
     init(option: OptionsType) {
         this.piecesString = option.piecesString;
         this.currentTurn = option.currentTurn;
-        this.isNeangMoved = option.isNeangMoved;
-        this.isSdechMoved = option.isSdechMoved;
+        this.isQueenMoved = option.isQueenMoved;
+        this.isKingMoved = option.isKingMoved;
 
         this.genCanMove = option.genCanMove;
         this.genCanMoveForAnother = option.genCanMoveForAnother;
@@ -95,9 +95,9 @@ export default class MoveHelper implements OptionsType {
         this.blackMoves = filter.blackPieces;
         const genMoves = (pieceIndices: PieceIndex[]) => {
             pieceIndices.forEach((pieceIndex) => {
-                let isHaveMoved = this.isSdechMoved;
+                let isHaveMoved = this.isKingMoved;
                 if (!pieceIndex.piece.isTypeKing) {
-                    isHaveMoved = pieceIndex.piece.isTypeQueen ? this.isNeangMoved : false;
+                    isHaveMoved = pieceIndex.piece.isTypeQueen ? this.isQueenMoved : false;
                 }
                 const canMovePoints = this.genCanMovePointsByPiecePoint(
                     pieceIndex.point,

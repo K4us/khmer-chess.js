@@ -157,11 +157,15 @@ export default class REN {
     }
 
     genAllCanMoves(): PieceIndex[] {
+        const isQueenMoved = Piece.isWhiteColor(this.turn) && this.kqMoved.whiteQueen ||
+            Piece.isBlackColor(this.turn) && this.kqMoved.blackQueen;
+        const isKingMoved = Piece.isWhiteColor(this.turn) && this.kqMoved.whiteKing ||
+            Piece.isBlackColor(this.turn) && this.kqMoved.blackKing;
         const canMoves = this.moveHelper.calcCanMove({
             piecesString: this.board.toStringFullNoSeparate(),
             currentTurn: this.turn,
-            isNeangMoved: true,
-            isSdechMoved: true,
+            isQueenMoved,
+            isKingMoved,
             genCanMove: true,
             genCanMoveForAnother: false,
         });
