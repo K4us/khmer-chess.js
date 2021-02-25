@@ -32,3 +32,4 @@ export const DEFAULT_BOARD_STR = 'BHGQKGHB/8/FFFFFFFF/8/8/ffffffff/8/bhgkqghb';
 export const NOT_SET = '-';
 export const PIECE_FLAG_KILL = 'x';
 export const PIECE_FLAG_JUMP = 'j';
+export const PIECE_FLAG_UPGRADE = 'u';
