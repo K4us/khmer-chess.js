@@ -29,7 +29,6 @@ import { NOT_SET } from './constant';
 import {
     PIECE_TYPE_NEANG,
     PIECE_TYPE_SDECH,
-    boardHelper,
 } from '../brain/index';
 import Piece from './Piece';
 

@@ -37,8 +37,6 @@ import {
     PIECE_TYPE_KOL,
     PIECE_TYPE_SES,
     PIECE_TYPE_SDECH,
-    PIECE_TYPE_NEANG,
-    PIECE_COLOR_EMPTY,
     CELL_COUNT,
 } from './constant';
 import Point from '../ren/Point';

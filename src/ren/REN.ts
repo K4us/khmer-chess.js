@@ -33,7 +33,6 @@ import Graveyard from './Graveyard';
 import {
     jsis,
     MoveHelper,
-    PIECE_TYPE_SDECH,
 } from '../brain/index';
 import {
     DEFAULT_BOARD_STR,
@@ -183,7 +182,7 @@ export default class REN {
         if (jsis.isNull(piece)) {
             return [];
         }
-        return this.moveHelper.ewgenCanMovePointsByPiecePoint(point, piece,
+        return this.moveHelper.genCanMovePointsByPiecePoint(point, piece,
             this.board.toStringFullNoSeparate(), this.isHasMoved(piece));
     }
 }

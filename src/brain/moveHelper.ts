@@ -95,7 +95,6 @@ export default class MoveHelper implements OptionsType {
         this.blackMoves = filter.blackPieces;
         const genMoves = (pieceIndices: PieceIndex[]) => {
             pieceIndices.forEach((pieceIndex) => {
-                const type = pieceIndex.piece.type;
                 let isHaveMoved = this.isSdechMoved;
                 if (!pieceIndex.piece.isTypeKing) {
                     isHaveMoved = pieceIndex.piece.isTypeQueen ? this.isNeangMoved : false;
