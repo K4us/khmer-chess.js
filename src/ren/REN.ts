@@ -33,6 +33,7 @@ import Graveyard from './Graveyard';
 import {
     jsis,
     MoveHelper,
+    PIECE_TYPE_SDECH,
 } from '../brain/index';
 import {
     DEFAULT_BOARD_STR,
@@ -173,7 +174,10 @@ export default class REN {
             return [];
         }
         // TODO: if piece is king or queen, check isHaveMoved, for jumping purpose
-        const isHaveMoved = true;
+        const isHaveMoved = false;
+        if (this.kqMoved.blackKing && piece.type === PIECE_TYPE_SDECH && piece.is) {
+            p
+        }
         return this.moveHelper.genCanMovePointsByPiecePoint(point, piece,
             this.board.toStringFullNoSeparate(), isHaveMoved);
     }

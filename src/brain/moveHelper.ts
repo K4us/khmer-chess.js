@@ -28,8 +28,6 @@
 import {
     PIECE_COLOR_BLACK,
     PIECE_COLOR_WHITE,
-    PIECE_TYPE_NEANG,
-    PIECE_TYPE_SDECH,
     boardHelper,
 } from './index';
 import {
@@ -98,11 +96,9 @@ export default class MoveHelper implements OptionsType {
         const genMoves = (pieceIndices: PieceIndex[]) => {
             pieceIndices.forEach((pieceIndex) => {
                 const type = pieceIndex.piece.type;
-                const isSdech = type === PIECE_TYPE_SDECH;
-                const isNeang = type === PIECE_TYPE_NEANG;
                 let isHaveMoved = this.isSdechMoved;
-                if (!isSdech) {
-                    isHaveMoved = isNeang ? this.isNeangMoved : false;
+                if (!pieceIndex.piece.isTypeKing) {
+                    isHaveMoved = pieceIndex.piece.isTypeQueen ? this.isNeangMoved : false;
                 }
                 const canMovePoints = this.genCanMovePointsByPiecePoint(
                     pieceIndex.point,

@@ -41,7 +41,7 @@ export default class Graveyard {
             }
             this.pieces = graveyardStr.split('').map((charCode, i) => {
                 const p = Piece.fromCharCode(charCode);
-                if (p.type === PIECE_TYPE_SDECH) {
+                if (p.isTypeKing) {
                     throw new Error(`King cannot die graveyard:${graveyardStr}`);
                 }
                 return p;

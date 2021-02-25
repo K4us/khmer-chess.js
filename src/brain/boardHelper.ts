@@ -94,15 +94,15 @@ class BoardHelper {
             const distPiece = this.getPieceByIndex(p.index, piecesString);
             if (distPiece.isValidPiece) {
                 if (piece.color === distPiece.piece.color ||
-                    (piece.type === PIECE_TYPE_TREY && p.x === thisPos.x)) {
+                    (piece.isTypeFish && p.x === thisPos.x)) {
                     p = null;
                 }
             } else {
-                if (piece.type === PIECE_TYPE_TREY && p.x !== thisPos.x) {
+                if (piece.isTypeFish && p.x !== thisPos.x) {
                     p = null;
                 }
             }
-            if (!jsis.isNull(p) && piece.type === PIECE_TYPE_TOUK) {
+            if (!jsis.isNull(p) && piece.isTypeBoat) {
                 const _x = thisPos.x;
                 const _y = thisPos.y;
                 if (p.x === thisPos.x) {
@@ -149,7 +149,7 @@ class BoardHelper {
         for (let i = 0; i < n; i++) {
             const p = this.getPieceByIndex(i, piecesString);
             if (p.isValidPiece && p.piece.color !== color &&
-                p.piece.type === PIECE_TYPE_TOUK) {
+                p.piece.isTypeBoat) {
                 const _poses = this.getPieceCanMovePoses(i, p.piece);
                 for (let j = 0; j < _poses.length; j++) {
                     if (_poses[j] === kingPos) {
@@ -180,7 +180,7 @@ class BoardHelper {
         piecesString: string, isHaveMoved?: boolean) {
         const _poses = this.getPieceCanMovePosesValid(index, piece, piecesString);
         const isHaveCaptured = this.isHaveCaptured(piecesString);
-        if (piece.type === PIECE_TYPE_SDECH) {
+        if (piece.isTypeKing) {
             if (!isHaveCaptured && !isHaveMoved) {
                 let p = this.convertMask(new Point(2, 1), index, piece.color);
                 if (p && !this.getPieceByIndex(p, piecesString).isValidPiece) {
@@ -191,7 +191,7 @@ class BoardHelper {
                     _poses.push(p);
                 }
             }
-        } else if (piece.type === PIECE_TYPE_NEANG) {
+        } else if (piece.isTypeQueen) {
             if (!isHaveCaptured && !isHaveMoved) {
                 const p = this.convertMask(new Point(-0, 2), index, piece.color);
                 if (p && !this.getPieceByIndex(p, piecesString).isValidPiece) {

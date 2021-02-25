@@ -41,8 +41,6 @@ import {
     COLOR_NAMES,
 } from '../brain/constant';
 import jsis from '../brain/jsis';
-import Point from './Point';
-
 
 export default class Piece {
     type: string;
@@ -57,6 +55,37 @@ export default class Piece {
     get title() {
         return `${COLOR_NAMES[this.color]} ${PIECE_NAMES[this.type]}`;
     }
+    _isTypeEqual(type: string) {
+        return this.type === type;
+    }
+    get isTypeKing() {
+        return this._isTypeEqual(PIECE_TYPE_SDECH);
+    }
+    get isTypeQueen() {
+        return this._isTypeEqual(PIECE_TYPE_NEANG);
+    }
+    get isTypeBoat() {
+        return this._isTypeEqual(PIECE_TYPE_TOUK);
+    }
+    get isTypeHorse() {
+        return this._isTypeEqual(PIECE_TYPE_SES);
+    }
+    get isTypeGeneral() {
+        return this._isTypeEqual(PIECE_TYPE_KOL);
+    }
+    get isTypeFish() {
+        return this._isTypeEqual(PIECE_TYPE_TREY);
+    }
+    get isTypeTransformedFish() {
+        return this._isTypeEqual(PIECE_TYPE_BORK);
+    }
+    get isColorWhite() {
+        return this.color === PIECE_COLOR_WHITE;
+    }
+    get isColorBlack() {
+        return this.color === PIECE_COLOR_BLACK;
+    }
+
 
     constructor(type: string, color: string) {
         this.type = Piece.toNormalCharCode(type);
@@ -73,7 +102,7 @@ export default class Piece {
     }
 
     toOriginPiece() {
-        if (this.type === PIECE_TYPE_BORK) {
+        if (this.isTypeTransformedFish) {
             return new Piece(PIECE_TYPE_TREY, this.color);
         }
         return this;
