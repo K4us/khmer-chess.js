@@ -2,5 +2,9 @@ import { KhmerChess, Point } from './src/index';
 
 const kc = new KhmerChess('BHGQK2B/4GH2/TFFFFFFF/8/8/5ft1/2qg2b1/bhgk2h1 w ---- -- -.- ffffff');
 // console.log(kc.renInstance.genAllCanMoves());
-console.log(kc.renInstance.getCanMovePointsByPoint(new Point(1, 0)));
+const point = new Point(1, 0);
+const piece = kc.renInstance.board.getPieceAtIndex(point.index);
+const points = kc.renInstance.getCanMovePointsByPoint(point);
+console.log(piece.title, point.indexCode);
+console.log(points.map(p => p.indexCode).join(','));
 
