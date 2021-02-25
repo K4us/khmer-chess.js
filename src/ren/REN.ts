@@ -168,10 +168,13 @@ export default class REN {
         return canMoves.moves;
     }
     getCanMovePointsByPoint(point: Point): Point[] {
-        const moves = this.genAllCanMoves();
-        const found = moves.filter((pieceIndex) => {
-            return pieceIndex.point.index === point.index;
-        });
-        return found.length ? found[0].canMovePoints : [];
+        const piece = this.board.getPieceAtIndex(point.index);
+        if (jsis.isNull(piece)) {
+            return [];
+        }
+        // TODO: if piece is king or queen, check isHaveMoved, for jumping purpose
+        const isHaveMoved = true;
+        return this.moveHelper.genCanMovePointsByPiecePoint(point, piece,
+            this.board.toStringFullNoSeparate(), isHaveMoved);
     }
 }

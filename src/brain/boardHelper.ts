@@ -176,7 +176,8 @@ class BoardHelper {
         }
         return null;
     }
-    generatePosesCanMove(index: number, piece: Piece, piecesString: string, isHaveMoved: boolean) {
+    genCanMovePointsByPiecePoint(index: number, piece: Piece,
+        piecesString: string, isHaveMoved?: boolean) {
         const _poses = this.getPieceCanMovePosesValid(index, piece, piecesString);
         const isHaveCaptured = this.isHaveCaptured(piecesString);
         if (piece.type === PIECE_TYPE_SDECH) {

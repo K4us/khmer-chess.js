@@ -66,6 +66,10 @@ export default class MoveHelper implements OptionsType {
     blackKingWillInDanger: Point[] | null;
     winColor: string | null;
     stuckColor: string | null;
+
+    get isWhiteTurn() {
+        return Piece.isWhiteColor(this.currentTurn);
+    }
     init(option: OptionsType) {
         this.piecesString = option.piecesString;
         this.currentTurn = option.currentTurn;
@@ -100,8 +104,8 @@ export default class MoveHelper implements OptionsType {
                 if (!isSdech) {
                     isHaveMoved = isNeang ? this.isNeangMoved : false;
                 }
-                const canMovePoints = boardHelper.generatePosesCanMove(
-                    pieceIndex.point.index,
+                const canMovePoints = this.genCanMovePointsByPiecePoint(
+                    pieceIndex.point,
                     pieceIndex.piece,
                     this.piecesString,
                     isHaveMoved
@@ -109,8 +113,17 @@ export default class MoveHelper implements OptionsType {
                 pieceIndex.canMovePoints = canMovePoints;
             });
         };
-        genMoves(this.whiteMoves);
-        genMoves(this.blackMoves);
+        if (this.isWhiteTurn) {
+            genMoves(this.whiteMoves);
+            if (this.genCanMoveForAnother) {
+                genMoves(this.blackMoves);
+            }
+        } else {
+            genMoves(this.blackMoves);
+            if (this.genCanMoveForAnother) {
+                genMoves(this.whiteMoves);
+            }
+        }
     }
 
     cleanPieceNoMove() {
@@ -163,10 +176,9 @@ export default class MoveHelper implements OptionsType {
         if (this.winColor) {
             return;
         }
-        const isWhite = Piece.isWhiteColor(this.currentTurn);
-        if (isWhite && !this.whiteMoves.length) {
+        if (this.isWhiteTurn && !this.whiteMoves.length) {
             this.stuckColor = PIECE_COLOR_WHITE;
-        } else if (!isWhite && !this.blackMoves.length) {
+        } else if (!this.isWhiteTurn && !this.blackMoves.length) {
             this.stuckColor = PIECE_COLOR_BLACK;
         }
     }
@@ -176,13 +188,12 @@ export default class MoveHelper implements OptionsType {
         this.generateCanMoves();
         this.cleanPieceNoMove();
         let moves: PieceIndex[] = [];
-        const isWhite = Piece.isWhiteColor(this.currentTurn);
         if (this.genCanMove) {
-            moves = isWhite ? this.whiteMoves : this.blackMoves;
+            moves = this.isWhiteTurn ? this.whiteMoves : this.blackMoves;
         }
         let anotherMoves: PieceIndex[] = [];
         if (this.genCanMoveForAnother) {
-            anotherMoves = !isWhite ? this.whiteMoves : this.blackMoves;
+            anotherMoves = !this.isWhiteTurn ? this.whiteMoves : this.blackMoves;
         }
         return {
             moves,
@@ -227,5 +238,15 @@ export default class MoveHelper implements OptionsType {
                 option.piecesString, option.force
             ),
         };
+    }
+
+    genCanMovePointsByPiecePoint(point: Point, piece: Piece,
+        piecesString: string, isHaveMoved?: boolean) {
+        return boardHelper.genCanMovePointsByPiecePoint(
+            point.index,
+            piece,
+            piecesString,
+            isHaveMoved
+        );
     }
 }
