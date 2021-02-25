@@ -27,7 +27,7 @@
  *---------------------------------------------------------------------------- */
 export const PIECE_COLOR_WHITE = 'w';
 export const PIECE_COLOR_BLACK = 'b';
-export const COLOR_NAMES = {
+export const COLOR_NAMES: { [key: string]: string } = {
     [PIECE_COLOR_BLACK]: 'black',
     [PIECE_COLOR_WHITE]: 'white',
 };
@@ -39,7 +39,7 @@ export const PIECE_TYPE_SDECH = 'k'; // King
 export const PIECE_TYPE_NEANG = 'q'; // Queen
 export const PIECE_TYPE_TREY = 'f'; // Fish
 export const PIECE_TYPE_BORK = 't'; // Transform fish
-export const PIECE_NAMES = {
+export const PIECE_NAMES: { [key: string]: string } = {
     [PIECE_TYPE_TOUK]: 'board',
     [PIECE_TYPE_SES]: 'horse',
     [PIECE_TYPE_KOL]: 'general',

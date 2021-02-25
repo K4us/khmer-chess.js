@@ -1,8 +1,7 @@
 export declare const PIECE_COLOR_WHITE = "w";
 export declare const PIECE_COLOR_BLACK = "b";
 export declare const COLOR_NAMES: {
-    b: string;
-    w: string;
+    [key: string]: string;
 };
 export declare const PIECE_TYPE_TOUK = "b";
 export declare const PIECE_TYPE_SES = "h";
@@ -12,13 +11,7 @@ export declare const PIECE_TYPE_NEANG = "q";
 export declare const PIECE_TYPE_TREY = "f";
 export declare const PIECE_TYPE_BORK = "t";
 export declare const PIECE_NAMES: {
-    b: string;
-    h: string;
-    g: string;
-    k: string;
-    q: string;
-    f: string;
-    t: string;
+    [key: string]: string;
 };
 export declare const EMPTY_PIECE = ".";
 export declare const PIECE_COLOR_EMPTY = ".";
