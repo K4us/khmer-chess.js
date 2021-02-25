@@ -37,6 +37,8 @@ import {
     PIECE_TYPE_NEANG,
     EMPTY_PIECE,
     BOARD_SEPARATOR,
+    PIECE_NAMES,
+    COLOR_NAMES,
 } from '../brain/constant';
 import jsis from '../brain/jsis';
 import Point from './Point';
@@ -50,6 +52,10 @@ export default class Piece {
             return Piece.toWhiteCharCode(this.type);
         }
         return this.type;
+    }
+
+    get title() {
+        return `${COLOR_NAMES[this.color]} ${PIECE_NAMES[this.type]}`;
     }
 
     constructor(type: string, color: string) {

@@ -30,10 +30,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var index_1 = require("../brain/index");
 var Point = /** @class */ (function () {
     function Point(x, y) {
-        // in graveyard x can be greater than ROW_NUMBER
-        if (x < 0 || y < 0 || y >= index_1.ROW_NUMBER) {
-            throw new Error('Invalid point x y');
-        }
         this.x = x;
         this.y = y;
     }

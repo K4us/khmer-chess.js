@@ -35,7 +35,8 @@ var genMask_1 = __importDefault(require("./genMask"));
 var constant_1 = require("./constant");
 var Point_1 = __importDefault(require("../ren/Point"));
 var Piece_1 = __importDefault(require("../ren/Piece"));
-var PieceIndex_1 = __importDefault(require("../ren/PieceIndex"));
+var Rectangle_1 = __importDefault(require("./Rectangle"));
+var ren_1 = require("../ren");
 var mask = genMask_1.default();
 var BoardHelper = /** @class */ (function () {
     function BoardHelper() {
@@ -44,27 +45,23 @@ var BoardHelper = /** @class */ (function () {
             var point2 = Point_1.default.fromIndex(index);
             point1.x = point1.x * sign + point2.x;
             point1.y = point1.y * sign + point2.y;
-            return point1.index;
+            return Rectangle_1.default.isValidPoint(point1) ? point1.index : null;
         };
     }
     BoardHelper.prototype.getCharPieceFromString = function (piecesString, index) {
         if (Point_1.default.isIndexInBoard(index) && piecesString.length === constant_1.CELL_COUNT) {
-            return piecesString.charAt(index);
+            return piecesString[index];
         }
         return constant_1.EMPTY_PIECE;
-    };
-    BoardHelper.prototype.getPieceProperties = function (pieceCode) {
-        var h = constant_1.pieceHash[pieceCode];
-        return new Piece_1.default(h ? h[1] : constant_1.EMPTY_PIECE, h ? h[0] : constant_1.PIECE_COLOR_EMPTY);
     };
     BoardHelper.prototype.getCharPieceInPos = function (index, piecesString) {
         return this.getCharPieceFromString(piecesString, index);
     };
     BoardHelper.prototype.getPieceByIndex = function (index, piecesString) {
-        var piece = this.getCharPieceInPos(index, piecesString);
+        var charCode = this.getCharPieceInPos(index, piecesString);
         return {
-            isValidPiece: Piece_1.default.isValidPiece(piece),
-            piece: Piece_1.default.fromCharCode(piece),
+            isValidPiece: Piece_1.default.isValidPiece(charCode),
+            piece: Piece_1.default.fromCharCode(charCode),
         };
     };
     BoardHelper.prototype.getPieceCanMovePoses = function (index, piece) {
@@ -127,11 +124,11 @@ var BoardHelper = /** @class */ (function () {
         }
         return pieceIndices;
     };
-    BoardHelper.prototype.replacePiecesStringAtIndex = function (piecesString, c, index) {
-        return piecesString.substring(0, index) + c + piecesString.substring(index + 1);
+    BoardHelper.prototype.replacePiecesStringAtIndex = function (piecesString, charCode, index) {
+        return piecesString.substring(0, index) + charCode + piecesString.substring(index + 1);
     };
     BoardHelper.prototype.injectPiece = function (piecesString, index1, index2) {
-        var c = piecesString.charAt(index1);
+        var c = piecesString[index1];
         if (!this.isCharPiecesInBoard(c, piecesString)) {
             return null;
         }
@@ -139,17 +136,8 @@ var BoardHelper = /** @class */ (function () {
         piecesString = this.replacePiecesStringAtIndex(piecesString, c, index2);
         return piecesString;
     };
-    BoardHelper.prototype.getPieceCode = function (piece) {
-        var val = piece.color + piece.type;
-        for (var k in constant_1.pieceHash) {
-            if (val === constant_1.pieceHash[k]) {
-                return k;
-            }
-        }
-        return constant_1.EMPTY_PIECE;
-    };
     BoardHelper.prototype.getKingWillInDanger = function (color, piecesString) {
-        var kingPos = piecesString.indexOf(this.getPieceCode(new Piece_1.default(constant_1.PIECE_TYPE_SDECH, color)));
+        var kingPos = piecesString.indexOf(new Piece_1.default(constant_1.PIECE_TYPE_SDECH, color).pieceCharCode);
         var n = piecesString.length;
         for (var i = 0; i < n; i++) {
             var p = this.getPieceByIndex(i, piecesString);
@@ -166,7 +154,7 @@ var BoardHelper = /** @class */ (function () {
         return null;
     };
     BoardHelper.prototype.getKingInDanger = function (color, piecesString) {
-        var kingPos = piecesString.indexOf(this.getPieceCode(new Piece_1.default(constant_1.PIECE_TYPE_SDECH, color)));
+        var kingPos = piecesString.indexOf(new Piece_1.default(constant_1.PIECE_TYPE_SDECH, color).pieceCharCode);
         var n = piecesString.length;
         for (var i = 0; i < n; i++) {
             var p = this.getPieceByIndex(i, piecesString);
@@ -205,21 +193,21 @@ var BoardHelper = /** @class */ (function () {
             }
         }
         var n = _poses.length;
-        var pieceIndices = [];
+        var points = [];
         for (var i = 0; i < n; i++) {
             var str = this.injectPiece(piecesString, index, _poses[i]);
             if (jsis_1.default.isNull(this.getKingInDanger(piece.color, str))) {
-                pieceIndices.push(Point_1.default.fromIndex(_poses[i]));
+                points.push(Point_1.default.fromIndex(_poses[i]));
             }
         }
-        return pieceIndices;
+        return points;
     };
     BoardHelper.prototype.isCharPiecesInBoard = function (code, piecesString) {
         return !!~piecesString.indexOf(code);
     };
     BoardHelper.prototype.getPiecesInBoard = function (piecesString) {
-        return piecesString.split('').filter(function (c) {
-            return Piece_1.default.isValidPiece(c);
+        return piecesString.split('').filter(function (charCode) {
+            return Piece_1.default.isValidPiece(charCode);
         });
     };
     BoardHelper.prototype.isHaveCaptured = function (piecesString) {
@@ -229,12 +217,10 @@ var BoardHelper = /** @class */ (function () {
         var whitePieces = [];
         var blackPieces = [];
         for (var i = 0; i < piecesString.length; i++) {
-            var c = piecesString.charAt(i);
-            if (Piece_1.default.isValidPiece(c)) {
-                var piece = this.getPieceProperties(c);
-                var point = Point_1.default.fromIndex(i);
-                var pieceIndex = new PieceIndex_1.default(point.x, point.y, piece);
-                if (Piece_1.default.isWhiteColor(piece.color)) {
+            var charCode = piecesString[i];
+            if (Piece_1.default.isValidPiece(charCode)) {
+                var pieceIndex = new ren_1.PieceIndex(Point_1.default.fromIndex(i), Piece_1.default.fromCharCode(charCode));
+                if (Piece_1.default.isWhiteColor(pieceIndex.piece.color)) {
                     whitePieces.push(pieceIndex);
                 }
                 else {
@@ -249,18 +235,17 @@ var BoardHelper = /** @class */ (function () {
     };
     BoardHelper.prototype.extractPiecesToArray = function (piecesString) {
         var _a;
-        var _this = this;
         var piecesStringArr = piecesString.split('');
         var pieceAll = (_a = {},
             _a[constant_1.PIECE_COLOR_BLACK] = [],
             _a[constant_1.PIECE_COLOR_WHITE] = [],
             _a);
-        piecesStringArr.forEach(function (c) {
-            if (c === constant_1.EMPTY_PIECE) {
+        piecesStringArr.forEach(function (charCode) {
+            if (charCode === constant_1.EMPTY_PIECE) {
                 return;
             }
-            var prop = _this.getPieceProperties(c);
-            pieceAll[prop.color].push(prop.type);
+            var piece = Piece_1.default.fromCharCode(charCode);
+            pieceAll[piece.color].push(piece.type);
         });
         return pieceAll;
     };

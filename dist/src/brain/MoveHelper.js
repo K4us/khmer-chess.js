@@ -53,19 +53,18 @@ var MoveHelper = /** @class */ (function () {
         var filter = index_1.boardHelper.filterPieceInBoard(this.piecesString);
         this.whiteMoves = filter.whitePieces;
         this.blackMoves = filter.blackPieces;
-        var genMoves = function (pieces) {
-            for (var i = 0; i < pieces.length; i++) {
-                var piece = pieces[i];
-                var type = piece.type;
+        var genMoves = function (pieceIndices) {
+            pieceIndices.forEach(function (pieceIndex) {
+                var type = pieceIndex.piece.type;
                 var isSdech = type === index_1.PIECE_TYPE_SDECH;
                 var isNeang = type === index_1.PIECE_TYPE_NEANG;
                 var isHaveMoved = _this.isSdechMoved;
                 if (!isSdech) {
                     isHaveMoved = isNeang ? _this.isNeangMoved : false;
                 }
-                var canMoveIndexes = index_1.boardHelper.generatePosesCanMove(piece.index, piece, _this.piecesString, isHaveMoved);
-                piece.canMoveIndexes = canMoveIndexes;
-            }
+                var canMovePoints = index_1.boardHelper.generatePosesCanMove(pieceIndex.point.index, pieceIndex.piece, _this.piecesString, isHaveMoved);
+                pieceIndex.canMovePoints = canMovePoints;
+            });
         };
         genMoves(this.whiteMoves);
         genMoves(this.blackMoves);
@@ -77,7 +76,7 @@ var MoveHelper = /** @class */ (function () {
                 isTrue = false;
                 for (var i = 0; i < pieces.length; i++) {
                     var piece = pieces[i];
-                    if (!piece.canMoveIndexes || !piece.canMoveIndexes.length) {
+                    if (!piece.canMovePoints.length) {
                         pieces.splice(i, 1);
                         isTrue = true;
                         break;
@@ -106,10 +105,11 @@ var MoveHelper = /** @class */ (function () {
         if (this.winColor) {
             return;
         }
-        if (index_2.Piece.isWhiteColor(this.currentTurn) && !this.whiteMoves.length) {
+        var isWhite = index_2.Piece.isWhiteColor(this.currentTurn);
+        if (isWhite && !this.whiteMoves.length) {
             this.stuckColor = index_1.PIECE_COLOR_WHITE;
         }
-        else if (index_2.Piece.isBlackColor(this.currentTurn) && !this.blackMoves.length) {
+        else if (!isWhite && !this.blackMoves.length) {
             this.stuckColor = index_1.PIECE_COLOR_BLACK;
         }
     };
@@ -118,12 +118,13 @@ var MoveHelper = /** @class */ (function () {
         this.generateCanMoves();
         this.cleanPieceNoMove();
         var moves = [];
+        var isWhite = index_2.Piece.isWhiteColor(this.currentTurn);
         if (this.genCanMove) {
-            moves = index_2.Piece.isWhiteColor(this.currentTurn) ? this.whiteMoves : this.blackMoves;
+            moves = isWhite ? this.whiteMoves : this.blackMoves;
         }
         var anotherMoves = [];
         if (this.genCanMoveForAnother) {
-            anotherMoves = index_2.Piece.isBlackColor(this.currentTurn) ? this.whiteMoves : this.blackMoves;
+            anotherMoves = !isWhite ? this.whiteMoves : this.blackMoves;
         }
         return {
             moves: moves,
@@ -156,4 +157,4 @@ var MoveHelper = /** @class */ (function () {
     };
     return MoveHelper;
 }());
-exports.default = new MoveHelper();
+exports.default = MoveHelper;

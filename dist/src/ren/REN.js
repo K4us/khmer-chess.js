@@ -37,9 +37,9 @@ var CountDown_1 = __importDefault(require("./CountDown"));
 var Graveyard_1 = __importDefault(require("./Graveyard"));
 var index_1 = require("../brain/index");
 var constant_1 = require("./constant");
+var kpgn_1 = require("../kpgn");
 var Move_1 = __importDefault(require("../kpgn/Move"));
 var Point_1 = __importDefault(require("./Point"));
-var kpgn_1 = require("../kpgn");
 var REN = /** @class */ (function () {
     function REN(_a) {
         var boardStr = _a.boardStr, turnStr = _a.turnStr, kqMovedStr = _a.kqMovedStr, kAttackedStr = _a.kAttackedStr, countdownStr = _a.countdownStr, graveyardStr = _a.graveyardStr;
@@ -55,6 +55,7 @@ var REN = /** @class */ (function () {
             msg += ", graveyard:" + graveyardStr + ", count:" + invalidPiecesString;
             throw new Error(msg);
         }
+        this.moveHelper = new index_1.MoveHelper();
     }
     REN.prototype.isInvalidPieceCount = function () {
         var pieces = this.board.pieceIndices.map(function (pos) {
@@ -69,7 +70,9 @@ var REN = /** @class */ (function () {
             obj[p.pieceCharCode]++;
             return obj;
         }, {});
-        var str = Object.keys(piecesCount).map(function (k) { return "" + k + piecesCount[k]; }).sort().join('');
+        var str = Object.keys(piecesCount).map(function (k) {
+            return "" + k + piecesCount[k];
+        }).sort().join('');
         if (str === constant_1.STRING_COUNT) {
             return false;
         }
@@ -120,6 +123,24 @@ var REN = /** @class */ (function () {
         str += " " + this.countdown.toString();
         str += " " + this.graveyard.toString();
         return str;
+    };
+    REN.prototype.genAllCanMoves = function () {
+        var canMoves = this.moveHelper.calcCanMove({
+            piecesString: this.board.toStringFullNoSeparate(),
+            currentTurn: this.turn,
+            isNeangMoved: true,
+            isSdechMoved: true,
+            genCanMove: true,
+            genCanMoveForAnother: false,
+        });
+        return canMoves.moves;
+    };
+    REN.prototype.getCanMovePointsByPoint = function (point) {
+        var moves = this.genAllCanMoves();
+        var found = moves.filter(function (pieceIndex) {
+            return pieceIndex.point.index === point.index;
+        });
+        return found.length ? found[0].canMovePoints : [];
     };
     return REN;
 }());

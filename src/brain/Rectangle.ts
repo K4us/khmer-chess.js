@@ -1,6 +1,3 @@
-import { Point } from "../ren";
-import { ROW_LAST_INDEX } from "./constant";
-
 /*
  * Copyright (c) 2021, K4us
  * Author: Raksa Eng <eng.raksa@gmail.com>
@@ -28,6 +25,9 @@ import { ROW_LAST_INDEX } from "./constant";
  * POSSIBILITY OF SUCH DAMAGE.
  *
  *---------------------------------------------------------------------------- */
+import { Point } from '../ren';
+import { ROW_LAST_INDEX } from './constant';
+
 export default class Rectangle {
     x: number;
     y: number;

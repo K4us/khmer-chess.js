@@ -54,6 +54,13 @@ var Piece = /** @class */ (function () {
         enumerable: false,
         configurable: true
     });
+    Object.defineProperty(Piece.prototype, "title", {
+        get: function () {
+            return constant_1.COLOR_NAMES[this.color] + " " + constant_1.PIECE_NAMES[this.type];
+        },
+        enumerable: false,
+        configurable: true
+    });
     Piece.fromCharCode = function (charCode) {
         if (!Piece.isValidPiece(charCode)) {
             return null;
@@ -105,8 +112,8 @@ var Piece = /** @class */ (function () {
     Piece.toNormalCharCode = function (charCode) {
         return Piece.toBlackCharCode(charCode);
     };
-    Piece.isValidPiece = function (piece) {
-        return piece !== constant_1.EMPTY_PIECE;
+    Piece.isValidPiece = function (charCode) {
+        return charCode !== constant_1.EMPTY_PIECE;
     };
     Piece.isWhiteColor = function (c) {
         return c === constant_1.PIECE_COLOR_WHITE;

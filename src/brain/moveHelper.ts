@@ -91,9 +91,8 @@ export default class MoveHelper implements OptionsType {
         const filter = boardHelper.filterPieceInBoard(this.piecesString);
         this.whiteMoves = filter.whitePieces;
         this.blackMoves = filter.blackPieces;
-        const genMoves = (pieces: PieceIndex[]) => {
-            for (let i = 0; i < pieces.length; i++) {
-                const pieceIndex = pieces[i];
+        const genMoves = (pieceIndices: PieceIndex[]) => {
+            pieceIndices.forEach((pieceIndex) => {
                 const type = pieceIndex.piece.type;
                 const isSdech = type === PIECE_TYPE_SDECH;
                 const isNeang = type === PIECE_TYPE_NEANG;
@@ -102,13 +101,13 @@ export default class MoveHelper implements OptionsType {
                     isHaveMoved = isNeang ? this.isNeangMoved : false;
                 }
                 const canMovePoints = boardHelper.generatePosesCanMove(
-                    i,
+                    pieceIndex.point.index,
                     pieceIndex.piece,
                     this.piecesString,
                     isHaveMoved
                 );
                 pieceIndex.canMovePoints = canMovePoints;
-            }
+            });
         };
         genMoves(this.whiteMoves);
         genMoves(this.blackMoves);

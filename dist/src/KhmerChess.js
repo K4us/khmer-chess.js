@@ -45,9 +45,13 @@ var KhmerChess = /** @class */ (function () {
     KhmerChess.prototype.reset = function () {
         this.renInstance = index_2.REN.fromString();
     };
-    KhmerChess.prototype.moves = function () {
+    KhmerChess.prototype.getCanMoves = function () {
         // TODO:
         return [];
+    };
+    KhmerChess.prototype.getCanMovePointsByPoint = function (point) {
+        var canMovePoints = this.renInstance.getCanMovePointsByPoint(point);
+        return canMovePoints;
     };
     KhmerChess.prototype.inCheck = function () {
         // TODO:

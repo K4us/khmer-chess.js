@@ -3,12 +3,15 @@ import KqMoved from './KqMoved';
 import KAttacked from './KAttacked';
 import CountDown from './CountDown';
 import Graveyard from './Graveyard';
+import { MoveHelper } from '../brain/index';
 import Move from '../kpgn/Move';
+import Point from './Point';
+import { PieceIndex } from '.';
 /**
  * Raksa-Eng Notation
  * fen: <pieces on board> <turn w|b> <king&queen moved ----|SNsn> <king attack --|Kk> <countdown -.-|-.4> <pieces in graveyard>
  */
-declare type RENPropType = {
+export declare type RENPropType = {
     boardStr: string;
     turnStr: string;
     kqMovedStr: string;
@@ -23,10 +26,12 @@ export default class REN {
     kAttacked: KAttacked;
     countdown: CountDown;
     graveyard: Graveyard;
+    moveHelper: MoveHelper;
     constructor({ boardStr, turnStr, kqMovedStr, kAttackedStr, countdownStr, graveyardStr }: RENPropType);
     isInvalidPieceCount(): string | false;
     static fromString(fen?: string): REN;
     move(moveFromIndex: number, moveToIndex: number): Move | null;
     toString(): string;
+    genAllCanMoves(): PieceIndex[];
+    getCanMovePointsByPoint(point: Point): Point[];
 }
-export {};

@@ -45,7 +45,7 @@ var Board = /** @class */ (function () {
             length: constant_2.CELL_COUNT,
         }, function (_, i) {
             var point = Point_1.default.fromIndex(i);
-            return new PieceIndex_1.default(point.x, point.y, null);
+            return new PieceIndex_1.default(point, null);
         });
         if (jsis_1.default.isUndefined(boardStr)) {
             boardStr = constant_1.DEFAULT_BOARD_STR;
@@ -57,7 +57,7 @@ var Board = /** @class */ (function () {
         }
         this.pieceIndices = newBoardStr.split('').map(function (charCode, i) {
             var point = Point_1.default.fromIndex(i);
-            return new PieceIndex_1.default(point.x, point.y, charCode === constant_2.EMPTY_PIECE ? null : Piece_1.default.fromCharCode(charCode));
+            return new PieceIndex_1.default(point, charCode === constant_2.EMPTY_PIECE ? null : Piece_1.default.fromCharCode(charCode));
         });
     }
     Object.defineProperty(Board.prototype, "piecesMultiArray", {
@@ -100,6 +100,11 @@ var Board = /** @class */ (function () {
             }
             return p;
         }).join('');
+        return str;
+    };
+    Board.prototype.toStringFullNoSeparate = function () {
+        var str = this.toStringFull();
+        str = str.replace(/\//g, '');
         return str;
     };
     Board.prototype.toString = function () {

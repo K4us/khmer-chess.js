@@ -1,6 +1,7 @@
 "use strict";
+var _a, _b;
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.pieceHash = exports.VERTICAL_NOTE_LETTERS_ASCII = exports.HORIZONTAL_NOTE_LETTERS_ASCII = exports.VERTICAL_NOTE_LETTERS = exports.HORIZONTAL_NOTE_LETTERS = exports.HORIZONTAL_CODE_LETTERS = exports.CELL_COUNT = exports.ROW_LAST_INDEX = exports.ROW_FIRST_INDEX = exports.ROW_NUMBER = exports.BOARD_SEPARATOR = exports.PIECE_COLOR_EMPTY = exports.EMPTY_PIECE = exports.PIECE_TYPE_BORK = exports.PIECE_TYPE_TREY = exports.PIECE_TYPE_NEANG = exports.PIECE_TYPE_SDECH = exports.PIECE_TYPE_KOL = exports.PIECE_TYPE_SES = exports.PIECE_TYPE_TOUK = exports.PIECE_COLOR_BLACK = exports.PIECE_COLOR_WHITE = void 0;
+exports.VERTICAL_NOTE_LETTERS_ASCII = exports.HORIZONTAL_NOTE_LETTERS_ASCII = exports.VERTICAL_NOTE_LETTERS = exports.HORIZONTAL_NOTE_LETTERS = exports.HORIZONTAL_CODE_LETTERS = exports.CELL_COUNT = exports.ROW_LAST_INDEX = exports.ROW_FIRST_INDEX = exports.ROW_NUMBER = exports.BOARD_SEPARATOR = exports.PIECE_COLOR_EMPTY = exports.EMPTY_PIECE = exports.PIECE_NAMES = exports.PIECE_TYPE_BORK = exports.PIECE_TYPE_TREY = exports.PIECE_TYPE_NEANG = exports.PIECE_TYPE_SDECH = exports.PIECE_TYPE_KOL = exports.PIECE_TYPE_SES = exports.PIECE_TYPE_TOUK = exports.COLOR_NAMES = exports.PIECE_COLOR_BLACK = exports.PIECE_COLOR_WHITE = void 0;
 /*
  * Copyright (c) 2021, K4us
  * Author: Raksa Eng <eng.raksa@gmail.com>
@@ -30,6 +31,10 @@ exports.pieceHash = exports.VERTICAL_NOTE_LETTERS_ASCII = exports.HORIZONTAL_NOT
  *---------------------------------------------------------------------------- */
 exports.PIECE_COLOR_WHITE = 'w';
 exports.PIECE_COLOR_BLACK = 'b';
+exports.COLOR_NAMES = (_a = {},
+    _a[exports.PIECE_COLOR_BLACK] = 'black',
+    _a[exports.PIECE_COLOR_WHITE] = 'white',
+    _a);
 exports.PIECE_TYPE_TOUK = 'b'; // Boat
 exports.PIECE_TYPE_SES = 'h'; // Horse
 exports.PIECE_TYPE_KOL = 'g'; // General
@@ -37,6 +42,15 @@ exports.PIECE_TYPE_SDECH = 'k'; // King
 exports.PIECE_TYPE_NEANG = 'q'; // Queen
 exports.PIECE_TYPE_TREY = 'f'; // Fish
 exports.PIECE_TYPE_BORK = 't'; // Transform fish
+exports.PIECE_NAMES = (_b = {},
+    _b[exports.PIECE_TYPE_TOUK] = 'board',
+    _b[exports.PIECE_TYPE_SES] = 'horse',
+    _b[exports.PIECE_TYPE_KOL] = 'general',
+    _b[exports.PIECE_TYPE_SDECH] = 'king',
+    _b[exports.PIECE_TYPE_NEANG] = 'queen',
+    _b[exports.PIECE_TYPE_TREY] = 'fish',
+    _b[exports.PIECE_TYPE_BORK] = 'transform fish',
+    _b);
 exports.EMPTY_PIECE = '.';
 exports.PIECE_COLOR_EMPTY = '.';
 exports.BOARD_SEPARATOR = '/';
@@ -51,19 +65,3 @@ exports.VERTICAL_NOTE_LETTERS = ['១', '២', '៣', '៤', '៥', '៦', '៧'
     '២១', '២២', '២៣', '២៤', '២៥', '២៦', '២៧', '២៨', '២៩', '៣០'];
 exports.HORIZONTAL_NOTE_LETTERS_ASCII = 'abcdefgh';
 exports.VERTICAL_NOTE_LETTERS_ASCII = Array.from({ length: 30 }, function (_, i) { return "" + (i + 1); });
-exports.pieceHash = {
-    a: exports.PIECE_COLOR_WHITE + exports.PIECE_TYPE_TOUK,
-    b: exports.PIECE_COLOR_WHITE + exports.PIECE_TYPE_SES,
-    c: exports.PIECE_COLOR_WHITE + exports.PIECE_TYPE_KOL,
-    d: exports.PIECE_COLOR_WHITE + exports.PIECE_TYPE_SDECH,
-    e: exports.PIECE_COLOR_WHITE + exports.PIECE_TYPE_NEANG,
-    f: exports.PIECE_COLOR_WHITE + exports.PIECE_TYPE_TREY,
-    g: exports.PIECE_COLOR_WHITE + exports.PIECE_TYPE_BORK,
-    h: exports.PIECE_COLOR_BLACK + exports.PIECE_TYPE_TOUK,
-    i: exports.PIECE_COLOR_BLACK + exports.PIECE_TYPE_SES,
-    j: exports.PIECE_COLOR_BLACK + exports.PIECE_TYPE_KOL,
-    k: exports.PIECE_COLOR_BLACK + exports.PIECE_TYPE_SDECH,
-    l: exports.PIECE_COLOR_BLACK + exports.PIECE_TYPE_NEANG,
-    m: exports.PIECE_COLOR_BLACK + exports.PIECE_TYPE_TREY,
-    n: exports.PIECE_COLOR_BLACK + exports.PIECE_TYPE_BORK,
-};

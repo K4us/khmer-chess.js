@@ -1,13 +1,10 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 var index_1 = require("../brain/index");
-var Point_1 = __importDefault(require("./Point"));
 var PieceIndex = /** @class */ (function () {
-    function PieceIndex(x, y, piece) {
-        this.point = new Point_1.default(x, y);
+    function PieceIndex(point, piece) {
+        this.canMovePoints = [];
+        this.point = point;
         this.piece = piece;
     }
     PieceIndex.prototype.toCode = function () {

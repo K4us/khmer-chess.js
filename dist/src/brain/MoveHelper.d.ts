@@ -1,5 +1,5 @@
 import { PieceIndex, Point } from '../ren/index';
-declare type OptionsType = {
+export declare type OptionsType = {
     piecesString: string;
     currentTurn: string;
     isNeangMoved: boolean;
@@ -7,11 +7,11 @@ declare type OptionsType = {
     genCanMove: boolean;
     genCanMoveForAnother: boolean;
 };
-declare type CalCountPropsType = {
+export declare type CalCountPropsType = {
     piecesString: string;
     force: boolean;
 };
-declare class MoveHelper {
+export default class MoveHelper implements OptionsType {
     piecesString: string;
     currentTurn: string;
     isNeangMoved: boolean;
@@ -51,5 +51,3 @@ declare class MoveHelper {
         countingWhite: number[];
     };
 }
-declare const _default: MoveHelper;
-export default _default;

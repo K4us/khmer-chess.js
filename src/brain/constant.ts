@@ -27,6 +27,10 @@
  *---------------------------------------------------------------------------- */
 export const PIECE_COLOR_WHITE = 'w';
 export const PIECE_COLOR_BLACK = 'b';
+export const COLOR_NAMES = {
+    [PIECE_COLOR_BLACK]: 'black',
+    [PIECE_COLOR_WHITE]: 'white',
+};
 
 export const PIECE_TYPE_TOUK = 'b'; // Boat
 export const PIECE_TYPE_SES = 'h'; // Horse
@@ -35,6 +39,15 @@ export const PIECE_TYPE_SDECH = 'k'; // King
 export const PIECE_TYPE_NEANG = 'q'; // Queen
 export const PIECE_TYPE_TREY = 'f'; // Fish
 export const PIECE_TYPE_BORK = 't'; // Transform fish
+export const PIECE_NAMES = {
+    [PIECE_TYPE_TOUK]: 'board',
+    [PIECE_TYPE_SES]: 'horse',
+    [PIECE_TYPE_KOL]: 'general',
+    [PIECE_TYPE_SDECH]: 'king',
+    [PIECE_TYPE_NEANG]: 'queen',
+    [PIECE_TYPE_TREY]: 'fish',
+    [PIECE_TYPE_BORK]: 'transform fish',
+};
 export const EMPTY_PIECE = '.';
 export const PIECE_COLOR_EMPTY = '.';
 export const BOARD_SEPARATOR = '/';

@@ -2,6 +2,7 @@ export default class Piece {
     type: string;
     color: string;
     get pieceCharCode(): string;
+    get title(): string;
     constructor(type: string, color: string);
     static fromCharCode(charCode: string): Piece;
     toOriginPiece(): Piece;
@@ -11,7 +12,7 @@ export default class Piece {
     static isWhiteCharCode(charCode: string): boolean;
     static toBlackCharCode(charCode: string): string;
     static toNormalCharCode(charCode: string): string;
-    static isValidPiece(piece: string): boolean;
+    static isValidPiece(charCode: string): boolean;
     static isWhiteColor(c: string): boolean;
     static isBlackColor(c: string): boolean;
     static oppositeColor(color: any): "w" | "b";

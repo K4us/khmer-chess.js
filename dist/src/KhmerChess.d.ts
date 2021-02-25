@@ -1,5 +1,5 @@
 import { KPGN, Move } from './kpgn/index';
-import { Piece, REN } from './ren/index';
+import { Piece, Point, REN } from './ren/index';
 export default class KhmerChess {
     static title: string;
     static version: string;
@@ -8,7 +8,8 @@ export default class KhmerChess {
     constructor(renStr?: string);
     load(renStr: string): void;
     reset(): void;
-    moves(): Move[];
+    getCanMoves(): Move[];
+    getCanMovePointsByPoint(point: Point): Point[];
     inCheck(): string | null;
     inCheckmate(): string | null;
     inStalemate(): string | null;
