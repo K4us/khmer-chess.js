@@ -41,13 +41,13 @@ var KAttacked = /** @class */ (function () {
         this.whiteKing = false;
         this.blackKing = false;
         if (kAttackedStr) {
-            this.whiteKing = !!~kAttackedStr.indexOf(Piece_1.default.toWhiteCharCode(index_1.PIECE_TYPE_SDECH));
-            this.blackKing = !!~kAttackedStr.indexOf(index_1.PIECE_TYPE_SDECH);
+            this.whiteKing = !!~kAttackedStr.indexOf(Piece_1.default.toWhiteCharCode(index_1.PIECE_TYPE_KING));
+            this.blackKing = !!~kAttackedStr.indexOf(index_1.PIECE_TYPE_KING);
         }
     }
     KAttacked.prototype.toString = function () {
-        var str = "" + (this.whiteKing ? Piece_1.default.toWhiteCharCode(index_1.PIECE_TYPE_SDECH) : constant_1.NOT_SET);
-        str += "" + (this.blackKing ? index_1.PIECE_TYPE_SDECH : constant_1.NOT_SET);
+        var str = "" + (this.whiteKing ? Piece_1.default.toWhiteCharCode(index_1.PIECE_TYPE_KING) : constant_1.NOT_SET);
+        str += "" + (this.blackKing ? index_1.PIECE_TYPE_KING : constant_1.NOT_SET);
         return str;
     };
     return KAttacked;

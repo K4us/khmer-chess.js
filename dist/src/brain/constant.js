@@ -1,7 +1,7 @@
 "use strict";
-var _a, _b;
+var _a, _b, _c, _d;
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.VERTICAL_NOTE_LETTERS_ASCII = exports.HORIZONTAL_NOTE_LETTERS_ASCII = exports.VERTICAL_NOTE_LETTERS = exports.HORIZONTAL_NOTE_LETTERS = exports.HORIZONTAL_CODE_LETTERS = exports.CELL_COUNT = exports.ROW_LAST_INDEX = exports.ROW_FIRST_INDEX = exports.ROW_NUMBER = exports.BOARD_SEPARATOR = exports.PIECE_COLOR_EMPTY = exports.EMPTY_PIECE = exports.PIECE_NAMES = exports.PIECE_TYPE_BORK = exports.PIECE_TYPE_TREY = exports.PIECE_TYPE_NEANG = exports.PIECE_TYPE_SDECH = exports.PIECE_TYPE_KOL = exports.PIECE_TYPE_SES = exports.PIECE_TYPE_TOUK = exports.COLOR_NAMES = exports.PIECE_COLOR_BLACK = exports.PIECE_COLOR_WHITE = void 0;
+exports.VERTICAL_NOTE_LETTERS_ENGLISH = exports.HORIZONTAL_NOTE_LETTERS_ENGLISH = exports.VERTICAL_NOTE_LETTERS = exports.HORIZONTAL_NOTE_LETTERS = exports.HORIZONTAL_CODE_LETTERS = exports.CELL_COUNT = exports.ROW_LAST_INDEX = exports.ROW_FIRST_INDEX = exports.ROW_NUMBER = exports.BOARD_SEPARATOR = exports.PIECE_COLOR_EMPTY = exports.EMPTY_PIECE = exports.PIECE_NAMES_ENGLISH = exports.PIECE_NAMES = exports.PIECE_TYPE_TRANSFORM_FISH = exports.PIECE_TYPE_FISH = exports.PIECE_TYPE_QUEEN = exports.PIECE_TYPE_KING = exports.PIECE_TYPE_GENERAL = exports.PIECE_TYPE_HORSE = exports.PIECE_TYPE_BOAT = exports.COLOR_NAMES_ENGLISH = exports.COLOR_NAMES = exports.PIECE_COLOR_BLACK = exports.PIECE_COLOR_WHITE = void 0;
 /*
  * Copyright (c) 2021, K4us
  * Author: Raksa Eng <eng.raksa@gmail.com>
@@ -32,25 +32,38 @@ exports.VERTICAL_NOTE_LETTERS_ASCII = exports.HORIZONTAL_NOTE_LETTERS_ASCII = ex
 exports.PIECE_COLOR_WHITE = 'w';
 exports.PIECE_COLOR_BLACK = 'b';
 exports.COLOR_NAMES = (_a = {},
-    _a[exports.PIECE_COLOR_BLACK] = 'black',
-    _a[exports.PIECE_COLOR_WHITE] = 'white',
+    _a[exports.PIECE_COLOR_BLACK] = 'ខ្មៅ',
+    _a[exports.PIECE_COLOR_WHITE] = 'ស',
     _a);
-exports.PIECE_TYPE_TOUK = 'b'; // Boat
-exports.PIECE_TYPE_SES = 'h'; // Horse
-exports.PIECE_TYPE_KOL = 'g'; // General
-exports.PIECE_TYPE_SDECH = 'k'; // King
-exports.PIECE_TYPE_NEANG = 'q'; // Queen
-exports.PIECE_TYPE_TREY = 'f'; // Fish
-exports.PIECE_TYPE_BORK = 't'; // Transform fish
-exports.PIECE_NAMES = (_b = {},
-    _b[exports.PIECE_TYPE_TOUK] = 'boat',
-    _b[exports.PIECE_TYPE_SES] = 'horse',
-    _b[exports.PIECE_TYPE_KOL] = 'general',
-    _b[exports.PIECE_TYPE_SDECH] = 'king',
-    _b[exports.PIECE_TYPE_NEANG] = 'queen',
-    _b[exports.PIECE_TYPE_TREY] = 'fish',
-    _b[exports.PIECE_TYPE_BORK] = 'transform fish',
+exports.COLOR_NAMES_ENGLISH = (_b = {},
+    _b[exports.PIECE_COLOR_BLACK] = 'black',
+    _b[exports.PIECE_COLOR_WHITE] = 'white',
     _b);
+exports.PIECE_TYPE_BOAT = 'b'; // Boat
+exports.PIECE_TYPE_HORSE = 'h'; // Horse
+exports.PIECE_TYPE_GENERAL = 'g'; // General
+exports.PIECE_TYPE_KING = 'k'; // King
+exports.PIECE_TYPE_QUEEN = 'q'; // Queen
+exports.PIECE_TYPE_FISH = 'f'; // Fish
+exports.PIECE_TYPE_TRANSFORM_FISH = 't'; // Transform fish
+exports.PIECE_NAMES = (_c = {},
+    _c[exports.PIECE_TYPE_BOAT] = 'ទូក',
+    _c[exports.PIECE_TYPE_HORSE] = 'សេះ',
+    _c[exports.PIECE_TYPE_GENERAL] = 'គោល',
+    _c[exports.PIECE_TYPE_KING] = 'ស្តេច',
+    _c[exports.PIECE_TYPE_QUEEN] = 'នាង',
+    _c[exports.PIECE_TYPE_FISH] = 'ត្រី',
+    _c[exports.PIECE_TYPE_TRANSFORM_FISH] = 'ត្រីបក',
+    _c);
+exports.PIECE_NAMES_ENGLISH = (_d = {},
+    _d[exports.PIECE_TYPE_BOAT] = 'boat',
+    _d[exports.PIECE_TYPE_HORSE] = 'horse',
+    _d[exports.PIECE_TYPE_GENERAL] = 'general',
+    _d[exports.PIECE_TYPE_KING] = 'king',
+    _d[exports.PIECE_TYPE_QUEEN] = 'queen',
+    _d[exports.PIECE_TYPE_FISH] = 'fish',
+    _d[exports.PIECE_TYPE_TRANSFORM_FISH] = 'transformed-fish',
+    _d);
 exports.EMPTY_PIECE = '.';
 exports.PIECE_COLOR_EMPTY = '.';
 exports.BOARD_SEPARATOR = '/';
@@ -63,5 +76,5 @@ exports.HORIZONTAL_NOTE_LETTERS = ['ក', 'ខ', 'គ', 'ឃ', 'ង', 'ច', '�
 exports.VERTICAL_NOTE_LETTERS = ['១', '២', '៣', '៤', '៥', '៦', '៧', '៨', '៩', '១០',
     '១១', '១២', '១៣', '១៤', '១៥', '១៦', '១៧', '១៨', '១៩', '២០',
     '២១', '២២', '២៣', '២៤', '២៥', '២៦', '២៧', '២៨', '២៩', '៣០'];
-exports.HORIZONTAL_NOTE_LETTERS_ASCII = 'abcdefgh';
-exports.VERTICAL_NOTE_LETTERS_ASCII = Array.from({ length: 30 }, function (_, i) { return "" + (i + 1); });
+exports.HORIZONTAL_NOTE_LETTERS_ENGLISH = 'abcdefgh';
+exports.VERTICAL_NOTE_LETTERS_ENGLISH = Array.from({ length: 30 }, function (_, i) { return "" + (i + 1); });

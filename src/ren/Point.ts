@@ -29,6 +29,8 @@ import {
     HORIZONTAL_CODE_LETTERS,
     ROW_NUMBER,
     CELL_COUNT,
+    HORIZONTAL_NOTE_LETTERS,
+    VERTICAL_NOTE_LETTERS,
 } from '../brain/index';
 
 export default class Point {
@@ -42,6 +44,12 @@ export default class Point {
     }
     get indexCode() {
         return `${this.h}${this.v}`;
+    }
+    get title() {
+        return `${HORIZONTAL_NOTE_LETTERS[this.x]}${VERTICAL_NOTE_LETTERS[this.y]}`;
+    }
+    get titleEnglish() {
+        return this.indexCode;
     }
     get h() {
         return HORIZONTAL_CODE_LETTERS[this.x];

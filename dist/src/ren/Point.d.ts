@@ -4,6 +4,8 @@ export default class Point {
     get index(): number;
     get graveyardIndex(): number;
     get indexCode(): string;
+    get title(): string;
+    get titleEnglish(): string;
     get h(): string;
     get v(): number;
     constructor(x: number, y: number);

@@ -28,17 +28,19 @@
 import {
     PIECE_COLOR_BLACK,
     PIECE_COLOR_WHITE,
-    PIECE_TYPE_BORK,
-    PIECE_TYPE_TREY,
-    PIECE_TYPE_TOUK,
-    PIECE_TYPE_SES,
-    PIECE_TYPE_KOL,
-    PIECE_TYPE_SDECH,
-    PIECE_TYPE_NEANG,
+    PIECE_TYPE_TRANSFORM_FISH,
+    PIECE_TYPE_FISH,
+    PIECE_TYPE_BOAT,
+    PIECE_TYPE_HORSE,
+    PIECE_TYPE_GENERAL,
+    PIECE_TYPE_KING,
+    PIECE_TYPE_QUEEN,
     EMPTY_PIECE,
     BOARD_SEPARATOR,
     PIECE_NAMES,
     COLOR_NAMES,
+    PIECE_NAMES_ENGLISH,
+    COLOR_NAMES_ENGLISH,
 } from '../brain/constant';
 import jsis from '../brain/jsis';
 
@@ -59,31 +61,34 @@ export default class Piece {
     }
 
     get title() {
-        return `${COLOR_NAMES[this.color]} ${PIECE_NAMES[this.type]}`;
+        return `${PIECE_NAMES[this.type]}${COLOR_NAMES[this.color]}`;
+    }
+    get titleEnglish() {
+        return `${COLOR_NAMES_ENGLISH[this.color]}-${PIECE_NAMES_ENGLISH[this.type]}`;
     }
     _isTypeEqual(type: string) {
         return this.type === type;
     }
     get isTypeKing() {
-        return this._isTypeEqual(PIECE_TYPE_SDECH);
+        return this._isTypeEqual(PIECE_TYPE_KING);
     }
     get isTypeQueen() {
-        return this._isTypeEqual(PIECE_TYPE_NEANG);
+        return this._isTypeEqual(PIECE_TYPE_QUEEN);
     }
     get isTypeBoat() {
-        return this._isTypeEqual(PIECE_TYPE_TOUK);
+        return this._isTypeEqual(PIECE_TYPE_BOAT);
     }
     get isTypeHorse() {
-        return this._isTypeEqual(PIECE_TYPE_SES);
+        return this._isTypeEqual(PIECE_TYPE_HORSE);
     }
     get isTypeGeneral() {
-        return this._isTypeEqual(PIECE_TYPE_KOL);
+        return this._isTypeEqual(PIECE_TYPE_GENERAL);
     }
     get isTypeFish() {
-        return this._isTypeEqual(PIECE_TYPE_TREY);
+        return this._isTypeEqual(PIECE_TYPE_FISH);
     }
     get isTypeTransformedFish() {
-        return this._isTypeEqual(PIECE_TYPE_BORK);
+        return this._isTypeEqual(PIECE_TYPE_TRANSFORM_FISH);
     }
     get isColorBlack() {
         return Piece.isBlackColor(this.color);
@@ -109,20 +114,20 @@ export default class Piece {
 
     get originPiece() {
         if (this.isTypeTransformedFish) {
-            return new Piece(PIECE_TYPE_TREY, this.color);
+            return new Piece(PIECE_TYPE_FISH, this.color);
         }
         return this;
     }
 
     static get pieceChars() {
         return [
-            PIECE_TYPE_TOUK,
-            PIECE_TYPE_SES,
-            PIECE_TYPE_KOL,
-            PIECE_TYPE_SDECH,
-            PIECE_TYPE_NEANG,
-            PIECE_TYPE_TREY,
-            PIECE_TYPE_BORK,
+            PIECE_TYPE_BOAT,
+            PIECE_TYPE_HORSE,
+            PIECE_TYPE_GENERAL,
+            PIECE_TYPE_KING,
+            PIECE_TYPE_QUEEN,
+            PIECE_TYPE_FISH,
+            PIECE_TYPE_TRANSFORM_FISH,
         ];
     }
     static get colorChars() {

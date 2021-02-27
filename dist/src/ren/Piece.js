@@ -70,7 +70,14 @@ var Piece = /** @class */ (function () {
     });
     Object.defineProperty(Piece.prototype, "title", {
         get: function () {
-            return constant_1.COLOR_NAMES[this.color] + " " + constant_1.PIECE_NAMES[this.type];
+            return "" + constant_1.PIECE_NAMES[this.type] + constant_1.COLOR_NAMES[this.color];
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(Piece.prototype, "titleEnglish", {
+        get: function () {
+            return constant_1.COLOR_NAMES_ENGLISH[this.color] + "-" + constant_1.PIECE_NAMES_ENGLISH[this.type];
         },
         enumerable: false,
         configurable: true
@@ -80,49 +87,49 @@ var Piece = /** @class */ (function () {
     };
     Object.defineProperty(Piece.prototype, "isTypeKing", {
         get: function () {
-            return this._isTypeEqual(constant_1.PIECE_TYPE_SDECH);
+            return this._isTypeEqual(constant_1.PIECE_TYPE_KING);
         },
         enumerable: false,
         configurable: true
     });
     Object.defineProperty(Piece.prototype, "isTypeQueen", {
         get: function () {
-            return this._isTypeEqual(constant_1.PIECE_TYPE_NEANG);
+            return this._isTypeEqual(constant_1.PIECE_TYPE_QUEEN);
         },
         enumerable: false,
         configurable: true
     });
     Object.defineProperty(Piece.prototype, "isTypeBoat", {
         get: function () {
-            return this._isTypeEqual(constant_1.PIECE_TYPE_TOUK);
+            return this._isTypeEqual(constant_1.PIECE_TYPE_BOAT);
         },
         enumerable: false,
         configurable: true
     });
     Object.defineProperty(Piece.prototype, "isTypeHorse", {
         get: function () {
-            return this._isTypeEqual(constant_1.PIECE_TYPE_SES);
+            return this._isTypeEqual(constant_1.PIECE_TYPE_HORSE);
         },
         enumerable: false,
         configurable: true
     });
     Object.defineProperty(Piece.prototype, "isTypeGeneral", {
         get: function () {
-            return this._isTypeEqual(constant_1.PIECE_TYPE_KOL);
+            return this._isTypeEqual(constant_1.PIECE_TYPE_GENERAL);
         },
         enumerable: false,
         configurable: true
     });
     Object.defineProperty(Piece.prototype, "isTypeFish", {
         get: function () {
-            return this._isTypeEqual(constant_1.PIECE_TYPE_TREY);
+            return this._isTypeEqual(constant_1.PIECE_TYPE_FISH);
         },
         enumerable: false,
         configurable: true
     });
     Object.defineProperty(Piece.prototype, "isTypeTransformedFish", {
         get: function () {
-            return this._isTypeEqual(constant_1.PIECE_TYPE_BORK);
+            return this._isTypeEqual(constant_1.PIECE_TYPE_TRANSFORM_FISH);
         },
         enumerable: false,
         configurable: true
@@ -152,7 +159,7 @@ var Piece = /** @class */ (function () {
     Object.defineProperty(Piece.prototype, "originPiece", {
         get: function () {
             if (this.isTypeTransformedFish) {
-                return new Piece(constant_1.PIECE_TYPE_TREY, this.color);
+                return new Piece(constant_1.PIECE_TYPE_FISH, this.color);
             }
             return this;
         },
@@ -162,13 +169,13 @@ var Piece = /** @class */ (function () {
     Object.defineProperty(Piece, "pieceChars", {
         get: function () {
             return [
-                constant_1.PIECE_TYPE_TOUK,
-                constant_1.PIECE_TYPE_SES,
-                constant_1.PIECE_TYPE_KOL,
-                constant_1.PIECE_TYPE_SDECH,
-                constant_1.PIECE_TYPE_NEANG,
-                constant_1.PIECE_TYPE_TREY,
-                constant_1.PIECE_TYPE_BORK,
+                constant_1.PIECE_TYPE_BOAT,
+                constant_1.PIECE_TYPE_HORSE,
+                constant_1.PIECE_TYPE_GENERAL,
+                constant_1.PIECE_TYPE_KING,
+                constant_1.PIECE_TYPE_QUEEN,
+                constant_1.PIECE_TYPE_FISH,
+                constant_1.PIECE_TYPE_TRANSFORM_FISH,
             ];
         },
         enumerable: false,

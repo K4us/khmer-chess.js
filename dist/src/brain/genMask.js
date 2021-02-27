@@ -30,13 +30,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var constant_1 = require("./constant");
 function genMask() {
     var mask = {};
-    mask[constant_1.PIECE_TYPE_TOUK] = [
+    mask[constant_1.PIECE_TYPE_BOAT] = [
         [0, 1], [0, 2], [0, 3], [0, 4], [0, 5], [0, 6], [0, 7], [0, 8],
         [0, -1], [0, -2], [0, -3], [0, -4], [0, -5], [0, -6], [0, -7], [0, -8],
         [1, 0], [2, 0], [3, 0], [4, 0], [5, 0], [6, 0], [7, 0], [8, 0],
         [-1, 0], [-2, 0], [-3, 0], [-4, 0], [-5, 0], [-6, 0], [-7, 0], [-8, 0],
     ];
-    mask[constant_1.PIECE_TYPE_SES] = [
+    mask[constant_1.PIECE_TYPE_HORSE] = [
         [-1, -2],
         [1, -2],
         [-2, -1],
@@ -46,26 +46,26 @@ function genMask() {
         [-2, 1],
         [2, 1],
     ];
-    mask[constant_1.PIECE_TYPE_NEANG] = [
+    mask[constant_1.PIECE_TYPE_QUEEN] = [
         [-1, -1],
         [1, -1],
         [-1, 1],
         [1, 1],
     ];
-    mask[constant_1.PIECE_TYPE_KOL] = mask[constant_1.PIECE_TYPE_NEANG].concat([
+    mask[constant_1.PIECE_TYPE_GENERAL] = mask[constant_1.PIECE_TYPE_QUEEN].concat([
         [0, 1],
     ]);
-    mask[constant_1.PIECE_TYPE_SDECH] = mask[constant_1.PIECE_TYPE_KOL].concat([
+    mask[constant_1.PIECE_TYPE_KING] = mask[constant_1.PIECE_TYPE_GENERAL].concat([
         [0, -1],
         [1, 0],
         [-1, 0],
     ]);
-    mask[constant_1.PIECE_TYPE_TREY] = [
+    mask[constant_1.PIECE_TYPE_FISH] = [
         [0, 1],
         [-1, 1],
         [1, 1],
     ];
-    mask[constant_1.PIECE_TYPE_BORK] = mask[constant_1.PIECE_TYPE_NEANG];
+    mask[constant_1.PIECE_TYPE_TRANSFORM_FISH] = mask[constant_1.PIECE_TYPE_QUEEN];
     return mask;
 }
 exports.default = genMask;

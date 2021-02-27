@@ -28,25 +28,38 @@
 export const PIECE_COLOR_WHITE = 'w';
 export const PIECE_COLOR_BLACK = 'b';
 export const COLOR_NAMES: { [key: string]: string } = {
+    [PIECE_COLOR_BLACK]: 'ខ្មៅ',
+    [PIECE_COLOR_WHITE]: 'ស',
+};
+export const COLOR_NAMES_ENGLISH: { [key: string]: string } = {
     [PIECE_COLOR_BLACK]: 'black',
     [PIECE_COLOR_WHITE]: 'white',
 };
 
-export const PIECE_TYPE_TOUK = 'b'; // Boat
-export const PIECE_TYPE_SES = 'h'; // Horse
-export const PIECE_TYPE_KOL = 'g'; // General
-export const PIECE_TYPE_SDECH = 'k'; // King
-export const PIECE_TYPE_NEANG = 'q'; // Queen
-export const PIECE_TYPE_TREY = 'f'; // Fish
-export const PIECE_TYPE_BORK = 't'; // Transform fish
+export const PIECE_TYPE_BOAT = 'b'; // Boat
+export const PIECE_TYPE_HORSE = 'h'; // Horse
+export const PIECE_TYPE_GENERAL = 'g'; // General
+export const PIECE_TYPE_KING = 'k'; // King
+export const PIECE_TYPE_QUEEN = 'q'; // Queen
+export const PIECE_TYPE_FISH = 'f'; // Fish
+export const PIECE_TYPE_TRANSFORM_FISH = 't'; // Transform fish
 export const PIECE_NAMES: { [key: string]: string } = {
-    [PIECE_TYPE_TOUK]: 'boat',
-    [PIECE_TYPE_SES]: 'horse',
-    [PIECE_TYPE_KOL]: 'general',
-    [PIECE_TYPE_SDECH]: 'king',
-    [PIECE_TYPE_NEANG]: 'queen',
-    [PIECE_TYPE_TREY]: 'fish',
-    [PIECE_TYPE_BORK]: 'transform fish',
+    [PIECE_TYPE_BOAT]: 'ទូក',
+    [PIECE_TYPE_HORSE]: 'សេះ',
+    [PIECE_TYPE_GENERAL]: 'គោល',
+    [PIECE_TYPE_KING]: 'ស្តេច',
+    [PIECE_TYPE_QUEEN]: 'នាង',
+    [PIECE_TYPE_FISH]: 'ត្រី',
+    [PIECE_TYPE_TRANSFORM_FISH]: 'ត្រីបក',
+};
+export const PIECE_NAMES_ENGLISH: { [key: string]: string } = {
+    [PIECE_TYPE_BOAT]: 'boat',
+    [PIECE_TYPE_HORSE]: 'horse',
+    [PIECE_TYPE_GENERAL]: 'general',
+    [PIECE_TYPE_KING]: 'king',
+    [PIECE_TYPE_QUEEN]: 'queen',
+    [PIECE_TYPE_FISH]: 'fish',
+    [PIECE_TYPE_TRANSFORM_FISH]: 'transformed-fish',
 };
 export const EMPTY_PIECE = '.';
 export const PIECE_COLOR_EMPTY = '.';
@@ -62,5 +75,5 @@ export const HORIZONTAL_NOTE_LETTERS = ['ក', 'ខ', 'គ', 'ឃ', 'ង', 'ច'
 export const VERTICAL_NOTE_LETTERS = ['១', '២', '៣', '៤', '៥', '៦', '៧', '៨', '៩', '១០',
     '១១', '១២', '១៣', '១៤', '១៥', '១៦', '១៧', '១៨', '១៩', '២០',
     '២១', '២២', '២៣', '២៤', '២៥', '២៦', '២៧', '២៨', '២៩', '៣០'];
-export const HORIZONTAL_NOTE_LETTERS_ASCII = 'abcdefgh';
-export const VERTICAL_NOTE_LETTERS_ASCII = Array.from({ length: 30 }, (_, i) => `${i + 1}`);
+export const HORIZONTAL_NOTE_LETTERS_ENGLISH = 'abcdefgh';
+export const VERTICAL_NOTE_LETTERS_ENGLISH = Array.from({ length: 30 }, (_, i) => `${i + 1}`);

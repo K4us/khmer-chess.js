@@ -41,18 +41,19 @@ export default class KhmerChess {
     static title = config.name;
     static version = config.version;
     renInstance: REN;
-    kpgnInstance = new KPGN();
+    kpgnInstance: KPGN;
     boardEventController: BoardEventController;
     constructor(renStr?: string) {
         this.renInstance = REN.fromString(renStr);
+        this.kpgnInstance = new KPGN(this.renInstance);
         this.boardEventController = new BoardEventController();
     }
 
-    load(renStr: string) {
+    loadRENStr(renStr: string) {
         this.renInstance = REN.fromString(renStr);
     }
 
-    reset() {
+    resetBoard() {
         this.renInstance = REN.fromString();
     }
 
@@ -91,7 +92,7 @@ export default class KhmerChess {
         return this.getWinColor() || this.isDraw();
     }
 
-    validateRen(renStr: string) {
+    validateRENStr(renStr: string) {
         try {
             REN.fromString(renStr);
             return { valid: true, error_number: 0, error: 'No errors.' };
@@ -100,7 +101,7 @@ export default class KhmerChess {
         }
     }
 
-    ren() {
+    getRENStr() {
         return this.renInstance.toString();
     }
 
@@ -117,27 +118,29 @@ export default class KhmerChess {
     }
 
     // Khmer Portable Game Notation <file-name>.kpgn.json
-    kpgn() {
+    getKPGN() {
         return this.kpgnInstance.toJson();
     }
 
     loadKpgn(kpgnJosn: any, options: any) {
-        this.kpgnInstance = new KPGN();
+        this.kpgnInstance = new KPGN(this.renInstance);
     }
 
-    ascii() {
+    drawAscii() {
         return asciiTable(this.renInstance);
     }
 
-    turn() {
+    getTurn() {
         return this.renInstance.turn;
     }
 
     move(moveFromIndex: number, moveToIndex: number): Move | null {
-        return this.renInstance.move(moveFromIndex, moveToIndex);
+        const move = this.renInstance.move(moveFromIndex, moveToIndex);
+        this.kpgnInstance.moves.push(move);
+        return move;
     }
 
-    undo() {
+    undoMove() {
         // TODO:
         return false;
     }
@@ -146,11 +149,11 @@ export default class KhmerChess {
      * Move all pieces to graveyard except kings
      * -> 4k3/8/8/8/8/8/8/3K4 w ---- -- -.- bhgqghbffffffffFFFFFFFFBHGQGHB
      */
-    clear() {
+    clearBoard() {
         this.renInstance = REN.fromString('4k3/8/8/8/8/8/8/3K4 w ---- -- -.- bhgqghbffffffffFFFFFFFFBHGQGHB');
     }
 
-    history() {
+    getHistories() {
         return this.kpgnInstance.moves;
     }
 

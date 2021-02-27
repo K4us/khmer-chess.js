@@ -46,7 +46,7 @@ import { PieceIndex } from '.';
 
 /**
  * Raksa-Eng Notation
- * fen: <pieces on board> <turn w|b> <king&queen moved ----|SNsn> <king attack --|Kk> <countdown -.-|-.4> <pieces in graveyard>
+ * ren: <pieces on board> <turn w|b> <king&queen moved ----|SNsn> <king attack --|Kk> <countdown -.-|-.4> <pieces in graveyard>
  */
 export type RENPropType = {
     boardStr: string;
@@ -64,7 +64,13 @@ export default class REN {
     countdown: CountDown;
     graveyard: Graveyard;
     moveHelper: MoveHelper;
-    constructor({ boardStr,
+    constructor(renProps: RENPropType) {
+        this.moveHelper = new MoveHelper();
+        this.init(renProps);
+    }
+
+    init({
+        boardStr,
         turnStr,
         kqMovedStr,
         kAttackedStr,
@@ -107,18 +113,18 @@ export default class REN {
         return str;
     }
 
-    static fromString(fen?: string) {
-        if (jsis.isUndefined(fen)) {
-            fen = DEFAULT_BOARD_STR;
+    static fromString(renStr?: string) {
+        if (jsis.isUndefined(renStr)) {
+            renStr = DEFAULT_BOARD_STR;
         }
-        const fenArr = fen.split(' ');
+        const renArr = renStr.split(' ');
         return new REN({
-            boardStr: fenArr[0],
-            turnStr: fenArr[1],
-            kqMovedStr: fenArr[2],
-            kAttackedStr: fenArr[3],
-            countdownStr: fenArr[4],
-            graveyardStr: fenArr[5],
+            boardStr: renArr[0],
+            turnStr: renArr[1],
+            kqMovedStr: renArr[2],
+            kAttackedStr: renArr[3],
+            countdownStr: renArr[4],
+            graveyardStr: renArr[5],
         });
     }
 

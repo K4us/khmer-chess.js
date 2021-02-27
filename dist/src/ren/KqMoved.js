@@ -43,17 +43,17 @@ var KqMoved = /** @class */ (function () {
         this.blackKing = false;
         this.blackQueen = false;
         if (kqMovedStr) {
-            this.whiteKing = !!~kqMovedStr.indexOf(Piece_1.default.toWhiteCharCode(index_1.PIECE_TYPE_SDECH));
-            this.whiteQueen = !!~kqMovedStr.indexOf(Piece_1.default.toWhiteCharCode(index_1.PIECE_TYPE_NEANG));
-            this.blackKing = !!~kqMovedStr.indexOf(index_1.PIECE_TYPE_SDECH);
-            this.blackQueen = !!~kqMovedStr.indexOf(index_1.PIECE_TYPE_NEANG);
+            this.whiteKing = !!~kqMovedStr.indexOf(Piece_1.default.toWhiteCharCode(index_1.PIECE_TYPE_KING));
+            this.whiteQueen = !!~kqMovedStr.indexOf(Piece_1.default.toWhiteCharCode(index_1.PIECE_TYPE_QUEEN));
+            this.blackKing = !!~kqMovedStr.indexOf(index_1.PIECE_TYPE_KING);
+            this.blackQueen = !!~kqMovedStr.indexOf(index_1.PIECE_TYPE_QUEEN);
         }
     }
     KqMoved.prototype.toString = function () {
-        var str = "" + (this.whiteKing ? Piece_1.default.toWhiteCharCode(index_1.PIECE_TYPE_SDECH) : constant_1.NOT_SET);
-        str += "" + (this.whiteQueen ? Piece_1.default.toWhiteCharCode(index_1.PIECE_TYPE_NEANG) : constant_1.NOT_SET);
-        str += "" + (this.blackKing ? index_1.PIECE_TYPE_SDECH : constant_1.NOT_SET);
-        str += "" + (this.blackQueen ? index_1.PIECE_TYPE_NEANG : constant_1.NOT_SET);
+        var str = "" + (this.whiteKing ? Piece_1.default.toWhiteCharCode(index_1.PIECE_TYPE_KING) : constant_1.NOT_SET);
+        str += "" + (this.whiteQueen ? Piece_1.default.toWhiteCharCode(index_1.PIECE_TYPE_QUEEN) : constant_1.NOT_SET);
+        str += "" + (this.blackKing ? index_1.PIECE_TYPE_KING : constant_1.NOT_SET);
+        str += "" + (this.blackQueen ? index_1.PIECE_TYPE_QUEEN : constant_1.NOT_SET);
         return str;
     };
     return KqMoved;

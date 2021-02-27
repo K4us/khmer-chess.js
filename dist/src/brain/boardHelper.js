@@ -137,7 +137,7 @@ var BoardHelper = /** @class */ (function () {
         return piecesString;
     };
     BoardHelper.prototype.getKingWillInDanger = function (color, piecesString) {
-        var kingPos = piecesString.indexOf(new Piece_1.default(constant_1.PIECE_TYPE_SDECH, color).pieceCharCode);
+        var kingPos = piecesString.indexOf(new Piece_1.default(constant_1.PIECE_TYPE_KING, color).pieceCharCode);
         var n = piecesString.length;
         for (var i = 0; i < n; i++) {
             var p = this.getPieceByIndex(i, piecesString);
@@ -154,7 +154,7 @@ var BoardHelper = /** @class */ (function () {
         return null;
     };
     BoardHelper.prototype.getKingInDanger = function (color, piecesString) {
-        var kingPos = piecesString.indexOf(new Piece_1.default(constant_1.PIECE_TYPE_SDECH, color).pieceCharCode);
+        var kingPos = piecesString.indexOf(new Piece_1.default(constant_1.PIECE_TYPE_KING, color).pieceCharCode);
         var n = piecesString.length;
         for (var i = 0; i < n; i++) {
             var p = this.getPieceByIndex(i, piecesString);
@@ -270,19 +270,19 @@ var BoardHelper = /** @class */ (function () {
         var weaker = pieceAll[color];
         var stronger = pieceAll[Piece_1.default.oppositeColor(color)];
         if (weaker.length === 1 && stronger.length > 1) {
-            if (!charExist(stronger, constant_1.PIECE_TYPE_TREY)) {
+            if (!charExist(stronger, constant_1.PIECE_TYPE_FISH)) {
                 var count = 64;
-                var toukCount = countChar(stronger, constant_1.PIECE_TYPE_TOUK);
+                var toukCount = countChar(stronger, constant_1.PIECE_TYPE_BOAT);
                 if (toukCount) {
                     count = toukCount > 1 ? 8 : 16;
                 }
-                else if (countChar(stronger, constant_1.PIECE_TYPE_KOL) > 1) {
+                else if (countChar(stronger, constant_1.PIECE_TYPE_GENERAL) > 1) {
                     count = 22;
                 }
-                else if (countChar(stronger, constant_1.PIECE_TYPE_SES) > 1) {
+                else if (countChar(stronger, constant_1.PIECE_TYPE_HORSE) > 1) {
                     count = 32;
                 }
-                else if (countChar(stronger, constant_1.PIECE_TYPE_KOL)) {
+                else if (countChar(stronger, constant_1.PIECE_TYPE_GENERAL)) {
                     count = 44;
                 }
                 return [stronger.length + 1, count];

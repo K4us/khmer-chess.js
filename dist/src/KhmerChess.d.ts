@@ -12,8 +12,8 @@ export default class KhmerChess {
     kpgnInstance: KPGN;
     boardEventController: BoardEventController;
     constructor(renStr?: string);
-    load(renStr: string): void;
-    reset(): void;
+    loadRENStr(renStr: string): void;
+    resetBoard(): void;
     getCanMoves(): Move[];
     getCanMovePointsByPoint(point: Point): Point[];
     getAttacker(): PieceIndex | null;
@@ -22,16 +22,16 @@ export default class KhmerChess {
     isDraw(): string;
     getDrawCountColor(): string | null;
     gameOver(): string;
-    validateRen(renStr: string): {
+    validateRENStr(renStr: string): {
         valid: boolean;
         error_number: number;
         error: any;
     };
-    ren(): string;
+    getRENStr(): string;
     get piecesInBoardMultiArray(): import("./ren").Piece[][];
     get piecesInBoard(): import("./ren").Piece[];
     get piecesInGraveyard(): import("./ren").Piece[];
-    kpgn(): {
+    getKPGN(): {
         event: string;
         date: string;
         location: string;
@@ -70,16 +70,16 @@ export default class KhmerChess {
         };
     };
     loadKpgn(kpgnJosn: any, options: any): void;
-    ascii(): string;
-    turn(): string;
+    drawAscii(): string;
+    getTurn(): string;
     move(moveFromIndex: number, moveToIndex: number): Move | null;
-    undo(): boolean;
+    undoMove(): boolean;
     /**
      * Move all pieces to graveyard except kings
      * -> 4k3/8/8/8/8/8/8/3K4 w ---- -- -.- bhgqghbffffffffFFFFFFFFBHGQGHB
      */
-    clear(): void;
-    history(): Move[];
+    clearBoard(): void;
+    getHistories(): Move[];
     checkBoardEvent(): void;
     addBoardEventListener(listener: ListenerType<BoardEvent>): void;
     removeBoardEventListener(listener: ListenerType<BoardEvent>): void;

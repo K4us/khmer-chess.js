@@ -5,6 +5,7 @@ export default class Piece {
     get pieceCharCode(): string;
     get pieceCharCodeWhite(): string;
     get title(): string;
+    get titleEnglish(): string;
     _isTypeEqual(type: string): boolean;
     get isTypeKing(): boolean;
     get isTypeQueen(): boolean;

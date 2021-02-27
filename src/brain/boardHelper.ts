@@ -32,11 +32,11 @@ import {
     PIECE_COLOR_BLACK,
     EMPTY_PIECE,
     ROW_NUMBER,
-    PIECE_TYPE_TREY,
-    PIECE_TYPE_TOUK,
-    PIECE_TYPE_KOL,
-    PIECE_TYPE_SES,
-    PIECE_TYPE_SDECH,
+    PIECE_TYPE_FISH,
+    PIECE_TYPE_BOAT,
+    PIECE_TYPE_GENERAL,
+    PIECE_TYPE_HORSE,
+    PIECE_TYPE_KING,
     CELL_COUNT,
 } from './constant';
 import Point from '../ren/Point';
@@ -142,7 +142,7 @@ class BoardHelper {
         return piecesString;
     }
     getKingWillInDanger(color: string, piecesString: string) {
-        const kingPos = piecesString.indexOf(new Piece(PIECE_TYPE_SDECH, color).pieceCharCode);
+        const kingPos = piecesString.indexOf(new Piece(PIECE_TYPE_KING, color).pieceCharCode);
         const n = piecesString.length;
         for (let i = 0; i < n; i++) {
             const p = this.getPieceByIndex(i, piecesString);
@@ -159,7 +159,7 @@ class BoardHelper {
         return null;
     }
     getKingInDanger(color: string, piecesString: string): Point[] | null {
-        const kingPos = piecesString.indexOf(new Piece(PIECE_TYPE_SDECH, color).pieceCharCode);
+        const kingPos = piecesString.indexOf(new Piece(PIECE_TYPE_KING, color).pieceCharCode);
         const n = piecesString.length;
         for (let i = 0; i < n; i++) {
             const p = this.getPieceByIndex(i, piecesString);
@@ -274,16 +274,16 @@ class BoardHelper {
         const weaker = pieceAll[color];
         const stronger = pieceAll[Piece.oppositeColor(color)];
         if (weaker.length === 1 && stronger.length > 1) {
-            if (!charExist(stronger, PIECE_TYPE_TREY)) {
+            if (!charExist(stronger, PIECE_TYPE_FISH)) {
                 let count = 64;
-                const toukCount = countChar(stronger, PIECE_TYPE_TOUK);
+                const toukCount = countChar(stronger, PIECE_TYPE_BOAT);
                 if (toukCount) {
                     count = toukCount > 1 ? 8 : 16;
-                } else if (countChar(stronger, PIECE_TYPE_KOL) > 1) {
+                } else if (countChar(stronger, PIECE_TYPE_GENERAL) > 1) {
                     count = 22;
-                } else if (countChar(stronger, PIECE_TYPE_SES) > 1) {
+                } else if (countChar(stronger, PIECE_TYPE_HORSE) > 1) {
                     count = 32;
-                } else if (countChar(stronger, PIECE_TYPE_KOL)) {
+                } else if (countChar(stronger, PIECE_TYPE_GENERAL)) {
                     count = 44;
                 }
                 return [stronger.length + 1, count];

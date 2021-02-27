@@ -27,8 +27,8 @@
  *---------------------------------------------------------------------------- */
 import { NOT_SET } from './constant';
 import {
-    PIECE_TYPE_NEANG,
-    PIECE_TYPE_SDECH,
+    PIECE_TYPE_QUEEN,
+    PIECE_TYPE_KING,
 } from '../brain/index';
 import Piece from './Piece';
 
@@ -42,18 +42,18 @@ export default class KqMoved {
     blackQueen = false;
     constructor(kqMovedStr?: string) {
         if (kqMovedStr) {
-            this.whiteKing = !!~kqMovedStr.indexOf(Piece.toWhiteCharCode(PIECE_TYPE_SDECH));
-            this.whiteQueen = !!~kqMovedStr.indexOf(Piece.toWhiteCharCode(PIECE_TYPE_NEANG));
-            this.blackKing = !!~kqMovedStr.indexOf(PIECE_TYPE_SDECH);
-            this.blackQueen = !!~kqMovedStr.indexOf(PIECE_TYPE_NEANG);
+            this.whiteKing = !!~kqMovedStr.indexOf(Piece.toWhiteCharCode(PIECE_TYPE_KING));
+            this.whiteQueen = !!~kqMovedStr.indexOf(Piece.toWhiteCharCode(PIECE_TYPE_QUEEN));
+            this.blackKing = !!~kqMovedStr.indexOf(PIECE_TYPE_KING);
+            this.blackQueen = !!~kqMovedStr.indexOf(PIECE_TYPE_QUEEN);
         }
     }
 
     toString() {
-        let str = `${this.whiteKing ? Piece.toWhiteCharCode(PIECE_TYPE_SDECH) : NOT_SET}`;
-        str += `${this.whiteQueen ? Piece.toWhiteCharCode(PIECE_TYPE_NEANG) : NOT_SET}`;
-        str += `${this.blackKing ? PIECE_TYPE_SDECH : NOT_SET}`;
-        str += `${this.blackQueen ? PIECE_TYPE_NEANG : NOT_SET}`;
+        let str = `${this.whiteKing ? Piece.toWhiteCharCode(PIECE_TYPE_KING) : NOT_SET}`;
+        str += `${this.whiteQueen ? Piece.toWhiteCharCode(PIECE_TYPE_QUEEN) : NOT_SET}`;
+        str += `${this.blackKing ? PIECE_TYPE_KING : NOT_SET}`;
+        str += `${this.blackQueen ? PIECE_TYPE_QUEEN : NOT_SET}`;
         return str;
     }
 }

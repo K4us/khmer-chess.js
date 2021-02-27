@@ -26,24 +26,24 @@
  *
  *---------------------------------------------------------------------------- */
 import {
-    PIECE_TYPE_TOUK,
-    PIECE_TYPE_SES,
-    PIECE_TYPE_SDECH,
-    PIECE_TYPE_KOL,
-    PIECE_TYPE_TREY,
-    PIECE_TYPE_BORK,
-    PIECE_TYPE_NEANG,
+    PIECE_TYPE_BOAT,
+    PIECE_TYPE_HORSE,
+    PIECE_TYPE_KING,
+    PIECE_TYPE_GENERAL,
+    PIECE_TYPE_FISH,
+    PIECE_TYPE_TRANSFORM_FISH,
+    PIECE_TYPE_QUEEN,
 } from './constant';
 
 export default function genMask() {
     const mask: { [key: string]: number[][] } = {};
-    mask[PIECE_TYPE_TOUK] = [
+    mask[PIECE_TYPE_BOAT] = [
         [0, 1], [0, 2], [0, 3], [0, 4], [0, 5], [0, 6], [0, 7], [0, 8],
         [0, -1], [0, -2], [0, -3], [0, -4], [0, -5], [0, -6], [0, -7], [0, -8],
         [1, 0], [2, 0], [3, 0], [4, 0], [5, 0], [6, 0], [7, 0], [8, 0],
         [-1, 0], [-2, 0], [-3, 0], [-4, 0], [-5, 0], [-6, 0], [-7, 0], [-8, 0],
     ];
-    mask[PIECE_TYPE_SES] = [
+    mask[PIECE_TYPE_HORSE] = [
         [-1, -2],
         [1, -2],
         [-2, -1],
@@ -53,25 +53,25 @@ export default function genMask() {
         [-2, 1],
         [2, 1],
     ];
-    mask[PIECE_TYPE_NEANG] = [
+    mask[PIECE_TYPE_QUEEN] = [
         [-1, -1],
         [1, -1],
         [-1, 1],
         [1, 1],
     ];
-    mask[PIECE_TYPE_KOL] = mask[PIECE_TYPE_NEANG].concat([
+    mask[PIECE_TYPE_GENERAL] = mask[PIECE_TYPE_QUEEN].concat([
         [0, 1],
     ]);
-    mask[PIECE_TYPE_SDECH] = mask[PIECE_TYPE_KOL].concat([
+    mask[PIECE_TYPE_KING] = mask[PIECE_TYPE_GENERAL].concat([
         [0, -1],
         [1, 0],
         [-1, 0],
     ]);
-    mask[PIECE_TYPE_TREY] = [
+    mask[PIECE_TYPE_FISH] = [
         [0, 1],
         [-1, 1],
         [1, 1],
     ];
-    mask[PIECE_TYPE_BORK] = mask[PIECE_TYPE_NEANG];
+    mask[PIECE_TYPE_TRANSFORM_FISH] = mask[PIECE_TYPE_QUEEN];
     return mask;
 }

@@ -46,7 +46,7 @@ var Move = /** @class */ (function () {
         this.captured = captured || null;
         if (brain_1.boardHelper.isUpgradable(piece, moveTo)) {
             this.isUpgrading = true;
-            piece.type = brain_1.PIECE_TYPE_BORK;
+            piece.type = brain_1.PIECE_TYPE_TRANSFORM_FISH;
         }
     }
     // Spec: Fc5d6xf => White fish (F) moved from c5 to d6 killed black fish (f)
@@ -95,6 +95,24 @@ var Move = /** @class */ (function () {
             isJumping: this.isJumping,
             capturedPiece: this.captured ? this.captured.piece.pieceCharCode : null,
         };
+    };
+    Move.prototype.getMessage = function (isEnglish) {
+        if (isEnglish) {
+            var captured = '';
+            if (this.captured) {
+                captured = " captures " + this.captured.piece.titleEnglish;
+            }
+            var upgrade = this.isUpgrading ? 'transforms' : '';
+            return this.piece.titleEnglish + " moved from " + this.moveFrom.titleEnglish + " to " + this.moveTo.titleEnglish + " " + upgrade + captured;
+        }
+        else {
+            var captured = '';
+            if (this.captured) {
+                captured = " \u179F\u17CA\u17B8" + this.captured.piece.title;
+            }
+            var upgrade = this.isUpgrading ? 'បក' : '';
+            return this.piece.title + " \u178A\u17BE\u179A\u200B\u1796\u17B8 " + this.moveFrom.title + " \u1791\u17C5 " + this.moveTo.title + " " + upgrade + captured;
+        }
     };
     return Move;
 }());

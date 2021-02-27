@@ -10,7 +10,7 @@ import Piece from './Piece';
 import { PieceIndex } from '.';
 /**
  * Raksa-Eng Notation
- * fen: <pieces on board> <turn w|b> <king&queen moved ----|SNsn> <king attack --|Kk> <countdown -.-|-.4> <pieces in graveyard>
+ * ren: <pieces on board> <turn w|b> <king&queen moved ----|SNsn> <king attack --|Kk> <countdown -.-|-.4> <pieces in graveyard>
  */
 export declare type RENPropType = {
     boardStr: string;
@@ -28,9 +28,10 @@ export default class REN {
     countdown: CountDown;
     graveyard: Graveyard;
     moveHelper: MoveHelper;
-    constructor({ boardStr, turnStr, kqMovedStr, kAttackedStr, countdownStr, graveyardStr }: RENPropType);
+    constructor(renProps: RENPropType);
+    init({ boardStr, turnStr, kqMovedStr, kAttackedStr, countdownStr, graveyardStr }: RENPropType): void;
     isInvalidPieceCount(): string | false;
-    static fromString(fen?: string): REN;
+    static fromString(renStr?: string): REN;
     move(moveFromIndex: number, moveToIndex: number): Move | null;
     toString(): string;
     get isQueenMoved(): boolean;

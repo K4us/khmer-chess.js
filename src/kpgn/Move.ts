@@ -26,7 +26,7 @@
  *
  *---------------------------------------------------------------------------- */
 
-import { boardHelper, PIECE_TYPE_BORK } from '../brain';
+import { boardHelper, PIECE_TYPE_TRANSFORM_FISH } from '../brain';
 import {
     PIECE_FLAG_JUMP,
     PIECE_FLAG_KILL,
@@ -62,7 +62,7 @@ export default class Move implements MovePropType {
         this.captured = captured || null;
         if (boardHelper.isUpgradable(piece, moveTo)) {
             this.isUpgrading = true;
-            piece.type = PIECE_TYPE_BORK;
+            piece.type = PIECE_TYPE_TRANSFORM_FISH;
         }
     }
 
@@ -112,5 +112,23 @@ export default class Move implements MovePropType {
             isJumping: this.isJumping,
             capturedPiece: this.captured ? this.captured.piece.pieceCharCode : null,
         };
+    }
+
+    getMessage(isEnglish?: boolean) {
+        if (isEnglish) {
+            let captured = '';
+            if (this.captured) {
+                captured = ` captures ${this.captured.piece.titleEnglish}`;
+            }
+            const upgrade = this.isUpgrading ? 'transforms' : '';
+            return `${this.piece.titleEnglish} moved from ${this.moveFrom.titleEnglish} to ${this.moveTo.titleEnglish} ${upgrade}${captured}`;
+        } else {
+            let captured = '';
+            if (this.captured) {
+                captured = ` ស៊ី${this.captured.piece.title}`;
+            }
+            const upgrade = this.isUpgrading ? 'បក' : '';
+            return `${this.piece.title} ដើរ​ពី ${this.moveFrom.title} ទៅ ${this.moveTo.title} ${upgrade}${captured}`;
+        }
     }
 }

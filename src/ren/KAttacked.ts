@@ -26,7 +26,7 @@
  *
  *---------------------------------------------------------------------------- */
 import {
-    PIECE_TYPE_SDECH,
+    PIECE_TYPE_KING,
 } from '../brain/index';
 import { NOT_SET } from './constant';
 import Piece from './Piece';
@@ -39,14 +39,14 @@ export default class KAttacked {
     blackKing = false;
     constructor(kAttackedStr?: string) {
         if (kAttackedStr) {
-            this.whiteKing = !!~kAttackedStr.indexOf(Piece.toWhiteCharCode(PIECE_TYPE_SDECH));
-            this.blackKing = !!~kAttackedStr.indexOf(PIECE_TYPE_SDECH);
+            this.whiteKing = !!~kAttackedStr.indexOf(Piece.toWhiteCharCode(PIECE_TYPE_KING));
+            this.blackKing = !!~kAttackedStr.indexOf(PIECE_TYPE_KING);
         }
     }
 
     toString() {
-        let str = `${this.whiteKing ? Piece.toWhiteCharCode(PIECE_TYPE_SDECH) : NOT_SET}`;
-        str += `${this.blackKing ? PIECE_TYPE_SDECH : NOT_SET}`;
+        let str = `${this.whiteKing ? Piece.toWhiteCharCode(PIECE_TYPE_KING) : NOT_SET}`;
+        str += `${this.blackKing ? PIECE_TYPE_KING : NOT_SET}`;
         return str;
     }
 }

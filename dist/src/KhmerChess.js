@@ -58,14 +58,14 @@ var constant_1 = require("./ren/constant");
 var REN_1 = __importDefault(require("./ren/REN"));
 var KhmerChess = /** @class */ (function () {
     function KhmerChess(renStr) {
-        this.kpgnInstance = new KPGN_1.default();
         this.renInstance = REN_1.default.fromString(renStr);
+        this.kpgnInstance = new KPGN_1.default(this.renInstance);
         this.boardEventController = new BoardEventController_1.default();
     }
-    KhmerChess.prototype.load = function (renStr) {
+    KhmerChess.prototype.loadRENStr = function (renStr) {
         this.renInstance = REN_1.default.fromString(renStr);
     };
-    KhmerChess.prototype.reset = function () {
+    KhmerChess.prototype.resetBoard = function () {
         this.renInstance = REN_1.default.fromString();
     };
     KhmerChess.prototype.getCanMoves = function () {
@@ -96,7 +96,7 @@ var KhmerChess = /** @class */ (function () {
     KhmerChess.prototype.gameOver = function () {
         return this.getWinColor() || this.isDraw();
     };
-    KhmerChess.prototype.validateRen = function (renStr) {
+    KhmerChess.prototype.validateRENStr = function (renStr) {
         try {
             REN_1.default.fromString(renStr);
             return { valid: true, error_number: 0, error: 'No errors.' };
@@ -105,7 +105,7 @@ var KhmerChess = /** @class */ (function () {
             return { valid: false, error_number: 1, error: error.message };
         }
     };
-    KhmerChess.prototype.ren = function () {
+    KhmerChess.prototype.getRENStr = function () {
         return this.renInstance.toString();
     };
     Object.defineProperty(KhmerChess.prototype, "piecesInBoardMultiArray", {
@@ -130,22 +130,24 @@ var KhmerChess = /** @class */ (function () {
         configurable: true
     });
     // Khmer Portable Game Notation <file-name>.kpgn.json
-    KhmerChess.prototype.kpgn = function () {
+    KhmerChess.prototype.getKPGN = function () {
         return this.kpgnInstance.toJson();
     };
     KhmerChess.prototype.loadKpgn = function (kpgnJosn, options) {
-        this.kpgnInstance = new KPGN_1.default();
+        this.kpgnInstance = new KPGN_1.default(this.renInstance);
     };
-    KhmerChess.prototype.ascii = function () {
+    KhmerChess.prototype.drawAscii = function () {
         return table_1.default(this.renInstance);
     };
-    KhmerChess.prototype.turn = function () {
+    KhmerChess.prototype.getTurn = function () {
         return this.renInstance.turn;
     };
     KhmerChess.prototype.move = function (moveFromIndex, moveToIndex) {
-        return this.renInstance.move(moveFromIndex, moveToIndex);
+        var move = this.renInstance.move(moveFromIndex, moveToIndex);
+        this.kpgnInstance.moves.push(move);
+        return move;
     };
-    KhmerChess.prototype.undo = function () {
+    KhmerChess.prototype.undoMove = function () {
         // TODO:
         return false;
     };
@@ -153,10 +155,10 @@ var KhmerChess = /** @class */ (function () {
      * Move all pieces to graveyard except kings
      * -> 4k3/8/8/8/8/8/8/3K4 w ---- -- -.- bhgqghbffffffffFFFFFFFFBHGQGHB
      */
-    KhmerChess.prototype.clear = function () {
+    KhmerChess.prototype.clearBoard = function () {
         this.renInstance = REN_1.default.fromString('4k3/8/8/8/8/8/8/3K4 w ---- -- -.- bhgqghbffffffffFFFFFFFFBHGQGHB');
     };
-    KhmerChess.prototype.history = function () {
+    KhmerChess.prototype.getHistories = function () {
         return this.kpgnInstance.moves;
     };
     KhmerChess.prototype.checkBoardEvent = function () {

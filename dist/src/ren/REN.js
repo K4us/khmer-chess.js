@@ -43,7 +43,11 @@ var Point_1 = __importDefault(require("./Point"));
 var Piece_1 = __importDefault(require("./Piece"));
 var _1 = require(".");
 var REN = /** @class */ (function () {
-    function REN(_a) {
+    function REN(renProps) {
+        this.moveHelper = new index_1.MoveHelper();
+        this.init(renProps);
+    }
+    REN.prototype.init = function (_a) {
         var boardStr = _a.boardStr, turnStr = _a.turnStr, kqMovedStr = _a.kqMovedStr, kAttackedStr = _a.kAttackedStr, countdownStr = _a.countdownStr, graveyardStr = _a.graveyardStr;
         this.board = new Board_1.default(boardStr);
         this.turn = turnStr;
@@ -58,7 +62,7 @@ var REN = /** @class */ (function () {
             throw new Error(msg);
         }
         this.moveHelper = new index_1.MoveHelper();
-    }
+    };
     REN.prototype.isInvalidPieceCount = function () {
         var pieces = this.board.pieceIndices.map(function (pos) {
             return pos.piece;
@@ -80,18 +84,18 @@ var REN = /** @class */ (function () {
         }
         return str;
     };
-    REN.fromString = function (fen) {
-        if (index_1.jsis.isUndefined(fen)) {
-            fen = constant_1.DEFAULT_BOARD_STR;
+    REN.fromString = function (renStr) {
+        if (index_1.jsis.isUndefined(renStr)) {
+            renStr = constant_1.DEFAULT_BOARD_STR;
         }
-        var fenArr = fen.split(' ');
+        var renArr = renStr.split(' ');
         return new REN({
-            boardStr: fenArr[0],
-            turnStr: fenArr[1],
-            kqMovedStr: fenArr[2],
-            kAttackedStr: fenArr[3],
-            countdownStr: fenArr[4],
-            graveyardStr: fenArr[5],
+            boardStr: renArr[0],
+            turnStr: renArr[1],
+            kqMovedStr: renArr[2],
+            kAttackedStr: renArr[3],
+            countdownStr: renArr[4],
+            graveyardStr: renArr[5],
         });
     };
     REN.prototype.move = function (moveFromIndex, moveToIndex) {

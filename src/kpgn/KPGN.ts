@@ -52,10 +52,12 @@ export default class KPGN {
     };
 
     moves: Move[];
-    ren: REN;
+    renInstant: REN;
     timer: Timer;
 
-    constructor() {
+    constructor(renInstant: REN) {
+        this.renInstant = renInstant;
+        this.moves = [];
     }
 
     toJson() {
@@ -75,7 +77,7 @@ export default class KPGN {
                 white: this.result.white.toJson(),
             },
             moves: this.moves.map((m) => m.toJson()),
-            ren: this.ren.toString(),
+            ren: this.renInstant.toString(),
             timer: this.timer.toJson(),
         };
     }

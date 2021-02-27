@@ -54,6 +54,20 @@ var Point = /** @class */ (function () {
         enumerable: false,
         configurable: true
     });
+    Object.defineProperty(Point.prototype, "title", {
+        get: function () {
+            return "" + index_1.HORIZONTAL_NOTE_LETTERS[this.x] + index_1.VERTICAL_NOTE_LETTERS[this.y];
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(Point.prototype, "titleEnglish", {
+        get: function () {
+            return this.indexCode;
+        },
+        enumerable: false,
+        configurable: true
+    });
     Object.defineProperty(Point.prototype, "h", {
         get: function () {
             return index_1.HORIZONTAL_CODE_LETTERS[this.x];
