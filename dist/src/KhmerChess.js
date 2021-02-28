@@ -139,9 +139,16 @@ var KhmerChess = /** @class */ (function () {
     KhmerChess.prototype.drawAscii = function () {
         return table_1.default(this.renInstance);
     };
-    KhmerChess.prototype.getTurn = function () {
-        return this.renInstance.turn;
-    };
+    Object.defineProperty(KhmerChess.prototype, "turn", {
+        get: function () {
+            return this.renInstance.turn;
+        },
+        set: function (turn) {
+            this.renInstance.turn = turn;
+        },
+        enumerable: false,
+        configurable: true
+    });
     KhmerChess.prototype.move = function (moveFromIndex, moveToIndex) {
         var move = this.renInstance.move(moveFromIndex, moveToIndex);
         this.kpgnInstance.moves.push(move);

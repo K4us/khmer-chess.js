@@ -71,7 +71,8 @@ export default class KhmerChess {
     };
     loadKpgn(kpgnJosn: any, options: any): void;
     drawAscii(): string;
-    getTurn(): string;
+    get turn(): string;
+    set turn(turn: string);
     move(moveFromIndex: number, moveToIndex: number): Move | null;
     undoMove(): boolean;
     /**

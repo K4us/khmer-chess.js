@@ -130,8 +130,12 @@ export default class KhmerChess {
         return asciiTable(this.renInstance);
     }
 
-    getTurn() {
+    get turn() {
         return this.renInstance.turn;
+    }
+
+    set turn(turn: string) {
+        this.renInstance.turn = turn;
     }
 
     move(moveFromIndex: number, moveToIndex: number): Move | null {
