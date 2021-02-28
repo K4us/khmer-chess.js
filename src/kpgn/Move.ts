@@ -120,15 +120,15 @@ export default class Move implements MovePropType {
             if (this.captured) {
                 captured = ` captures ${this.captured.piece.titleEnglish}`;
             }
-            const upgrade = this.isUpgrading ? 'transforms' : '';
-            return `${this.piece.titleEnglish} moved from ${this.moveFrom.titleEnglish} to ${this.moveTo.titleEnglish} ${upgrade}${captured}`;
+            const upgrade = this.isUpgrading ? ' transforms' : '';
+            return `${this.piece.titleEnglish} moved from ${this.moveFrom.titleEnglish} to ${this.moveTo.titleEnglish}${upgrade}${captured}`;
         } else {
             let captured = '';
             if (this.captured) {
                 captured = ` ស៊ី${this.captured.piece.title}`;
             }
-            const upgrade = this.isUpgrading ? 'បក' : '';
-            return `${this.piece.title} ដើរ​ពី ${this.moveFrom.title} ទៅ ${this.moveTo.title} ${upgrade}${captured}`;
+            const upgrade = this.isUpgrading ? ' បក' : '';
+            return `${this.piece.title} ដើរ​ពី ${this.moveFrom.title} ទៅ ${this.moveTo.title}${upgrade}${captured}`;
         }
     }
 }
