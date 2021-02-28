@@ -57,9 +57,9 @@ export default class KhmerChess {
         this.renInstance = REN.fromString();
     }
 
-    getCanMoves(): Move[] {
-        // TODO:
-        return [];
+    getCanMoves(): PieceIndex[] {
+        const pieceIndices = this.renInstance.genAllCanMoves();
+        return pieceIndices;
     }
     getCanMovePointsByPoint(point: Point): Point[] {
         const canMovePoints = this.renInstance.getCanMovePointsByPoint(point);

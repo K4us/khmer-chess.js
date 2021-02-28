@@ -14,7 +14,7 @@ export default class KhmerChess {
     constructor(renStr?: string);
     loadRENStr(renStr: string): void;
     resetBoard(): void;
-    getCanMoves(): Move[];
+    getCanMoves(): PieceIndex[];
     getCanMovePointsByPoint(point: Point): Point[];
     getAttacker(): PieceIndex | null;
     getWinColor(): string | null;
