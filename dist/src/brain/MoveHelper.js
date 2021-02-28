@@ -1,4 +1,7 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 /*
  * Copyright (c) 2021, K4us
@@ -27,14 +30,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * POSSIBILITY OF SUCH DAMAGE.
  *
  *---------------------------------------------------------------------------- */
-var index_1 = require("./index");
-var index_2 = require("../ren/index");
+var Piece_1 = __importDefault(require("../ren/Piece"));
+var boardHelper_1 = __importDefault(require("./boardHelper"));
+var constant_1 = require("./constant");
 var MoveHelper = /** @class */ (function () {
     function MoveHelper() {
     }
     Object.defineProperty(MoveHelper.prototype, "isWhiteTurn", {
         get: function () {
-            return index_2.Piece.isWhiteColor(this.currentTurn);
+            return Piece_1.default.isWhiteColor(this.currentTurn);
         },
         enumerable: false,
         configurable: true
@@ -57,7 +61,7 @@ var MoveHelper = /** @class */ (function () {
     };
     MoveHelper.prototype.generateCanMoves = function () {
         var _this = this;
-        var filter = index_1.boardHelper.filterPieceInBoard(this.piecesString);
+        var filter = boardHelper_1.default.filterPieceInBoard(this.piecesString);
         this.whiteMoves = filter.whitePieces;
         this.blackMoves = filter.blackPieces;
         var genMoves = function (pieceIndices) {
@@ -102,17 +106,17 @@ var MoveHelper = /** @class */ (function () {
         cleanMoves(this.blackMoves);
     };
     MoveHelper.prototype.checkIfKingInDanger = function () {
-        this.whiteKingInDanger = index_1.boardHelper.getKingInDanger(index_1.PIECE_COLOR_WHITE, this.piecesString);
-        this.whiteKingWillInDanger = index_1.boardHelper.getKingWillInDanger(index_1.PIECE_COLOR_WHITE, this.piecesString);
-        this.blackKingInDanger = index_1.boardHelper.getKingInDanger(index_1.PIECE_COLOR_BLACK, this.piecesString);
-        this.blackKingWillInDanger = index_1.boardHelper.getKingWillInDanger(index_1.PIECE_COLOR_BLACK, this.piecesString);
+        this.whiteKingInDanger = boardHelper_1.default.getKingInDanger(constant_1.PIECE_COLOR_WHITE, this.piecesString);
+        this.whiteKingWillInDanger = boardHelper_1.default.getKingWillInDanger(constant_1.PIECE_COLOR_WHITE, this.piecesString);
+        this.blackKingInDanger = boardHelper_1.default.getKingInDanger(constant_1.PIECE_COLOR_BLACK, this.piecesString);
+        this.blackKingWillInDanger = boardHelper_1.default.getKingWillInDanger(constant_1.PIECE_COLOR_BLACK, this.piecesString);
     };
     MoveHelper.prototype.genWinLost = function () {
         if (this.whiteKingInDanger && !this.whiteMoves.length) {
-            this.winColor = index_1.PIECE_COLOR_BLACK;
+            this.winColor = constant_1.PIECE_COLOR_BLACK;
         }
         else if (this.blackKingInDanger && !this.blackMoves.length) {
-            this.winColor = index_1.PIECE_COLOR_WHITE;
+            this.winColor = constant_1.PIECE_COLOR_WHITE;
         }
     };
     MoveHelper.prototype.getStuck = function () {
@@ -120,10 +124,10 @@ var MoveHelper = /** @class */ (function () {
             return;
         }
         if (this.isWhiteTurn && !this.whiteMoves.length) {
-            this.stuckColor = index_1.PIECE_COLOR_WHITE;
+            this.stuckColor = constant_1.PIECE_COLOR_WHITE;
         }
         else if (!this.isWhiteTurn && !this.blackMoves.length) {
-            this.stuckColor = index_1.PIECE_COLOR_BLACK;
+            this.stuckColor = constant_1.PIECE_COLOR_BLACK;
         }
     };
     MoveHelper.prototype.calcCanMove = function (option) {
@@ -157,18 +161,18 @@ var MoveHelper = /** @class */ (function () {
             whiteKingWillInDanger: this.whiteKingWillInDanger,
             winColor: this.winColor,
             stuckColor: this.stuckColor,
-            blackCountable: index_1.boardHelper.checkCountable(index_1.PIECE_COLOR_BLACK, this.piecesString),
-            whiteCountable: index_1.boardHelper.checkCountable(index_1.PIECE_COLOR_WHITE, this.piecesString),
+            blackCountable: boardHelper_1.default.checkCountable(constant_1.PIECE_COLOR_BLACK, this.piecesString),
+            whiteCountable: boardHelper_1.default.checkCountable(constant_1.PIECE_COLOR_WHITE, this.piecesString),
         };
     };
     MoveHelper.prototype.calCount = function (option) {
         return {
-            countingBlack: index_1.boardHelper.checkCount(index_1.PIECE_COLOR_BLACK, option.piecesString, option.force),
-            countingWhite: index_1.boardHelper.checkCount(index_1.PIECE_COLOR_WHITE, option.piecesString, option.force),
+            countingBlack: boardHelper_1.default.checkCount(constant_1.PIECE_COLOR_BLACK, option.piecesString, option.force),
+            countingWhite: boardHelper_1.default.checkCount(constant_1.PIECE_COLOR_WHITE, option.piecesString, option.force),
         };
     };
     MoveHelper.prototype.genCanMovePointsByPiecePoint = function (point, piece, piecesString, isHasMoved) {
-        return index_1.boardHelper.genCanMovePointsByPiecePoint(point.index, piece, piecesString, isHasMoved);
+        return boardHelper_1.default.genCanMovePointsByPiecePoint(point.index, piece, piecesString, isHasMoved);
     };
     return MoveHelper;
 }());

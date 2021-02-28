@@ -25,16 +25,11 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  *---------------------------------------------------------------------------- */
-import {
-    PIECE_COLOR_BLACK,
-    PIECE_COLOR_WHITE,
-    boardHelper,
-} from './index';
-import {
-    Piece,
-    PieceIndex,
-    Point,
-} from '../ren/index';
+import Piece from '../ren/Piece';
+import PieceIndex from '../ren/PieceIndex';
+import Point from '../ren/Point';
+import boardHelper from './boardHelper';
+import { PIECE_COLOR_BLACK, PIECE_COLOR_WHITE } from './constant';
 // abcdecbaooooooooffffffffoooooooooooooooommmmmmmmoooooooohijlkjih
 export type OptionsType = {
     piecesString: string;

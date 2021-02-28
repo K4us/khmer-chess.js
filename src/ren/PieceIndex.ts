@@ -25,11 +25,9 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  *---------------------------------------------------------------------------- */
+import { EMPTY_PIECE } from '../brain/constant';
+import jsis from '../brain/jsis';
 import Piece from './Piece';
-import {
-    jsis,
-    EMPTY_PIECE,
-} from '../brain/index';
 import Point from './Point';
 
 export default class PieceIndex {

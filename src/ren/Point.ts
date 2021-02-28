@@ -25,13 +25,14 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  *---------------------------------------------------------------------------- */
+
 import {
-    HORIZONTAL_CODE_LETTERS,
-    ROW_NUMBER,
     CELL_COUNT,
+    HORIZONTAL_CODE_LETTERS,
     HORIZONTAL_NOTE_LETTERS,
+    ROW_NUMBER,
     VERTICAL_NOTE_LETTERS,
-} from '../brain/index';
+} from '../brain/constant';
 
 export default class Point {
     x: number;

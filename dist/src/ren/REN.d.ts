@@ -3,11 +3,11 @@ import KqMoved from './KqMoved';
 import KAttacked from './KAttacked';
 import CountDown from './CountDown';
 import Graveyard from './Graveyard';
-import { MoveHelper } from '../brain/index';
 import Move from '../kpgn/Move';
 import Point from './Point';
 import Piece from './Piece';
 import { PieceIndex } from '.';
+import MoveHelper from '../brain/MoveHelper';
 /**
  * Raksa-Eng Notation
  * ren: <pieces on board> <turn w|b> <king&queen moved ----|SNsn> <king attack --|Kk> <countdown -.-|-.4> <pieces in graveyard>

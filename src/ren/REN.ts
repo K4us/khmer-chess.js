@@ -31,10 +31,6 @@ import KAttacked from './KAttacked';
 import CountDown from './CountDown';
 import Graveyard from './Graveyard';
 import {
-    jsis,
-    MoveHelper,
-} from '../brain/index';
-import {
     DEFAULT_BOARD_STR,
     STRING_COUNT,
 } from './constant';
@@ -43,6 +39,9 @@ import Move from '../kpgn/Move';
 import Point from './Point';
 import Piece from './Piece';
 import { PieceIndex } from '.';
+import MoveHelper from '../brain/MoveHelper';
+import { PIECE_COLOR_WHITE } from '../brain/constant';
+import jsis from '../brain/jsis';
 
 /**
  * Raksa-Eng Notation
@@ -77,7 +76,7 @@ export default class REN {
         countdownStr,
         graveyardStr }: RENPropType) {
         this.board = new Board(boardStr);
-        this.turn = turnStr;
+        this.turn = turnStr || PIECE_COLOR_WHITE;
         this.kqMoved = new KqMoved(kqMovedStr);
         this.kAttacked = new KAttacked(kAttackedStr);
         this.countdown = new CountDown(countdownStr);

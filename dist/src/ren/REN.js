@@ -35,22 +35,24 @@ var KqMoved_1 = __importDefault(require("./KqMoved"));
 var KAttacked_1 = __importDefault(require("./KAttacked"));
 var CountDown_1 = __importDefault(require("./CountDown"));
 var Graveyard_1 = __importDefault(require("./Graveyard"));
-var index_1 = require("../brain/index");
 var constant_1 = require("./constant");
 var kpgn_1 = require("../kpgn");
 var Move_1 = __importDefault(require("../kpgn/Move"));
 var Point_1 = __importDefault(require("./Point"));
 var Piece_1 = __importDefault(require("./Piece"));
 var _1 = require(".");
+var MoveHelper_1 = __importDefault(require("../brain/MoveHelper"));
+var constant_2 = require("../brain/constant");
+var jsis_1 = __importDefault(require("../brain/jsis"));
 var REN = /** @class */ (function () {
     function REN(renProps) {
-        this.moveHelper = new index_1.MoveHelper();
+        this.moveHelper = new MoveHelper_1.default();
         this.init(renProps);
     }
     REN.prototype.init = function (_a) {
         var boardStr = _a.boardStr, turnStr = _a.turnStr, kqMovedStr = _a.kqMovedStr, kAttackedStr = _a.kAttackedStr, countdownStr = _a.countdownStr, graveyardStr = _a.graveyardStr;
         this.board = new Board_1.default(boardStr);
-        this.turn = turnStr;
+        this.turn = turnStr || constant_2.PIECE_COLOR_WHITE;
         this.kqMoved = new KqMoved_1.default(kqMovedStr);
         this.kAttacked = new KAttacked_1.default(kAttackedStr);
         this.countdown = new CountDown_1.default(countdownStr);
@@ -61,13 +63,13 @@ var REN = /** @class */ (function () {
             msg += ", graveyard:" + graveyardStr + ", count:" + invalidPiecesString;
             throw new Error(msg);
         }
-        this.moveHelper = new index_1.MoveHelper();
+        this.moveHelper = new MoveHelper_1.default();
     };
     REN.prototype.isInvalidPieceCount = function () {
         var pieces = this.board.pieceIndices.map(function (pos) {
             return pos.piece;
         }).filter(function (p) {
-            return !index_1.jsis.isNull(p);
+            return !jsis_1.default.isNull(p);
         }).concat(this.graveyard.pieces).map(function (p) {
             return p.originPiece;
         });
@@ -85,7 +87,7 @@ var REN = /** @class */ (function () {
         return str;
     };
     REN.fromString = function (renStr) {
-        if (index_1.jsis.isUndefined(renStr)) {
+        if (jsis_1.default.isUndefined(renStr)) {
             renStr = constant_1.DEFAULT_BOARD_STR;
         }
         var renArr = renStr.split(' ');
@@ -100,7 +102,7 @@ var REN = /** @class */ (function () {
     };
     REN.prototype.move = function (moveFromIndex, moveToIndex) {
         var piece = this.board.getPieceAtIndex(moveFromIndex);
-        if (index_1.jsis.isNull(piece)) {
+        if (jsis_1.default.isNull(piece)) {
             return null;
         }
         this.board.pieceIndices[moveFromIndex].piece = null;
@@ -171,7 +173,7 @@ var REN = /** @class */ (function () {
     };
     REN.prototype.getCanMovePointsByPoint = function (point) {
         var piece = this.board.getPieceAtIndex(point.index);
-        if (index_1.jsis.isNull(piece)) {
+        if (jsis_1.default.isNull(piece)) {
             return [];
         }
         return this.moveHelper.genCanMovePointsByPiecePoint(point, piece, this.board.toStringFullNoSeparate(), this.isHasMoved(piece));

@@ -1,4 +1,6 @@
-import { Piece, PieceIndex, Point } from '../ren/index';
+import Piece from '../ren/Piece';
+import PieceIndex from '../ren/PieceIndex';
+import Point from '../ren/Point';
 export declare type OptionsType = {
     piecesString: string;
     currentTurn: string;

@@ -25,7 +25,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  *---------------------------------------------------------------------------- */
-import { jsis } from '../brain/index';
+import jsis from '../brain/jsis';
 import { NOT_SET } from './constant';
 
 // 23.-

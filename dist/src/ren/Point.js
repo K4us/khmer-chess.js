@@ -1,5 +1,4 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 /*
  * Copyright (c) 2021, K4us
  * Author: Raksa Eng <eng.raksa@gmail.com>
@@ -27,7 +26,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * POSSIBILITY OF SUCH DAMAGE.
  *
  *---------------------------------------------------------------------------- */
-var index_1 = require("../brain/index");
+Object.defineProperty(exports, "__esModule", { value: true });
+var constant_1 = require("../brain/constant");
 var Point = /** @class */ (function () {
     function Point(x, y) {
         this.x = x;
@@ -56,7 +56,7 @@ var Point = /** @class */ (function () {
     });
     Object.defineProperty(Point.prototype, "title", {
         get: function () {
-            return "" + index_1.HORIZONTAL_NOTE_LETTERS[this.x] + index_1.VERTICAL_NOTE_LETTERS[this.y];
+            return "" + constant_1.HORIZONTAL_NOTE_LETTERS[this.x] + constant_1.VERTICAL_NOTE_LETTERS[this.y];
         },
         enumerable: false,
         configurable: true
@@ -70,7 +70,7 @@ var Point = /** @class */ (function () {
     });
     Object.defineProperty(Point.prototype, "h", {
         get: function () {
-            return index_1.HORIZONTAL_CODE_LETTERS[this.x];
+            return constant_1.HORIZONTAL_CODE_LETTERS[this.x];
         },
         enumerable: false,
         configurable: true
@@ -83,10 +83,10 @@ var Point = /** @class */ (function () {
         configurable: true
     });
     Point.xyToIndex = function (x, y) {
-        return y * index_1.ROW_NUMBER + x;
+        return y * constant_1.ROW_NUMBER + x;
     };
     Point.indexCodeToXY = function (indexCode) {
-        var x = index_1.HORIZONTAL_CODE_LETTERS.indexOf(indexCode[0]);
+        var x = constant_1.HORIZONTAL_CODE_LETTERS.indexOf(indexCode[0]);
         var y = Number(indexCode[1]) - 1;
         return { x: x, y: y };
     };
@@ -99,8 +99,8 @@ var Point = /** @class */ (function () {
         return new Point(x, y);
     };
     Point.indexToXY = function (index) {
-        var x = index % index_1.ROW_NUMBER;
-        var y = Math.floor(index / index_1.ROW_NUMBER);
+        var x = index % constant_1.ROW_NUMBER;
+        var y = Math.floor(index / constant_1.ROW_NUMBER);
         return { x: x, y: y };
     };
     Point.fromIndex = function (index) {
@@ -111,7 +111,7 @@ var Point = /** @class */ (function () {
         return new Point(index, 0);
     };
     Point.isIndexInBoard = function (index) {
-        return index >= 0 && index <= index_1.CELL_COUNT - 1;
+        return index >= 0 && index <= constant_1.CELL_COUNT - 1;
     };
     return Point;
 }());

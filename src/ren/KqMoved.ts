@@ -25,11 +25,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  *---------------------------------------------------------------------------- */
+import { PIECE_TYPE_KING, PIECE_TYPE_QUEEN } from '../brain/constant';
 import { NOT_SET } from './constant';
-import {
-    PIECE_TYPE_QUEEN,
-    PIECE_TYPE_KING,
-} from '../brain/index';
 import Piece from './Piece';
 
 /**
