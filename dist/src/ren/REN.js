@@ -188,8 +188,9 @@ var REN = /** @class */ (function () {
             genCanMove: false,
             genCanMoveForAnother: false,
         });
-        if (state.blackKingInDanger) {
-            var pieceIndex = state.blackKingInDanger.map(function (point) {
+        var kingInDanger = state.blackKingInDanger || state.whiteKingInDanger;
+        if (kingInDanger) {
+            var pieceIndex = kingInDanger.map(function (point) {
                 return new _1.PieceIndex(point, _this.board.getPieceAtIndex(point.index));
             }).filter(function (pieceIndex) {
                 return !pieceIndex.piece.isTypeKing;

@@ -210,8 +210,9 @@ export default class REN {
             genCanMove: false,
             genCanMoveForAnother: false,
         });
-        if (state.blackKingInDanger) {
-            const pieceIndex = state.blackKingInDanger.map((point) => {
+        const kingInDanger = state.blackKingInDanger || state.whiteKingInDanger;
+        if (kingInDanger) {
+            const pieceIndex = kingInDanger.map((point) => {
                 return new PieceIndex(point, this.board.getPieceAtIndex(point.index));
             }).filter((pieceIndex) => {
                 return !pieceIndex.piece.isTypeKing;

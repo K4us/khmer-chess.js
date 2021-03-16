@@ -102,16 +102,16 @@ var Move = /** @class */ (function () {
             if (this.captured) {
                 captured = " captures " + this.captured.piece.titleEnglish;
             }
-            var upgrade = this.isUpgrading ? 'transforms' : '';
-            return this.piece.titleEnglish + " moved from " + this.moveFrom.titleEnglish + " to " + this.moveTo.titleEnglish + " " + upgrade + captured;
+            var upgrade = this.isUpgrading ? ' transforms' : '';
+            return this.piece.titleEnglish + " moved from " + this.moveFrom.titleEnglish + " to " + this.moveTo.titleEnglish + upgrade + captured;
         }
         else {
             var captured = '';
             if (this.captured) {
                 captured = " \u179F\u17CA\u17B8" + this.captured.piece.title;
             }
-            var upgrade = this.isUpgrading ? 'បក' : '';
-            return this.piece.title + " \u178A\u17BE\u179A\u200B\u1796\u17B8 " + this.moveFrom.title + " \u1791\u17C5 " + this.moveTo.title + " " + upgrade + captured;
+            var upgrade = this.isUpgrading ? ' បក' : '';
+            return this.piece.title + " \u178A\u17BE\u179A\u200B\u1796\u17B8 " + this.moveFrom.title + " \u1791\u17C5 " + this.moveTo.title + upgrade + captured;
         }
     };
     return Move;
