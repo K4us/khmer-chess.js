@@ -103,17 +103,8 @@ export default class MoveHelper implements OptionsType {
                 pieceIndex.canMovePoints = canMovePoints;
             });
         };
-        if (this.isWhiteTurn) {
-            genMoves(this.whiteMoves);
-            if (this.genCanMoveForAnother) {
-                genMoves(this.blackMoves);
-            }
-        } else {
-            genMoves(this.blackMoves);
-            if (this.genCanMoveForAnother) {
-                genMoves(this.whiteMoves);
-            }
-        }
+        genMoves(this.whiteMoves);
+        genMoves(this.blackMoves);
     }
 
     cleanPieceNoMove() {
